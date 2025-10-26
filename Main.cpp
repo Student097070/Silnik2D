@@ -107,21 +107,17 @@ int main() {
         else if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
             if (ev.mouse.x >= ResolutionButton_x && ev.mouse.x <= ResolutionButton_x + ResolutionButton_w &&
                 ev.mouse.y >= ResolutionButton_y && ev.mouse.y <= ResolutionButton_y + ResolutionButton_h) {
+               
+                if (current_w == 800 && current_h == 640) {
+                    al_resize_display(display, 1024, 768);
 
-                struct Resolution {
-                    int w, h;
-                    int workspace_w, workspace_h;
-                };
-
-                // cykl dostępnych rozdzielczości
-                struct Resolution resolutions[] = {
-                    // w, h, workspace_w, workspace_h
-
-                 {1024, 600, 400, 300},    // małe laptopy / netbooki
-                 {1280, 720, 500, 350},   // klasyczne 720p
-                 {1366, 768, 600, 400},   // standard HD (typowy 15,6")
-                 {1600, 900, 700, 450},   // HD+
-                 {1920, 1080, 800, 500},  // Full HD
+                    WorkspacePlace_w = 600, WorkspacePlace_h = 400;
+                    
+                    current_w = 1024;
+                    current_h = 768;
+                }
+                else if (current_w == 1024 && current_h == 768) {
+                    al_resize_display(display, 1152, 864);
 
                 };
                 const int num_res = sizeof(resolutions) / sizeof(resolutions[0]);
@@ -161,30 +157,8 @@ int main() {
             }
         }
         // Naciśnięcie ESC — zamknięcie
-        else if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
-            switch (ev.keyboard.keycode) {
-            case ALLEGRO_KEY_ESCAPE:
-                running = false;
-                break;
-
-            case ALLEGRO_KEY_F: // F – przełącza pełny ekran
-                fullscreen = !fullscreen;
-                al_toggle_display_flag(display, ALLEGRO_FULLSCREEN_WINDOW, fullscreen);
-                if ((fullscreen == true))
-                {
-                    WorkspacePlace_w = 800;
-                    WorkspacePlace_h = 500;
-                    WorkspacePlace_x = (1920 / 2.0f) - (800 / 2.0f);
-                    WorkspacePlace_y = (1080 / 2.0f) - (500 / 2.0f);
-                }
-                else {
-                    al_resize_display(display, 1024, 600);
-                    WorkspacePlace_x = (1024 / 2.0f) - (400 / 2.0f);
-                    WorkspacePlace_y = (600 / 2.0f) - (300 / 2.0f);
-                }
-                break;
-            }
-        }
+        else if (ev.type == ALLEGRO_EVENT_KEY_DOWN && ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
+            running = false;
 
         // Rysowanie
         al_clear_to_color(al_map_rgb(30, 30, 30));

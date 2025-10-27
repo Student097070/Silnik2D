@@ -9,6 +9,11 @@
 
 using namespace std;
 
+struct Resolution {
+    int w, h;
+    int workspace_w, workspace_h;
+};
+
 int main() {
     if (!al_init()) {
         std::cerr << "Błąd inicjalizacji Allegro!" << std::endl;
@@ -20,12 +25,23 @@ int main() {
     al_install_mouse();
     al_install_keyboard();
 
-    const int WIDTH = 800, HEIGHT = 600;
-    al_set_new_display_flags(ALLEGRO_RESIZABLE); // okno można zmieniać
+    // cykl dostępnych rozdzielczości
+    Resolution resolutions[] = {
+        {800, 640, 400, 300},
+        {1024, 768, 500, 350},
+        {1152, 864, 600, 400},
+        {1280, 720, 500, 350},
+        {1366, 768, 600, 400}
+    };
+    const int num_res = sizeof(resolutions) / sizeof(resolutions[0]);
+    int current_index = 0;
+
+    const int WIDTH = resolutions[current_index].w, HEIGHT = resolutions[current_index].h;
+    al_set_new_display_flags(ALLEGRO_RESIZABLE);
     ALLEGRO_DISPLAY* display = al_create_display(WIDTH, HEIGHT);
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
     ALLEGRO_FONT* Rozdzielczosc = al_load_ttf_font("Arial.ttf", 11, 0);
-    ALLEGRO_TIMER* timer = al_create_timer(1.0/144.0);
+    ALLEGRO_TIMER* timer = al_create_timer(1.0 / 144.0);
 
     al_register_event_source(queue, al_get_display_event_source(display));
     al_register_event_source(queue, al_get_timer_event_source(timer));
@@ -34,11 +50,12 @@ int main() {
 
     al_start_timer(timer);
 
-    time_t x=0;
+    time_t x = 0;
 
-    //Wymiary i polożenie początkowe przycisku do rozdzielczości
-    float WorkspacePlace_w = 500, WorkspacePlace_h = 300;
-    float ResolutionButton_w = 100, ResolutionButton_h = 20;  
+    // Wymiary i polożenie początkowe
+    float WorkspacePlace_w = resolutions[current_index].workspace_w;
+    float WorkspacePlace_h = resolutions[current_index].workspace_h;
+    float ResolutionButton_w = 100, ResolutionButton_h = 20;
 
     float ResolutionButton_x = 0;
     float ResolutionButton_y = 0;
@@ -48,10 +65,6 @@ int main() {
 
     bool running = true;
     bool hovered = false;
-
-    int current_w = 800;
-    int current_h = 640;
-
     bool fullscreen = false;
 
     while (running) {
@@ -62,16 +75,34 @@ int main() {
         if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
             running = false;
 
-        else if(ev.type == ALLEGRO_EVENT_TIMER){
-
+        else if (ev.type == ALLEGRO_EVENT_TIMER) {
             time(&x);
-
             string czasomierz = to_string(x);
-
             czasomierz.erase(0, 8);
-          
-            al_draw_text(Rozdzielczosc, al_map_rgb(255, 255, 255), 100, 100, ALLEGRO_ALIGN_CENTRE, czasomierz.c_str());
-            
+
+            // Rysowanie
+            al_clear_to_color(al_map_rgb(30, 30, 30));
+            ALLEGRO_COLOR color = hovered ? al_map_rgb(0, 120, 255) : al_map_rgb(0, 0, 0);
+
+            al_draw_filled_rectangle(ResolutionButton_x, ResolutionButton_y,
+                ResolutionButton_x + ResolutionButton_w,
+                ResolutionButton_y + ResolutionButton_h, color);
+            al_draw_filled_rectangle(WorkspacePlace_x, WorkspacePlace_y,
+                WorkspacePlace_x + WorkspacePlace_w,
+                WorkspacePlace_y + WorkspacePlace_h,
+                al_map_rgb(190, 190, 190));
+            al_draw_rectangle(ResolutionButton_x, ResolutionButton_y,
+                ResolutionButton_x + ResolutionButton_w,
+                ResolutionButton_y + ResolutionButton_h,
+                al_map_rgb(255, 255, 255), 2);
+            al_draw_text(Rozdzielczosc, al_map_rgb(255, 255, 255),
+                ResolutionButton_x + (ResolutionButton_w / 2.0),
+                ResolutionButton_y + (ResolutionButton_h / 5),
+                ALLEGRO_ALIGN_CENTRE, "ROZDZIELCZOSC");
+
+            al_draw_text(Rozdzielczosc, al_map_rgb(255, 255, 255),
+                100, 100, ALLEGRO_ALIGN_CENTRE, czasomierz.c_str());
+
             al_flip_display();
         }
         // Zmiana rozmiaru okna
@@ -81,14 +112,17 @@ int main() {
             int new_w = al_get_display_width(display);
             int new_h = al_get_display_height(display);
 
-            // ponowne wyśrodkowanie przycisku
             ResolutionButton_x = 0;
             ResolutionButton_y = 0;
-            if (fullscreen == false) {
-                WorkspacePlace_w = 400, WorkspacePlace_h = 300;
+
+            if (!fullscreen) {
+                WorkspacePlace_w = resolutions[current_index].workspace_w;
+                WorkspacePlace_h = resolutions[current_index].workspace_h;
             }
-            else
-            WorkspacePlace_w = 1000, WorkspacePlace_h = 600;
+            else {
+                WorkspacePlace_w = 800;
+                WorkspacePlace_h = 500;
+            }
 
             WorkspacePlace_x = (new_w / 2.0f) - (WorkspacePlace_w / 2.0f);
             WorkspacePlace_y = (new_h / 2.0f) - (WorkspacePlace_h / 2.0f);
@@ -108,59 +142,25 @@ int main() {
             if (ev.mouse.x >= ResolutionButton_x && ev.mouse.x <= ResolutionButton_x + ResolutionButton_w &&
                 ev.mouse.y >= ResolutionButton_y && ev.mouse.y <= ResolutionButton_y + ResolutionButton_h) {
 
-                struct Resolution {
-                    int w, h;
-                    int workspace_w, workspace_h;
-                };
+                current_index = (current_index + 1) % num_res;
+                al_resize_display(display, resolutions[current_index].w, resolutions[current_index].h);
 
-                // cykl dostępnych rozdzielczości
-                struct Resolution resolutions[] = {
-                    // w, h, workspace_w, workspace_h
+                WorkspacePlace_w = resolutions[current_index].workspace_w;
+                WorkspacePlace_h = resolutions[current_index].workspace_h;
+                WorkspacePlace_x = (resolutions[current_index].w / 2.0f) - (WorkspacePlace_w / 2.0f);
+                WorkspacePlace_y = (resolutions[current_index].h / 2.0f) - (WorkspacePlace_h / 2.0f);
 
-                 {1024, 600, 400, 300},    // małe laptopy / netbooki
-                 {1280, 720, 500, 350},   // klasyczne 720p
-                 {1366, 768, 600, 400},   // standard HD (typowy 15,6")
-                 {1600, 900, 700, 450},   // HD+
-                 {1920, 1080, 800, 500},  // Full HD
-
-                };
-                const int num_res = sizeof(resolutions) / sizeof(resolutions[0]);
-
-                int next_index = 0;
-                for (int i = 0; i < num_res; i++) {
-                    if (current_w == resolutions[i].w && current_h == resolutions[i].h) {
-                        next_index = (i + 1) % num_res; // przejście do kolejnej rozdzielczości w cyklu
-                        break;
-                    }
-                }
-
-                al_resize_display(display, resolutions[next_index].w, resolutions[next_index].h);
-
-                // Wycentrowanie okna po zmianie rozdzielczości
+                // Centrowanie okna
                 ALLEGRO_MONITOR_INFO info;
                 al_get_monitor_info(0, &info);
                 int screen_w = info.x2 - info.x1;
                 int screen_h = info.y2 - info.y1;
-
-                int win_x = (screen_w - resolutions[next_index].w) / 2;
-                int win_y = (screen_h - resolutions[next_index].h) / 2;
+                int win_x = (screen_w - resolutions[current_index].w) / 2;
+                int win_y = (screen_h - resolutions[current_index].h) / 2;
                 al_set_window_position(display, win_x, win_y);
-
-                WorkspacePlace_w = resolutions[next_index].workspace_w;
-                WorkspacePlace_h = resolutions[next_index].workspace_h;
-
-                current_w = resolutions[next_index].w;
-                current_h = resolutions[next_index].h;
-
-                // ponowne wyśrodkowanie przycisku
-                ResolutionButton_x = 0;
-                ResolutionButton_y = 0;
-
-                WorkspacePlace_x = (current_w / 2.0f) - (WorkspacePlace_w / 2.0f);
-                WorkspacePlace_y = (current_h / 2.0f) - (WorkspacePlace_h / 2.0f);
             }
         }
-        // Naciśnięcie ESC — zamknięcie
+        // Obsługa klawiszy
         else if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
             switch (ev.keyboard.keycode) {
             case ALLEGRO_KEY_ESCAPE:
@@ -170,30 +170,34 @@ int main() {
             case ALLEGRO_KEY_F: // F – przełącza pełny ekran
                 fullscreen = !fullscreen;
                 al_toggle_display_flag(display, ALLEGRO_FULLSCREEN_WINDOW, fullscreen);
-                if ((fullscreen == true))
-                {
+                if (fullscreen) {
                     WorkspacePlace_w = 800;
                     WorkspacePlace_h = 500;
                     WorkspacePlace_x = (1920 / 2.0f) - (800 / 2.0f);
                     WorkspacePlace_y = (1080 / 2.0f) - (500 / 2.0f);
                 }
                 else {
-                    al_resize_display(display, 1024, 600);
-                    WorkspacePlace_x = (1024 / 2.0f) - (400 / 2.0f);
-                    WorkspacePlace_y = (600 / 2.0f) - (300 / 2.0f);
+                    // PRZYWRÓĆ ORYGINALNĄ ROZDZIELCZOŚĆ
+                    al_resize_display(display, resolutions[current_index].w, resolutions[current_index].h);
+
+                    // PRZYWRÓĆ ORYGINALNE WYMIARY WORKSPACE
+                    WorkspacePlace_w = resolutions[current_index].workspace_w;
+                    WorkspacePlace_h = resolutions[current_index].workspace_h;
+                    WorkspacePlace_x = (resolutions[current_index].w / 2.0f) - (WorkspacePlace_w / 2.0f);
+                    WorkspacePlace_y = (resolutions[current_index].h / 2.0f) - (WorkspacePlace_h / 2.0f);
+
+                    // CENTROWANIE OKNA
+                    ALLEGRO_MONITOR_INFO info;
+                    al_get_monitor_info(0, &info);
+                    int screen_w = info.x2 - info.x1;
+                    int screen_h = info.y2 - info.y1;
+                    int win_x = (screen_w - resolutions[current_index].w) / 2;
+                    int win_y = (screen_h - resolutions[current_index].h) / 2;
+                    al_set_window_position(display, win_x, win_y);
                 }
                 break;
             }
         }
-
-        // Rysowanie
-        al_clear_to_color(al_map_rgb(30, 30, 30));
-        ALLEGRO_COLOR color = hovered ? al_map_rgb(0, 120, 255) : al_map_rgb(0, 0, 0);
-        al_draw_filled_rectangle(ResolutionButton_x, ResolutionButton_y, ResolutionButton_x + ResolutionButton_w, ResolutionButton_y + ResolutionButton_h, color);
-        al_draw_filled_rectangle(WorkspacePlace_x, WorkspacePlace_y, WorkspacePlace_x + WorkspacePlace_w, WorkspacePlace_y + WorkspacePlace_h, al_map_rgb(190, 190, 190));
-        al_draw_rectangle(ResolutionButton_x, ResolutionButton_y, ResolutionButton_x + ResolutionButton_w, ResolutionButton_y + ResolutionButton_h, al_map_rgb(255, 255, 255), 2);
-        al_draw_text(Rozdzielczosc, al_map_rgb(255, 255, 255), ResolutionButton_x + (ResolutionButton_w / 2.0), ResolutionButton_y + (ResolutionButton_h / 5), ALLEGRO_ALIGN_CENTRE, "ROZDZIELCZOSC");
-        al_flip_display();
     }
 
     al_destroy_timer(timer);

@@ -10,19 +10,24 @@
 
 using namespace std;
 
+// Struktura przechowująca informacje o rozdzielczości okna i obszaru roboczego
 struct Resolution {
-    int w, h;
-    int workspace_w, workspace_h;
+    int w, h;                           // Szerokość i wysokość okna
+    int workspace_w, workspace_h;       // Szerokość i wysokość obszaru roboczego
 };
 
+
+// Klasa silnika programu
 class Engine {
 private:
+    // Komponenty biblioteki Allegro
     ALLEGRO_DISPLAY* display = nullptr;
     ALLEGRO_EVENT_QUEUE* queue = nullptr;
     ALLEGRO_TIMER* timer = nullptr;
     ALLEGRO_FONT* fontSmall = nullptr;
     ALLEGRO_FONT* fontLarge = nullptr;
 
+    // Tablica dostępncyh rozdzielczości
     Resolution resolutions[5] = {
         {800, 640, 400, 300},
         {1024, 768, 500, 350},
@@ -30,23 +35,25 @@ private:
         {1280, 720, 1000, 500},
         {1920, 1080, 1200, 750}
     };
-    int current_index = 0;
+    int current_index = 0;            //Aktualna rozdzielczość 
 
-    bool running = true;
-    bool fullscreen = false;
-    bool resolution_hovered = false;
-    bool reset_hovered = false;
+    bool running = true;              // Stan działania aplikacji
+    bool fullscreen = false;          // Czy jest włączony tryb pełnoekranowy
+    bool resolution_hovered = false;  // Czy myszka jest nad przyciskiem rozdzielczości
+    bool reset_hovered = false;       // Czy myszka jest nad przyciskiem resetu
 
-    float ResolutionButton_x = 0, ResolutionButton_y = 0;
-    float ResolutionButton_w = 100, ResolutionButton_h = 20;
-    float ResetButton_x = 110, ResetButton_y = 0;
-    float ResetButton_w = 100, ResetButton_h = 20;
-    float WorkspacePlace_x, WorkspacePlace_y, WorkspacePlace_w, WorkspacePlace_h;
-    float Timer_x, Timer_y;
+    // Pozycje i rozmiary elementów interfejsu
+    float ResolutionButton_x = 0, ResolutionButton_y = 0;           // Pozycja przycisku zmiany rozdzielczości
+    float ResolutionButton_w = 100, ResolutionButton_h = 20;        // Rozmiar przycisku zmiany rozdzielczości
+    float ResetButton_x = 110, ResetButton_y = 0;                   // Pozycja przycisku resetu czasomierza  
+    float ResetButton_w = 100, ResetButton_h = 20;                  // Rozmiar przycisku resetu czasomierza
+    float WorkspacePlace_x, WorkspacePlace_y, WorkspacePlace_w, WorkspacePlace_h;  // Pozycja i rozmiar obszaru roboczego   
+    float Timer_x, Timer_y;						                	// Pozycja wyświetlania czasomierza
 
-    time_t start_time = time(nullptr);
+    time_t start_time = time(nullptr);  // Czas rozpoczęcia czasomierza  
 
 public:
+    // Konstruktor inicjalizujący silnik
     Engine() {
         initLog();
         if (!initAllegro()) exit(-1);
@@ -59,10 +66,12 @@ public:
         logError("Silnik uruchomiony pomyślnie");
     }
 
+    // Czyszczenie zasobów
     ~Engine() {
         cleanup();
     }
 
+    // Główna pętla programu
     void run() {
         al_start_timer(timer);
         while (running) {
@@ -74,6 +83,7 @@ public:
     }
 
 private:
+    // Inicjalizacja pliku log z błędami
     void initLog() {
         ofstream errorFile("error_log.txt");
         if (errorFile.is_open()) {
@@ -82,6 +92,7 @@ private:
         }
     }
 
+    // Zapisywanie komunikatu z błędami
     static void logError(const string& errorMessage) {
         ofstream errorFile("error_log.txt", ios::app);
         if (errorFile.is_open()) {
@@ -95,6 +106,7 @@ private:
         cerr << errorMessage << endl;
     }
 
+    // Inicjalizacja biblioteki Allegro i jej dodatków
     bool initAllegro() {
         if (!al_init()) { logError("Błąd inicjalizacji Allegro!"); return false; }
         if (!al_init_font_addon()) { logError("Błąd inicjalizacji fontów!"); return false; }
@@ -105,6 +117,7 @@ private:
         return true;
     }
 
+    // Tworzenie głównego okna aplikacji
     void createDisplay() {
         al_set_new_display_flags(ALLEGRO_RESIZABLE);
         display = al_create_display(resolutions[current_index].w, resolutions[current_index].h);
@@ -114,6 +127,7 @@ private:
         if (!queue) { logError("Błąd tworzenia kolejki zdarzeń!"); exit(-1); }
     }
 
+    // Ładowanie czcionek
     void loadFonts() {
         fontSmall = al_load_ttf_font("Arial.ttf", 11, 0);
         if (!fontSmall) {
@@ -124,11 +138,13 @@ private:
         if (!fontLarge) fontLarge = fontSmall;
     }
 
+    // Tworzenie czasomierza
     void createTimer() {
         timer = al_create_timer(1.0 / 144.0);
         if (!timer) { logError("Błąd tworzenia timera!"); exit(-1); }
     }
 
+    // Rejestrowanie źródeł zdarzeń
     void registerEventSources() {
         al_register_event_source(queue, al_get_display_event_source(display));
         al_register_event_source(queue, al_get_timer_event_source(timer));
@@ -136,15 +152,18 @@ private:
         al_register_event_source(queue, al_get_keyboard_event_source());
     }
 
+    // Ustawianie obszaru roboczego
     void setupWorkspace() {
         WorkspacePlace_w = resolutions[current_index].workspace_w;
         WorkspacePlace_h = resolutions[current_index].workspace_h;
         WorkspacePlace_x = (resolutions[current_index].w / 2.0f) - (WorkspacePlace_w / 2.0f);
         WorkspacePlace_y = (resolutions[current_index].h / 2.0f) - (WorkspacePlace_h / 2.0f);
+        // Pozycja czasomierza
         Timer_x = WorkspacePlace_x + (WorkspacePlace_w / 2.0f);
         Timer_y = WorkspacePlace_y - 40;
     }
 
+    // Centrowanie okna na ekranie
     void centerWindow() {
         ALLEGRO_MONITOR_INFO info;
         if (al_get_monitor_info(0, &info)) {
@@ -156,10 +175,12 @@ private:
         }
     }
 
+    // Resetowanie czasomierza
     void resetTimer() {
         start_time = time(nullptr);
     }
 
+    // Obsługa zdarzeń
     void handleEvent(ALLEGRO_EVENT& ev) {
         if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
             running = false;
@@ -175,6 +196,7 @@ private:
             handleResize();
     }
 
+    // Obsługa ruchu myszy
     void handleMouseMove(int x, int y) {
         resolution_hovered =
             (x >= ResolutionButton_x && x <= ResolutionButton_x + ResolutionButton_w &&
@@ -184,11 +206,13 @@ private:
                 y >= ResetButton_y && y <= ResetButton_y + ResetButton_h);
     }
 
+    // Obsługa kliknięcia myszy
     void handleMouseClick() {
         if (resolution_hovered) changeResolution();
         else if (reset_hovered) resetTimer();
     }
 
+    // Obsługa klawiszy
     void handleKey(int key) {
         switch (key) {
         case ALLEGRO_KEY_ESCAPE: running = false; break;
@@ -197,6 +221,7 @@ private:
         }
     }
 
+    // Obsługa zmiany rozmiaru okna
     void handleResize() {
         al_acknowledge_resize(display);
         int new_w = al_get_display_width(display);
@@ -207,6 +232,7 @@ private:
         Timer_y = WorkspacePlace_y - 40;
     }
 
+    // Zmiana rozdzielczości okna
     void changeResolution() {
         current_index = (current_index + 1) % 5;
         al_resize_display(display, resolutions[current_index].w, resolutions[current_index].h);
@@ -214,16 +240,20 @@ private:
         centerWindow();
     }
 
+    // Przełączanie trybu pełnoekranowego
     void toggleFullscreen() {
         fullscreen = !fullscreen;
         if (!al_toggle_display_flag(display, ALLEGRO_FULLSCREEN_WINDOW, fullscreen))
             logError("Błąd przełączania pełnego ekranu!");
     }
 
+    // Rysowanie interfejsu
     void draw() {
+        // Obliczanie czasu czasomierza
         time_t elapsed = time(nullptr) - start_time;
         string timerText = to_string(elapsed);
 
+        // Wyczyszczenie ekranu
         al_clear_to_color(al_map_rgb(30, 30, 30));
 
         // Przycisk rozdzielczości
@@ -237,7 +267,7 @@ private:
             ResolutionButton_x + (ResolutionButton_w / 2.0), ResolutionButton_y + 4,
             ALLEGRO_ALIGN_CENTRE, "ROZDZIELCZOSC");
 
-        // Przycisk resetu
+        // Przycisk resetu czasomierza
         ALLEGRO_COLOR reset_color = reset_hovered ? al_map_rgb(255, 100, 100) : al_map_rgb(0, 0, 0);
         al_draw_filled_rectangle(ResetButton_x, ResetButton_y,
             ResetButton_x + ResetButton_w, ResetButton_y + ResetButton_h, reset_color);
@@ -248,16 +278,18 @@ private:
             ResetButton_x + (ResetButton_w / 2.0), ResetButton_y + 4,
             ALLEGRO_ALIGN_CENTRE, "RESET TIMERA");
 
-        // Workspace i timer
+        // Rysowanie obszaru roboczego i czasomierza
         al_draw_filled_rectangle(WorkspacePlace_x, WorkspacePlace_y,
             WorkspacePlace_x + WorkspacePlace_w, WorkspacePlace_y + WorkspacePlace_h,
             al_map_rgb(190, 190, 190));
         al_draw_text(fontLarge, al_map_rgb(255, 215, 0),
             Timer_x, Timer_y, ALLEGRO_ALIGN_CENTRE, timerText.c_str());
 
+        // Wyświetlenie zmian
         al_flip_display();
     }
 
+    // Czyszczenie zasobów
     void cleanup() {
         al_destroy_timer(timer);
         if (fontSmall) al_destroy_font(fontSmall);
@@ -267,8 +299,9 @@ private:
     }
 };
 
+// Główna funkcja programu
 int main() {
-    Engine engine;
-    engine.run();
+    Engine engine;      // Utworzenie instancji silnika
+    engine.run();       // Uruchomienie głównej pętli
     return 0;
 }

@@ -1,0 +1,3 @@
+=== Log b³êdów programu ===
+[Mon Oct 27 10:40:31 2025] Program uruchomiony pomyœlnie
+[Mon Oct 27 10:42:37 2025] Program zakoñczony pomyœlnie

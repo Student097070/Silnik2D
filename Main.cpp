@@ -1,11 +1,9 @@
 ﻿#include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
-#include <iostream>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <string>
-#include <ctime>
-#include <Windows.h>
+#include <iostream>
 
 using namespace std;
 
@@ -42,16 +40,16 @@ int main() {
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
     ALLEGRO_FONT* Rozdzielczosc = al_load_ttf_font("Arial.ttf", 11, 0);
     ALLEGRO_FONT* TimerFont = al_load_ttf_font("Arial.ttf", 24, 0); // Większa czcionka dla timera
-    ALLEGRO_TIMER* timer = al_create_timer(1.0 / 144.0);
+    ALLEGRO_TIMER* timer = al_create_timer(1.0);
 
     al_register_event_source(queue, al_get_display_event_source(display));
     al_register_event_source(queue, al_get_timer_event_source(timer));
     al_register_event_source(queue, al_get_mouse_event_source());
     al_register_event_source(queue, al_get_keyboard_event_source());
 
-    al_start_timer(timer);
+    double czas = 0;
 
-    time_t x = 0;
+    al_start_timer(timer);
 
     // Wymiary i polożenie początkowe
     float WorkspacePlace_w = resolutions[current_index].workspace_w;
@@ -81,9 +79,9 @@ int main() {
             running = false;
 
         else if (ev.type == ALLEGRO_EVENT_TIMER) {
-            time(&x);
-            string czasomierz = to_string(x);
-            czasomierz.erase(0, 8);
+            //czasomierz od 0 
+            czas += 1;
+            std::string czasomierz = "Czas: " + std::to_string((int)czas) + " s";
 
             // Rysowanie
             al_clear_to_color(al_map_rgb(30, 30, 30));

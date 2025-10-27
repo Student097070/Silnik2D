@@ -30,8 +30,8 @@ int main() {
         {800, 640, 400, 300},
         {1024, 768, 500, 350},
         {1152, 864, 600, 400},
-        {1280, 720, 500, 350},
-        {1366, 768, 600, 400}
+        {1280, 720, 700, 450},
+        {1920,1080, 1300, 700}
     };
     const int num_res = sizeof(resolutions) / sizeof(resolutions[0]);
     int current_index = 0;
@@ -41,6 +41,7 @@ int main() {
     ALLEGRO_DISPLAY* display = al_create_display(WIDTH, HEIGHT);
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
     ALLEGRO_FONT* Rozdzielczosc = al_load_ttf_font("Arial.ttf", 11, 0);
+    ALLEGRO_FONT* TimerFont = al_load_ttf_font("Arial.ttf", 24, 0); // Większa czcionka dla timera
     ALLEGRO_TIMER* timer = al_create_timer(1.0 / 144.0);
 
     al_register_event_source(queue, al_get_display_event_source(display));
@@ -62,6 +63,10 @@ int main() {
 
     float WorkspacePlace_x = (WIDTH / 2.0f) - (WorkspacePlace_w / 2.0f);
     float WorkspacePlace_y = (HEIGHT / 2.0f) - (WorkspacePlace_h / 2.0f);
+
+    // Pozycja timera - nad polem roboczym
+    float Timer_x = WorkspacePlace_x + (WorkspacePlace_w / 2.0f);
+    float Timer_y = WorkspacePlace_y - 40; // 40 pikseli nad polem roboczym
 
     bool running = true;
     bool hovered = false;
@@ -100,8 +105,9 @@ int main() {
                 ResolutionButton_y + (ResolutionButton_h / 5),
                 ALLEGRO_ALIGN_CENTRE, "ROZDZIELCZOSC");
 
-            al_draw_text(Rozdzielczosc, al_map_rgb(255, 255, 255),
-                100, 100, ALLEGRO_ALIGN_CENTRE, czasomierz.c_str());
+            // Rysowanie timera - większa czcionka, widoczny kolor, wyśrodkowany nad polem roboczym
+            al_draw_text(TimerFont, al_map_rgb(255, 215, 0), // Złoty kolor dla lepszej widoczności
+                Timer_x, Timer_y, ALLEGRO_ALIGN_CENTRE, czasomierz.c_str());
 
             al_flip_display();
         }
@@ -126,6 +132,10 @@ int main() {
 
             WorkspacePlace_x = (new_w / 2.0f) - (WorkspacePlace_w / 2.0f);
             WorkspacePlace_y = (new_h / 2.0f) - (WorkspacePlace_h / 2.0f);
+
+            // Aktualizacja pozycji timera
+            Timer_x = WorkspacePlace_x + (WorkspacePlace_w / 2.0f);
+            Timer_y = WorkspacePlace_y - 40;
         }
 
         // Ruch myszy – efekt hover
@@ -149,6 +159,10 @@ int main() {
                 WorkspacePlace_h = resolutions[current_index].workspace_h;
                 WorkspacePlace_x = (resolutions[current_index].w / 2.0f) - (WorkspacePlace_w / 2.0f);
                 WorkspacePlace_y = (resolutions[current_index].h / 2.0f) - (WorkspacePlace_h / 2.0f);
+
+                // Aktualizacja pozycji timera
+                Timer_x = WorkspacePlace_x + (WorkspacePlace_w / 2.0f);
+                Timer_y = WorkspacePlace_y - 40;
 
                 // Centrowanie okna
                 ALLEGRO_MONITOR_INFO info;
@@ -175,6 +189,10 @@ int main() {
                     WorkspacePlace_h = 500;
                     WorkspacePlace_x = (1920 / 2.0f) - (800 / 2.0f);
                     WorkspacePlace_y = (1080 / 2.0f) - (500 / 2.0f);
+
+                    // Aktualizacja pozycji timera w trybie pełnoekranowym
+                    Timer_x = WorkspacePlace_x + (WorkspacePlace_w / 2.0f);
+                    Timer_y = WorkspacePlace_y - 40;
                 }
                 else {
                     // PRZYWRÓĆ ORYGINALNĄ ROZDZIELCZOŚĆ
@@ -185,6 +203,10 @@ int main() {
                     WorkspacePlace_h = resolutions[current_index].workspace_h;
                     WorkspacePlace_x = (resolutions[current_index].w / 2.0f) - (WorkspacePlace_w / 2.0f);
                     WorkspacePlace_y = (resolutions[current_index].h / 2.0f) - (WorkspacePlace_h / 2.0f);
+
+                    // Aktualizacja pozycji timera
+                    Timer_x = WorkspacePlace_x + (WorkspacePlace_w / 2.0f);
+                    Timer_y = WorkspacePlace_y - 40;
 
                     // CENTROWANIE OKNA
                     ALLEGRO_MONITOR_INFO info;
@@ -202,6 +224,7 @@ int main() {
 
     al_destroy_timer(timer);
     al_destroy_font(Rozdzielczosc);
+    al_destroy_font(TimerFont); // Pamiętaj o zniszczeniu nowej czcionki
     al_destroy_event_queue(queue);
     al_destroy_display(display);
     return 0;

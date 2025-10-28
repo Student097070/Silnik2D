@@ -16,6 +16,79 @@ struct Resolution {
     int workspace_w, workspace_h;       // Szerokość i wysokość obszaru roboczego
 };
 
+class PrimitiveRenderer {
+
+private:
+    ALLEGRO_COLOR kolor;
+public:
+    PrimitiveRenderer(ALLEGRO_COLOR kolor = al_map_rgb(0, 0, 0)) : kolor(kolor) {}
+
+
+
+    void  point(int x, int y) {
+        al_put_pixel(x, y, kolor);
+    }
+    void rectangle(int x0, int y0, int x1, int y1, bool wypelniony = false, float grubosc = 1.0f) {
+        if (wypelniony)
+            al_draw_filled_rectangle(x0, y0, x1, y1, kolor);
+        else
+            al_draw_rectangle(x0, y0, x1, y1, kolor, grubosc);
+    }
+    void circle(int x, int y, int r, bool wypelniony = false, float grubosc = 1.0f) {
+        if (wypelniony)
+            al_draw_filled_circle(x, y, r, kolor);
+        else
+            al_draw_circle(x, y, r, kolor, grubosc);
+    }
+
+    void triangle(int x0, int y0, int x1, int y1, int x2, int y2, bool wypelniony = false, float grubosc = 1.0f) {
+        if (wypelniony)
+            al_draw_filled_triangle(x0, y0, x1, y1, x2, y2, kolor);
+        else
+            al_draw_triangle(x0, y0, x1, y1, x2, y2, kolor, grubosc);
+    }
+
+
+    void line(int x0, int y0, int x1, int y1) {
+        int dx = x1 - x0;
+        int dy = y1 - y0;
+
+        if (abs(dy) <= abs(dx)) {
+            if (x0 > x1) {
+                swap(x0, x1);
+                swap(y0, y1);
+                dx = x1 - x0;
+                dy = y1 - x0;
+            }
+            float m = (float)dy / dx;
+            float y = y0;
+            for (int x = x0; x <= x1; x++) {
+                al_put_pixel(x, round(y), kolor);
+                y += m;
+            }
+        }
+        else {
+            if (y0 > y1) {
+                swap(x0, x1);
+                swap(y1, y0);
+                dx = x1 - x0;
+                dy = y1 - y0;
+
+            }
+
+            float m = (float)dx / dy;
+            float x = x0;
+
+            for (int y = y0; y <= y1; y++) {
+                al_put_pixel(round(x), y, kolor);
+                x += m;
+            }
+        }
+
+    }
+
+
+};
 
 // Klasa silnika programu
 class Engine {
@@ -41,12 +114,15 @@ private:
     bool fullscreen = false;          // Czy jest włączony tryb pełnoekranowy
     bool resolution_hovered = false;  // Czy myszka jest nad przyciskiem rozdzielczości
     bool reset_hovered = false;       // Czy myszka jest nad przyciskiem resetu
+    bool prim_hovered = false;
 
     // Pozycje i rozmiary elementów interfejsu
     float ResolutionButton_x = 0, ResolutionButton_y = 0;           // Pozycja przycisku zmiany rozdzielczości
     float ResolutionButton_w = 100, ResolutionButton_h = 20;        // Rozmiar przycisku zmiany rozdzielczości
     float ResetButton_x = 110, ResetButton_y = 0;                   // Pozycja przycisku resetu czasomierza  
-    float ResetButton_w = 100, ResetButton_h = 20;                  // Rozmiar przycisku resetu czasomierza
+    float ResetButton_w = 100, ResetButton_h = 20;                // Rozmiar przycisku resetu czasomierza
+    float PrimButton_x = 220, PrimButton_y = 0;                  
+    float PrimButton_w = 100, PrimButton_h = 20;
     float WorkspacePlace_x, WorkspacePlace_y, WorkspacePlace_w, WorkspacePlace_h;  // Pozycja i rozmiar obszaru roboczego   
     float Timer_x, Timer_y;						                	// Pozycja wyświetlania czasomierza
 
@@ -204,12 +280,16 @@ private:
         reset_hovered =
             (x >= ResetButton_x && x <= ResetButton_x + ResetButton_w &&
                 y >= ResetButton_y && y <= ResetButton_y + ResetButton_h);
+        prim_hovered =
+            (x >= PrimButton_x && x <= PrimButton_x + PrimButton_w &&
+                y >= PrimButton_y && y <= PrimButton_y + PrimButton_h);
     }
 
     // Obsługa kliknięcia myszy
     void handleMouseClick() {
         if (resolution_hovered) changeResolution();
         else if (reset_hovered) resetTimer();
+        //else if (prim_hovered) primitive();
     }
 
     // Obsługa klawiszy
@@ -232,6 +312,11 @@ private:
         Timer_y = WorkspacePlace_y - 40;
     }
 
+    /*void primitive() {
+        PrimitiveRenderer p(al_map_rgb(0, 255, 0));
+        p.circle(200,200, 100, true, 3.5);
+        al_flip_display();
+    }*/
     // Zmiana rozdzielczości okna
     void changeResolution() {
         current_index = (current_index + 1) % 5;
@@ -278,15 +363,30 @@ private:
             ResetButton_x + (ResetButton_w / 2.0), ResetButton_y + 4,
             ALLEGRO_ALIGN_CENTRE, "RESET TIMERA");
 
+        ALLEGRO_COLOR prim_color = prim_hovered ? al_map_rgb(0, 120, 255) : al_map_rgb(0, 0, 0);
+        al_draw_filled_rectangle(PrimButton_x, PrimButton_y,
+            PrimButton_x + PrimButton_w, PrimButton_y + PrimButton_h, prim_color);
+        al_draw_rectangle(ResolutionButton_x, ResolutionButton_y,
+            PrimButton_x + PrimButton_w, PrimButton_y + PrimButton_h,
+            al_map_rgb(255, 255, 255), 2);
+        al_draw_text(fontSmall, al_map_rgb(255, 255, 255),
+            PrimButton_x + (PrimButton_w / 2.0), PrimButton_y + 4,
+            ALLEGRO_ALIGN_CENTRE, "Primus");
+
         // Rysowanie obszaru roboczego i czasomierza
         al_draw_filled_rectangle(WorkspacePlace_x, WorkspacePlace_y,
             WorkspacePlace_x + WorkspacePlace_w, WorkspacePlace_y + WorkspacePlace_h,
             al_map_rgb(190, 190, 190));
         al_draw_text(fontLarge, al_map_rgb(255, 215, 0),
             Timer_x, Timer_y, ALLEGRO_ALIGN_CENTRE, timerText.c_str());
+        if (prim_hovered) {
+            PrimitiveRenderer p(al_map_rgb(0, 255, 0));
+            p.circle(200, 200, 100, true, 3.5);
+        }
 
         // Wyświetlenie zmian
         al_flip_display();
+
     }
 
     // Czyszczenie zasobów
@@ -299,9 +399,16 @@ private:
     }
 };
 
+
+
+
+
 // Główna funkcja programu
 int main() {
     Engine engine;      // Utworzenie instancji silnika
     engine.run();       // Uruchomienie głównej pętli
+    //PrimitiveRenderer p(al_map_rgb(0, 255, 0));
+    //p.circle(200,200, 100, true, 3.5);
+
     return 0;
 }

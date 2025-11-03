@@ -121,7 +121,7 @@ private:
     float ResolutionButton_w = 100, ResolutionButton_h = 20;        // Rozmiar przycisku zmiany rozdzielczości
     float ResetButton_x = 110, ResetButton_y = 0;                   // Pozycja przycisku resetu czasomierza  
     float ResetButton_w = 100, ResetButton_h = 20;                // Rozmiar przycisku resetu czasomierza
-    float PrimButton_x = 220, PrimButton_y = 0;
+    float PrimButton_x = 220, PrimButton_y = 0;                  
     float PrimButton_w = 100, PrimButton_h = 20;
     float WorkspacePlace_x, WorkspacePlace_y, WorkspacePlace_w, WorkspacePlace_h;  // Pozycja i rozmiar obszaru roboczego   
     float Timer_x, Timer_y;						                	// Pozycja wyświetlania czasomierza

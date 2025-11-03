@@ -1,94 +1,4 @@
-﻿#include <allegro5/allegro.h>
-#include <allegro5/allegro_primitives.h>
-#include <allegro5/allegro_font.h>
-#include <allegro5/allegro_ttf.h>
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <ctime>
-#include <Windows.h>
-
-using namespace std;
-
-// Struktura przechowująca informacje o rozdzielczości okna i obszaru roboczego
-struct Resolution {
-    int w, h;                           // Szerokość i wysokość okna
-    int workspace_w, workspace_h;       // Szerokość i wysokość obszaru roboczego
-};
-
-class PrimitiveRenderer {
-
-private:
-    ALLEGRO_COLOR kolor;
-public:
-    PrimitiveRenderer(ALLEGRO_COLOR kolor = al_map_rgb(0, 0, 0)) : kolor(kolor) {}
-
-
-
-    void  point(int x, int y) {
-        al_put_pixel(x, y, kolor);
-    }
-    void rectangle(int x0, int y0, int x1, int y1, bool wypelniony = false, float grubosc = 1.0f) {
-        if (wypelniony)
-            al_draw_filled_rectangle(x0, y0, x1, y1, kolor);
-        else
-            al_draw_rectangle(x0, y0, x1, y1, kolor, grubosc);
-    }
-    void circle(int x, int y, int r, bool wypelniony = false, float grubosc = 1.0f) {
-        if (wypelniony)
-            al_draw_filled_circle(x, y, r, kolor);
-        else
-            al_draw_circle(x, y, r, kolor, grubosc);
-    }
-
-    void triangle(int x0, int y0, int x1, int y1, int x2, int y2, bool wypelniony = false, float grubosc = 1.0f) {
-        if (wypelniony)
-            al_draw_filled_triangle(x0, y0, x1, y1, x2, y2, kolor);
-        else
-            al_draw_triangle(x0, y0, x1, y1, x2, y2, kolor, grubosc);
-    }
-
-
-    void line(int x0, int y0, int x1, int y1) {
-        int dx = x1 - x0;
-        int dy = y1 - y0;
-
-        if (abs(dy) <= abs(dx)) {
-            if (x0 > x1) {
-                swap(x0, x1);
-                swap(y0, y1);
-                dx = x1 - x0;
-                dy = y1 - x0;
-            }
-            float m = (float)dy / dx;
-            float y = y0;
-            for (int x = x0; x <= x1; x++) {
-                al_put_pixel(x, round(y), kolor);
-                y += m;
-            }
-        }
-        else {
-            if (y0 > y1) {
-                swap(x0, x1);
-                swap(y1, y0);
-                dx = x1 - x0;
-                dy = y1 - y0;
-
-            }
-
-            float m = (float)dx / dy;
-            float x = x0;
-
-            for (int y = y0; y <= y1; y++) {
-                al_put_pixel(round(x), y, kolor);
-                x += m;
-            }
-        }
-
-    }
-
-
-};
+﻿#include "Include.h"
 
 // Klasa silnika programu
 class Engine {
@@ -398,10 +308,6 @@ private:
         if (display) al_destroy_display(display);
     }
 };
-
-
-//abc
-
 
 // Główna funkcja programu
 int main() {

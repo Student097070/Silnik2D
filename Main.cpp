@@ -100,6 +100,8 @@ private:
         if (!al_init_primitives_addon()) { logError("Błąd inicjalizacji primitives!"); return false; }
         if (!al_install_mouse()) { logError("Błąd inicjalizacji myszy!"); return false; }
         if (!al_install_keyboard()) { logError("Błąd inicjalizacji klawiatury!"); return false; }
+        if (!al_init_image_addon()) { logError("Błąd inicjalizacji allegro_image!"); return false; }
+
         return true;
     }
 
@@ -294,6 +296,14 @@ private:
             p.circle(200, 200, 100, true, 3.5);
         }
 
+        // Ładowanie obrazu (możesz to przenieść do konstruktora, żeby nie ładować co klatkę)
+        static ALLEGRO_BITMAP* background = al_load_bitmap("Stachu.jpg");
+        if (!background) {
+            logError("Nie można załadować tła: tlo.jpg");
+        }
+        else {
+            al_draw_bitmap(background, 300, 300, 0);
+        }
         // Wyświetlenie zmian
         al_flip_display();
 

@@ -1,15 +1,11 @@
 ﻿#include "Include.h"
+#include "PrimitiveRenderer.h"
+#include "Resolution.h"
 
 // Klasa silnika programu
 class Engine {
 private:
-    // Komponenty biblioteki Allegro
-    ALLEGRO_DISPLAY* display = nullptr;
-    ALLEGRO_EVENT_QUEUE* queue = nullptr;
-    ALLEGRO_TIMER* timer = nullptr;
-    ALLEGRO_FONT* fontSmall = nullptr;
-    ALLEGRO_FONT* fontLarge = nullptr;
-
+  
     // Tablica dostępncyh rozdzielczości
     Resolution resolutions[5] = {
         {800, 640, 400, 300},
@@ -18,24 +14,7 @@ private:
         {1280, 720, 1000, 500},
         {1920, 1080, 1200, 750}
     };
-    int current_index = 0;            //Aktualna rozdzielczość 
-
-    bool running = true;              // Stan działania aplikacji
-    bool fullscreen = false;          // Czy jest włączony tryb pełnoekranowy
-    bool resolution_hovered = false;  // Czy myszka jest nad przyciskiem rozdzielczości
-    bool reset_hovered = false;       // Czy myszka jest nad przyciskiem resetu
-    bool prim_hovered = false;
-
-    // Pozycje i rozmiary elementów interfejsu
-    float ResolutionButton_x = 0, ResolutionButton_y = 0;           // Pozycja przycisku zmiany rozdzielczości
-    float ResolutionButton_w = 100, ResolutionButton_h = 20;        // Rozmiar przycisku zmiany rozdzielczości
-    float ResetButton_x = 110, ResetButton_y = 0;                   // Pozycja przycisku resetu czasomierza  
-    float ResetButton_w = 100, ResetButton_h = 20;                // Rozmiar przycisku resetu czasomierza
-    float PrimButton_x = 220, PrimButton_y = 0;                  
-    float PrimButton_w = 100, PrimButton_h = 20;
-    float WorkspacePlace_x, WorkspacePlace_y, WorkspacePlace_w, WorkspacePlace_h;  // Pozycja i rozmiar obszaru roboczego   
-    float Timer_x, Timer_y;						                	// Pozycja wyświetlania czasomierza
-
+   
     time_t start_time = time(nullptr);  // Czas rozpoczęcia czasomierza  
 
 public:

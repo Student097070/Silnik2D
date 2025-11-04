@@ -1,3 +1,4 @@
+#include "Include.h"
 #include "PrimitiveRenderer.h"
 
 void PrimitiveRenderer:: point(int x, int y) {

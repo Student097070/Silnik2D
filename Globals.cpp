@@ -17,8 +17,7 @@ bool reset_hovered = false;
 bool prim_hovered = false;
 
 // --- UI: pozycje i rozmiary przycisków ---
-float ResolutionButton_x = 0, ResolutionButton_y = 0;
-float ResolutionButton_w = 100, ResolutionButton_h = 20;
+
 float ResetButton_x = 110, ResetButton_y = 0;
 float ResetButton_w = 100, ResetButton_h = 20;
 float PrimButton_x = 220, PrimButton_y = 0;

@@ -1,6 +1,11 @@
 ﻿#include "Include.h"
 #include "PrimitiveRenderer.h"
 #include "Resolution.h"
+#include "Button.h"
+
+Button ResolutionButton(0,0,100,20,"Rozdzielczosc", al_map_rgb(0, 120, 255), al_map_rgb(255, 255, 255));
+Button ResetButton(110, 0, 120, 30, "RESET TIMERA", al_map_rgb(255, 0, 0), al_map_rgb(255, 255, 255));
+Button PrimButton(240, 0, 100, 20, "Primus", al_map_rgb(0, 120, 255), al_map_rgb(255, 255, 255));
 
 // Klasa silnika programu
 class Engine {
@@ -153,7 +158,7 @@ private:
         else if (ev.type == ALLEGRO_EVENT_TIMER)
             draw();
         else if (ev.type == ALLEGRO_EVENT_MOUSE_AXES)
-            handleMouseMove(ev.mouse.x, ev.mouse.y);
+            handleMouseMove(ev.mouse.x, ev.mouse.y); 
         else if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
             handleMouseClick();
         else if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
@@ -164,21 +169,15 @@ private:
 
     // Obsługa ruchu myszy
     void handleMouseMove(int x, int y) {
-        resolution_hovered =
-            (x >= ResolutionButton_x && x <= ResolutionButton_x + ResolutionButton_w &&
-                y >= ResolutionButton_y && y <= ResolutionButton_y + ResolutionButton_h);
-        reset_hovered =
-            (x >= ResetButton_x && x <= ResetButton_x + ResetButton_w &&
-                y >= ResetButton_y && y <= ResetButton_y + ResetButton_h);
-        prim_hovered =
-            (x >= PrimButton_x && x <= PrimButton_x + PrimButton_w &&
-                y >= PrimButton_y && y <= PrimButton_y + PrimButton_h);
+		ResolutionButton.hovered();
+		ResetButton.hovered();
+		PrimButton.hovered();
     }
 
     // Obsługa kliknięcia myszy
     void handleMouseClick() {
-        if (resolution_hovered) changeResolution();
-        else if (reset_hovered) resetTimer();
+        if (ResolutionButton.hovered()) changeResolution();
+        else if (ResetButton.hovered()) resetTimer();
         //else if (prim_hovered) primitive();
     }
 
@@ -207,6 +206,7 @@ private:
         p.circle(200,200, 100, true, 3.5);
         al_flip_display();
     }*/
+
     // Zmiana rozdzielczości okna
     void changeResolution() {
         current_index = (current_index + 1) % 5;
@@ -231,37 +231,14 @@ private:
         // Wyczyszczenie ekranu
         al_clear_to_color(al_map_rgb(30, 30, 30));
 
-        // Przycisk rozdzielczości
-        ALLEGRO_COLOR resolution_color = resolution_hovered ? al_map_rgb(0, 120, 255) : al_map_rgb(0, 0, 0);
-        al_draw_filled_rectangle(ResolutionButton_x, ResolutionButton_y,
-            ResolutionButton_x + ResolutionButton_w, ResolutionButton_y + ResolutionButton_h, resolution_color);
-        al_draw_rectangle(ResolutionButton_x, ResolutionButton_y,
-            ResolutionButton_x + ResolutionButton_w, ResolutionButton_y + ResolutionButton_h,
-            al_map_rgb(255, 255, 255), 2);
-        al_draw_text(fontSmall, al_map_rgb(255, 255, 255),
-            ResolutionButton_x + (ResolutionButton_w / 2.0), ResolutionButton_y + 4,
-            ALLEGRO_ALIGN_CENTRE, "ROZDZIELCZOSC");
+		// Przycisk zmiany rozdzielczości
+        ResolutionButton.draw("Rozdzielczosc");
 
         // Przycisk resetu czasomierza
-        ALLEGRO_COLOR reset_color = reset_hovered ? al_map_rgb(255, 100, 100) : al_map_rgb(0, 0, 0);
-        al_draw_filled_rectangle(ResetButton_x, ResetButton_y,
-            ResetButton_x + ResetButton_w, ResetButton_y + ResetButton_h, reset_color);
-        al_draw_rectangle(ResetButton_x, ResetButton_y,
-            ResetButton_x + ResetButton_w, ResetButton_y + ResetButton_h,
-            al_map_rgb(255, 255, 255), 2);
-        al_draw_text(fontSmall, al_map_rgb(255, 255, 255),
-            ResetButton_x + (ResetButton_w / 2.0), ResetButton_y + 4,
-            ALLEGRO_ALIGN_CENTRE, "RESET TIMERA");
+		ResetButton.draw("RESET TIMERA");
 
-        ALLEGRO_COLOR prim_color = prim_hovered ? al_map_rgb(0, 120, 255) : al_map_rgb(0, 0, 0);
-        al_draw_filled_rectangle(PrimButton_x, PrimButton_y,
-            PrimButton_x + PrimButton_w, PrimButton_y + PrimButton_h, prim_color);
-        al_draw_rectangle(ResolutionButton_x, ResolutionButton_y,
-            PrimButton_x + PrimButton_w, PrimButton_y + PrimButton_h,
-            al_map_rgb(255, 255, 255), 2);
-        al_draw_text(fontSmall, al_map_rgb(255, 255, 255),
-            PrimButton_x + (PrimButton_w / 2.0), PrimButton_y + 4,
-            ALLEGRO_ALIGN_CENTRE, "Primus");
+		// Przycisk Primus
+		PrimButton.draw("Primus");
 
         // Rysowanie obszaru roboczego i czasomierza
         al_draw_filled_rectangle(WorkspacePlace_x, WorkspacePlace_y,
@@ -292,8 +269,5 @@ private:
 int main() {
     Engine engine;      // Utworzenie instancji silnika
     engine.run();       // Uruchomienie głównej pętli
-    //PrimitiveRenderer p(al_map_rgb(0, 255, 0));
-    //p.circle(200,200, 100, true, 3.5);
-
     return 0;
 }

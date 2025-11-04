@@ -9,9 +9,13 @@ public:
 
 	Button(float x,float y,float w, float h, string name,ALLEGRO_COLOR ButtonCollor,ALLEGRO_COLOR TextCollor);
 	
-	bool hovered(float mouseX,float mouseY);
+	bool isCliked() {
+
+	}
+
+	bool hovered();
 	
-	void draw();
+	void draw(string name);
 
 	~Button();
 };

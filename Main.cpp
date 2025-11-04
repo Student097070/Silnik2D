@@ -277,7 +277,7 @@ private:
         ALLEGRO_COLOR prim_color = prim_hovered ? al_map_rgb(0, 120, 255) : al_map_rgb(0, 0, 0);
         al_draw_filled_rectangle(PrimButton_x, PrimButton_y,
             PrimButton_x + PrimButton_w, PrimButton_y + PrimButton_h, prim_color);
-        al_draw_rectangle(ResolutionButton_x, ResolutionButton_y,
+        al_draw_rectangle(PrimButton_x, PrimButton_y,    
             PrimButton_x + PrimButton_w, PrimButton_y + PrimButton_h,
             al_map_rgb(255, 255, 255), 2);
         al_draw_text(fontSmall, al_map_rgb(255, 255, 255),
@@ -290,9 +290,34 @@ private:
             al_map_rgb(190, 190, 190));
         al_draw_text(fontLarge, al_map_rgb(255, 215, 0),
             Timer_x, Timer_y, ALLEGRO_ALIGN_CENTRE, timerText.c_str());
+
         if (prim_hovered) {
-            PrimitiveRenderer p(al_map_rgb(0, 255, 0));
-            p.circle(200, 200, 100, true, 3.5);
+            PrimitiveRenderer redRenderer(al_map_rgb(255, 0, 0));
+            PrimitiveRenderer blueRenderer(al_map_rgb(0, 0, 255));
+            PrimitiveRenderer greenRenderer(al_map_rgb(0, 255, 0));
+
+            redRenderer.circle(300, 300, 3, true);  
+
+            Point2D points[] = {
+                Point2D(320, 300),
+                Point2D(340, 320),
+                Point2D(360, 280),
+                Point2D(380, 340)
+            };
+
+            for (int i = 0; i < 4; i++) {
+                if (i % 2 == 0) {
+                    blueRenderer.circle(points[i].getX(), points[i].getY(), 3, true);
+                }
+                else {
+                    greenRenderer.circle(points[i].getX(), points[i].getY(), 3, true);
+                }
+            }
+
+            redRenderer.line(300, 300, 320, 300);
+            blueRenderer.line(320, 300, 340, 320);
+            greenRenderer.line(340, 320, 360, 280);
+            blueRenderer.line(360, 280, 380, 340);
         }
         // Wyświetlenie zmian
         al_flip_display();
@@ -317,4 +342,4 @@ int main() {
     //p.circle(200,200, 100, true, 3.5);
 
     return 0;
-}
+        }

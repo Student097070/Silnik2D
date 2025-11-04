@@ -8,7 +8,8 @@
 #include <string>
 #include <ctime>
 #include <Windows.h>
-#include "PrimitiveRenderer.h"
 #include "Resolution.h"
+#include "PrimitiveRenderer.h"
+#include "Point2D.h"
 
 using namespace std;

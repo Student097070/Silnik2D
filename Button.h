@@ -9,13 +9,11 @@ public:
 
 	Button(float x,float y,float w, float h, string name,ALLEGRO_COLOR ButtonCollor,ALLEGRO_COLOR TextCollor);
 	
-	bool isCliked() {
-
-	}
-
-	bool hovered();
 	
-	void draw(string name);
+
+	bool hovered(float mouseX, float mouseY); // funkcja sprawdzajaca czy myszka jest nad przyciskiem
+	
+	void draw(); //funckja rysujaca przycisk
 
 	~Button();
 };

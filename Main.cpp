@@ -3,9 +3,9 @@
 #include "Resolution.h"
 #include "Button.h"
 
-Button ResolutionButton(0,0,100,20,"Rozdzielczosc", al_map_rgb(0, 120, 255), al_map_rgb(255, 255, 255));
-Button ResetButton(110, 0, 120, 30, "RESET TIMERA", al_map_rgb(255, 0, 0), al_map_rgb(255, 255, 255));
-Button PrimButton(240, 0, 100, 20, "Primus", al_map_rgb(0, 120, 255), al_map_rgb(255, 255, 255));
+Button ResolutionButton(0,0,100,20,"Rozdzielczosc", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+Button ResetButton(110, 0, 120, 20, "RESET TIMERA", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+Button PrimButton(240, 0, 100, 20, "Primus", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 
 // Klasa silnika programu
 class Engine {
@@ -157,10 +157,14 @@ private:
             running = false;
         else if (ev.type == ALLEGRO_EVENT_TIMER)
             draw();
+
         else if (ev.type == ALLEGRO_EVENT_MOUSE_AXES)
             handleMouseMove(ev.mouse.x, ev.mouse.y); 
+
+
         else if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
-            handleMouseClick();
+            handleMouseClick(ev.mouse.x, ev.mouse.y);
+
         else if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
             handleKey(ev.keyboard.keycode);
         else if (ev.type == ALLEGRO_EVENT_DISPLAY_RESIZE)
@@ -169,17 +173,22 @@ private:
 
     // Obsługa ruchu myszy
     void handleMouseMove(int x, int y) {
-		ResolutionButton.hovered();
-		ResetButton.hovered();
-		PrimButton.hovered();
+        resolution_hovered = ResolutionButton.hovered(x, y);
+        reset_hovered = ResetButton.hovered(x, y);
+        prim_hovered = PrimButton.hovered(x, y);
     }
 
+
     // Obsługa kliknięcia myszy
-    void handleMouseClick() {
-        if (ResolutionButton.hovered()) changeResolution();
-        else if (ResetButton.hovered()) resetTimer();
-        //else if (prim_hovered) primitive();
+    void handleMouseClick(float mouseX, float mouseY) {
+        if (ResolutionButton.hovered(mouseX, mouseY))
+            changeResolution();
+        else if (ResetButton.hovered(mouseX, mouseY))
+            resetTimer();
+        else if (PrimButton.hovered(mouseX, mouseY))
+            logError("Kliknięto przycisk Primus (tu możesz dodać funkcję).");
     }
+
 
     // Obsługa klawiszy
     void handleKey(int key) {
@@ -232,13 +241,13 @@ private:
         al_clear_to_color(al_map_rgb(30, 30, 30));
 
 		// Przycisk zmiany rozdzielczości
-        ResolutionButton.draw("Rozdzielczosc");
+        ResolutionButton.draw();
 
         // Przycisk resetu czasomierza
-		ResetButton.draw("RESET TIMERA");
+		ResetButton.draw();
 
 		// Przycisk Primus
-		PrimButton.draw("Primus");
+		PrimButton.draw();
 
         // Rysowanie obszaru roboczego i czasomierza
         al_draw_filled_rectangle(WorkspacePlace_x, WorkspacePlace_y,

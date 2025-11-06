@@ -3,9 +3,10 @@
 #include "Resolution.h"
 #include "Button.h"
 
-Button ResolutionButton(0,0,100,20,"Rozdzielczosc", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+Button ResolutionButton(0, 0, 100, 20, "Rozdzielczosc", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button ResetButton(110, 0, 120, 20, "RESET TIMERA", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button PrimButton(240, 0, 100, 20, "Primus", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+
 
 // Klasa silnika programu
 class Engine {
@@ -22,35 +23,6 @@ private:
    
     time_t start_time = time(nullptr);  // Czas rozpoczęcia czasomierza  
 
-public:
-    // Konstruktor inicjalizujący silnik
-    Engine() {
-        initLog();
-        if (!initAllegro()) exit(-1);
-        createDisplay();
-        loadFonts();
-        createTimer();
-        registerEventSources();
-        setupWorkspace();
-        centerWindow();
-        logError("Silnik uruchomiony pomyślnie");
-    }
-
-    // Czyszczenie zasobów
-    ~Engine() {
-        cleanup();
-    }
-
-    // Główna pętla programu
-    void run() {
-        al_start_timer(timer);
-        while (running) {
-            ALLEGRO_EVENT ev;
-            al_wait_for_event(queue, &ev);
-            handleEvent(ev);
-        }
-        logError("Silnik zakończył działanie pomyślnie");
-    }
 
 private:
     // Inicjalizacja pliku log z błędami
@@ -61,7 +33,8 @@ private:
             errorFile.close();
         }
     }
-
+public:
+	bool ShowCircle = false;
     // Zapisywanie komunikatu z błędami
     static void logError(const string& errorMessage) {
         ofstream errorFile("error_log.txt", ios::app);
@@ -146,6 +119,34 @@ private:
         }
     }
 
+    // Rysowanie interfejsu
+    void draw() {
+        al_clear_to_color(al_map_rgb(30, 30, 30));
+
+        ResolutionButton.draw();
+        ResetButton.draw();
+        PrimButton.draw();
+
+        // Rysowanie obszaru roboczego i czasomierza
+        al_draw_filled_rectangle(WorkspacePlace_x, WorkspacePlace_y,
+            WorkspacePlace_x + WorkspacePlace_w, WorkspacePlace_y + WorkspacePlace_h,
+            al_map_rgb(190, 190, 190));
+
+        // ⬇️ Rysuj koło tylko gdy aktywne
+        if (ShowCircle) {
+            PrimitiveRenderer p(al_map_rgb(0, 255, 0));
+            p.circle(200, 200, 100, true, 3.5);
+        }
+
+        // Czasomierz
+        time_t elapsed = time(nullptr) - start_time;
+        string timerText = to_string(elapsed);
+        al_draw_text(fontLarge, al_map_rgb(255, 215, 0),
+            Timer_x, Timer_y, ALLEGRO_ALIGN_CENTRE, timerText.c_str());
+
+        al_flip_display();
+    }
+
     // Resetowanie czasomierza
     void resetTimer() {
         start_time = time(nullptr);
@@ -159,7 +160,7 @@ private:
             draw();
 
         else if (ev.type == ALLEGRO_EVENT_MOUSE_AXES)
-            handleMouseMove(ev.mouse.x, ev.mouse.y); 
+            handleMouseMove(ev.mouse.x, ev.mouse.y);
 
 
         else if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
@@ -185,8 +186,11 @@ private:
             changeResolution();
         else if (ResetButton.hovered(mouseX, mouseY))
             resetTimer();
-        else if (PrimButton.hovered(mouseX, mouseY))
-            logError("Kliknięto przycisk Primus (tu możesz dodać funkcję).");
+        else if (PrimButton.hovered(mouseX, mouseY)) {
+			ShowCircle = !ShowCircle;
+            primitive();
+        }
+			
     }
 
 
@@ -210,11 +214,11 @@ private:
         Timer_y = WorkspacePlace_y - 40;
     }
 
-    /*void primitive() {
+    void primitive() {
         PrimitiveRenderer p(al_map_rgb(0, 255, 0));
         p.circle(200,200, 100, true, 3.5);
         al_flip_display();
-    }*/
+    }
 
     // Zmiana rozdzielczości okna
     void changeResolution() {
@@ -231,38 +235,37 @@ private:
             logError("Błąd przełączania pełnego ekranu!");
     }
 
-    // Rysowanie interfejsu
-    void draw() {
-        // Obliczanie czasu czasomierza
-        time_t elapsed = time(nullptr) - start_time;
-        string timerText = to_string(elapsed);
-
-        // Wyczyszczenie ekranu
-        al_clear_to_color(al_map_rgb(30, 30, 30));
-
-		// Przycisk zmiany rozdzielczości
-        ResolutionButton.draw();
-
-        // Przycisk resetu czasomierza
-		ResetButton.draw();
-
-		// Przycisk Primus
-		PrimButton.draw();
-
-        // Rysowanie obszaru roboczego i czasomierza
-        al_draw_filled_rectangle(WorkspacePlace_x, WorkspacePlace_y,
-            WorkspacePlace_x + WorkspacePlace_w, WorkspacePlace_y + WorkspacePlace_h,
-            al_map_rgb(190, 190, 190));
-        al_draw_text(fontLarge, al_map_rgb(255, 215, 0),
-            Timer_x, Timer_y, ALLEGRO_ALIGN_CENTRE, timerText.c_str());
-        if (prim_hovered) {
-            PrimitiveRenderer p(al_map_rgb(0, 255, 0));
-            p.circle(200, 200, 100, true, 3.5);
-        }
-        // Wyświetlenie zmian
-        al_flip_display();
-
+    
+    
+    // Konstruktor inicjalizujący silnik
+    Engine() {
+        initLog();
+        if (!initAllegro()) exit(-1);
+        createDisplay();
+        loadFonts();
+        createTimer();
+        registerEventSources();
+        setupWorkspace();
+        centerWindow();
+        logError("Silnik uruchomiony pomyślnie");
     }
+
+    // Czyszczenie zasobów
+    ~Engine() {
+        cleanup();
+    }
+
+    // Główna pętla programu
+    void run() {
+        al_start_timer(timer);
+        while (running) {
+            ALLEGRO_EVENT ev;
+            al_wait_for_event(queue, &ev);
+            handleEvent(ev);
+        }
+        logError("Silnik zakończył działanie pomyślnie");
+    }
+
 
     // Czyszczenie zasobów
     void cleanup() {

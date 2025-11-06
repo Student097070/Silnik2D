@@ -23,5 +23,4 @@ void Button::draw() {
     al_draw_text(fontSmall, al_map_rgb(255, 255, 255), x + (w / 2.0), y + 4,ALLEGRO_ALIGN_CENTRE, name.c_str());
 }
 
-
 Button::~Button() {}

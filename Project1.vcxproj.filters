@@ -41,7 +41,7 @@
     <ClInclude Include="Include.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Resolution.h">
+    <ClInclude Include="STR.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="Button.h">

@@ -1,8 +1,9 @@
 #include "Point2D.h"
 
-Point2D::Point2D(float x, float y) {
+Point2D::Point2D(float x, float y,ALLEGRO_COLOR kolor) {
 	this->x = x;
 	this->y = y;
+	this->kolor = kolor;
 }
 
 void Point2D::ReadPoint(){

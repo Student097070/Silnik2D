@@ -1,12 +1,17 @@
 ﻿#include "Include.h"
 #include "PrimitiveRenderer.h"
-#include "Resolution.h"
+#include "STR.h"
 #include "Button.h"
+#include "Point2D.h"
 
 Button ResolutionButton(0, 0, 100, 20, "Rozdzielczosc", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button ResetButton(110, 0, 100, 20, "RESET TIMERA", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
-Button PrimButton(220, 0, 100, 20, "Primus", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+Button CircleButton(220, 0, 100, 20, "CIRCLE", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button Point2DButton(330, 0, 100, 20, "Point2D", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+Button CleanButton(660, 0, 100, 20, "Clean", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+Button RectangleButton(0, 30, 100, 20, "RECTANGLE", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+Button TriangleButton(110, 30, 100, 20, "TRIANGLE", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+Button LineButton(220, 30, 100, 20, "LINE", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 
 
 // Klasa silnika programu
@@ -35,7 +40,17 @@ private:
         }
     }
 public:
-	bool ShowCircle = false;
+	bool CircleDrawingMode = false;
+	bool PointDrawingMode = false;
+    bool RectangleDrawingMode = false;
+    bool TriangleDrawingMode = false;
+    
+	vector<Point2D> points; // Przechowywanie punktow Point2D
+    vector<CircleData> circles; // Przechowywanie punktow Circle
+	vector<RectangleData> rectangles; // Przechowywanie prostokatow Rectangle
+	vector<TriangleData> triangles; // Przechowywanie trojkątów Triangle
+
+
     // Zapisywanie komunikatu z błędami
     static void logError(const string& errorMessage) {
         ofstream errorFile("error_log.txt", ios::app);
@@ -120,35 +135,86 @@ public:
         }
     }
 
+    void clear() { // czyszczenie mapy
+        points.clear(); 
+		circles.clear(); 
+    }
+
+
     // Rysowanie interfejsu
-    void draw() {
+    void draw(ALLEGRO_EVENT& ev) {
         al_clear_to_color(al_map_rgb(30, 30, 30));
 
         ResolutionButton.draw();
-        
         ResetButton.draw();
-        PrimButton.draw();
+        CircleButton.draw();
 		Point2DButton.draw();
+		CleanButton.draw();
+		RectangleButton.draw();
+		TriangleButton.draw();
+		LineButton.draw();
+
+        //punkt
+        if (PointDrawingMode) {
+            Point2DButton.ButtonCollor = al_map_rgb(0, 255, 0);
+            Point2DButton.TextCollor = al_map_rgb(0, 0, 0);
+        }
+        else {
+            Point2DButton.ButtonCollor = al_map_rgb(255, 0, 0);
+            Point2DButton.TextCollor = al_map_rgb(255, 255, 255);
+        }
+
+        //kolo
+        if (CircleDrawingMode) {
+            CircleButton.ButtonCollor = al_map_rgb(0, 255, 0);
+            CircleButton.TextCollor = al_map_rgb(0, 0, 0);
+        }
+        else {
+            CircleButton.ButtonCollor = al_map_rgb(255, 0, 0);
+            CircleButton.TextCollor = al_map_rgb(255, 255, 255);
+        }
+
+        //kwadrat
+        if (RectangleDrawingMode) {
+            RectangleButton.ButtonCollor = al_map_rgb(0, 255, 0);
+            RectangleButton.TextCollor = al_map_rgb(0, 0, 0);
+        }
+        else {
+            RectangleButton.ButtonCollor = al_map_rgb(255, 0, 0);
+            RectangleButton.TextCollor = al_map_rgb(255, 255, 255);
+        }
+
+		//trojkat
+        if (TriangleDrawingMode) {
+            TriangleButton.ButtonCollor = al_map_rgb(0, 255, 0);
+            TriangleButton.TextCollor = al_map_rgb(0, 0, 0);
+        }
+        else {
+            TriangleButton.ButtonCollor = al_map_rgb(255, 0, 0);
+            TriangleButton.TextCollor = al_map_rgb(255, 255, 255);
+        }
 
         // Rysowanie obszaru roboczego i czasomierza
         al_draw_filled_rectangle(WorkspacePlace_x, WorkspacePlace_y,
             WorkspacePlace_x + WorkspacePlace_w, WorkspacePlace_y + WorkspacePlace_h,
             al_map_rgb(190, 190, 190));
 
-        // ⬇️ Rysuj koło tylko gdy aktywne
-        if (ShowCircle) {
-            PrimitiveRenderer p(al_map_rgb(0, 255, 0));
-            p.circle(200, 200, 100, true, 3.5);
+        
+
+        for (auto& p : points)
+            p.DisplayPoint();
+
+        for (auto& c : circles) {
+            PrimitiveRenderer renderer(c.color);
+            renderer.circle(c.x, c.y, c.r, true, 2.0);
         }
+
 
         // Czasomierz
         time_t elapsed = time(nullptr) - start_time;
         string timerText = to_string(elapsed);
         al_draw_text(fontLarge, al_map_rgb(255, 215, 0),
             Timer_x, Timer_y, ALLEGRO_ALIGN_CENTRE, timerText.c_str());
-
-       
-
         al_flip_display();
     }
 
@@ -162,14 +228,52 @@ public:
         if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
             running = false;
         else if (ev.type == ALLEGRO_EVENT_TIMER)
-            draw();
-
+            draw(ev);
         else if (ev.type == ALLEGRO_EVENT_MOUSE_AXES)
             handleMouseMove(ev.mouse.x, ev.mouse.y);
+        else if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
 
+            // Kliknięcie w przyciski:
+            if (ResolutionButton.hovered(ev.mouse.x, ev.mouse.y))
+                changeResolution();
 
-        else if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
-            handleMouseClick(ev.mouse.x, ev.mouse.y);
+            else if (ResetButton.hovered(ev.mouse.x, ev.mouse.y))
+                resetTimer();
+
+			else if (CleanButton.hovered(ev.mouse.x, ev.mouse.y))
+				clear();
+
+            else if (CircleButton.hovered(ev.mouse.x, ev.mouse.y)) {
+                CircleDrawingMode = !CircleDrawingMode;
+            }
+
+            else if (RectangleButton.hovered(ev.mouse.x, ev.mouse.y)) {
+                RectangleDrawingMode = !RectangleDrawingMode;
+            }
+
+            else if (TriangleButton.hovered(ev.mouse.x, ev.mouse.y)) {
+                TriangleDrawingMode = !TriangleDrawingMode;
+            }
+
+            else if (Point2DButton.hovered(ev.mouse.x, ev.mouse.y)) {
+                PointDrawingMode = !PointDrawingMode; // przelaczanie trybu rysowania 
+            }
+
+            // Jeśli kliknięto poza przyciskami i tryb rysowania jest aktywny:
+            else if (PointDrawingMode) {
+                Point2D newPoint(ev.mouse.x, ev.mouse.y, al_map_rgb(255, 255, 255));
+                points.push_back(newPoint);  // zapamiętaj punkt
+            }
+
+            else if (CircleDrawingMode) {
+                CircleData newCircle;
+                newCircle.x = ev.mouse.x;
+                newCircle.y = ev.mouse.y;
+                newCircle.r = 50;
+                newCircle.color = al_map_rgb(0, 255, 0);
+                circles.push_back(newCircle);
+            }
+        }
 
         else if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
             handleKey(ev.keyboard.keycode);
@@ -181,23 +285,8 @@ public:
     void handleMouseMove(int x, int y) {
         resolution_hovered = ResolutionButton.hovered(x, y);
         reset_hovered = ResetButton.hovered(x, y);
-        prim_hovered = PrimButton.hovered(x, y);
+        prim_hovered = CircleButton.hovered(x, y);
     }
-
-
-    // Obsługa kliknięcia myszy
-    void handleMouseClick(float mouseX, float mouseY) {
-        if (ResolutionButton.hovered(mouseX, mouseY))
-            changeResolution();
-        else if (ResetButton.hovered(mouseX, mouseY))
-            resetTimer();
-        else if (PrimButton.hovered(mouseX, mouseY)) {
-			ShowCircle = !ShowCircle;
-            primitive();
-        }
-			
-    }
-
 
     // Obsługa klawiszy
     void handleKey(int key) {
@@ -252,7 +341,7 @@ public:
         registerEventSources();
         setupWorkspace();
         centerWindow();
-        logError("Silnik uruchomiony pomyślnie");
+        logError("Silnik uruchomiony pomyslnie");
     }
 
     // Czyszczenie zasobów
@@ -269,7 +358,7 @@ public:
             handleEvent(ev);
             
         }
-        logError("Silnik zakończył działanie pomyślnie");
+        logError("Silnik zakonczył dzialanie pomyslnie");
     }
 
 

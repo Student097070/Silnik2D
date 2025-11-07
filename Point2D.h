@@ -6,7 +6,7 @@ class Point2D
 public:
 	float x, y; //wspolrzedne punktu 
 	ALLEGRO_COLOR kolor; //kolor punktu
-	Point2D(float x = 0.0, float y = 0.0);
+	Point2D(float x, float y, ALLEGRO_COLOR kolor);
 
 	void ReadPoint();
 

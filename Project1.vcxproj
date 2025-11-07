@@ -153,6 +153,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Globals.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Point2D.cpp" />
     <ClCompile Include="PrimitiveRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +162,7 @@
   <ItemGroup>
     <ClInclude Include="Button.h" />
     <ClInclude Include="Include.h" />
+    <ClInclude Include="Point2D.h" />
     <ClInclude Include="PrimitiveRenderer.h" />
     <ClInclude Include="Resolution.h" />
   </ItemGroup>

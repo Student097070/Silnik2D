@@ -4,8 +4,9 @@
 #include "Button.h"
 
 Button ResolutionButton(0, 0, 100, 20, "Rozdzielczosc", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
-Button ResetButton(110, 0, 120, 20, "RESET TIMERA", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
-Button PrimButton(240, 0, 100, 20, "Primus", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+Button ResetButton(110, 0, 100, 20, "RESET TIMERA", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+Button PrimButton(220, 0, 100, 20, "Primus", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+Button Point2DButton(330, 0, 100, 20, "Point2D", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 
 
 // Klasa silnika programu
@@ -124,8 +125,10 @@ public:
         al_clear_to_color(al_map_rgb(30, 30, 30));
 
         ResolutionButton.draw();
+        
         ResetButton.draw();
         PrimButton.draw();
+		Point2DButton.draw();
 
         // Rysowanie obszaru roboczego i czasomierza
         al_draw_filled_rectangle(WorkspacePlace_x, WorkspacePlace_y,
@@ -143,6 +146,8 @@ public:
         string timerText = to_string(elapsed);
         al_draw_text(fontLarge, al_map_rgb(255, 215, 0),
             Timer_x, Timer_y, ALLEGRO_ALIGN_CENTRE, timerText.c_str());
+
+       
 
         al_flip_display();
     }
@@ -262,6 +267,7 @@ public:
             ALLEGRO_EVENT ev;
             al_wait_for_event(queue, &ev);
             handleEvent(ev);
+            
         }
         logError("Silnik zakończył działanie pomyślnie");
     }

@@ -1,9 +1,7 @@
 #include "Include.h"
 #include "PrimitiveRenderer.h"
 
-void PrimitiveRenderer:: point(int x, int y) {
-    al_put_pixel(x, y, kolor);
-}
+
 void PrimitiveRenderer::rectangle(int x0, int y0, int x1, int y1, bool wypelniony, float grubosc) {
     if (wypelniony)
         al_draw_filled_rectangle(x0, y0, x1, y1, kolor);

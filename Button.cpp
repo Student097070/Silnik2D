@@ -13,7 +13,8 @@ Button::Button(float x, float y, float w, float h, string name, ALLEGRO_COLOR Bu
 }
 
 bool Button:: hovered(float mouseX,float mouseY){
-    return (mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h);
+	if (mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h) return true;
+	else return false;
 }
 
 void Button::draw() {

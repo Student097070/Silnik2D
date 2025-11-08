@@ -3,16 +3,17 @@
 #include "STR.h"
 #include "Button.h"
 #include "Point2D.h"
+#include "LineSegment.h"
 
 Button ResolutionButton(0, 0, 100, 20, "Rozdzielczosc", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button ResetButton(110, 0, 100, 20, "RESET TIMERA", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button CircleButton(220, 0, 100, 20, "CIRCLE", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button Point2DButton(330, 0, 100, 20, "Point2D", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
-Button CleanButton(660, 0, 100, 20, "Clean", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+Button CleanButton(660, 0, 100, 20, "CLEAN", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button RectangleButton(0, 30, 100, 20, "RECTANGLE", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button TriangleButton(110, 30, 100, 20, "TRIANGLE", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button LineButton(220, 30, 100, 20, "LINE", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
-
+    
 
 // Klasa silnika programu
 class Engine {
@@ -44,12 +45,13 @@ public:
 	bool PointDrawingMode = false;
     bool RectangleDrawingMode = false;
     bool TriangleDrawingMode = false;
+	bool LineDrawingMode = false;
     
 	vector<Point2D> points; // Przechowywanie punktow Point2D
     vector<CircleData> circles; // Przechowywanie punktow Circle
-	vector<RectangleData> rectangles; // Przechowywanie prostokatow Rectangle
-	vector<TriangleData> triangles; // Przechowywanie trojkątów Triangle
-
+	//vector<RectangleData> rectangles; // Przechowywanie prostokatow Rectangle
+	//vector<TriangleData> triangles; // Przechowywanie trojkątów Triangle
+	vector <LineData> lines; // Przechowywanie linii LineSegment
 
     // Zapisywanie komunikatu z błędami
     static void logError(const string& errorMessage) {
@@ -174,25 +176,35 @@ public:
             CircleButton.TextCollor = al_map_rgb(255, 255, 255);
         }
 
+        //linia
+        if (LineDrawingMode) {
+            LineButton.ButtonCollor = al_map_rgb(0, 255, 0);
+            LineButton.TextCollor = al_map_rgb(0, 0, 0);
+        }
+        else {
+            LineButton.ButtonCollor = al_map_rgb(255, 0, 0);
+            LineButton.TextCollor = al_map_rgb(255, 255, 255);
+        }
+
         //kwadrat
-        if (RectangleDrawingMode) {
-            RectangleButton.ButtonCollor = al_map_rgb(0, 255, 0);
+        /*if (RectangleDrawingMode) {
+            RectangleButton.ButtonCollor = al_map_rgb(0, 255, 0); 
             RectangleButton.TextCollor = al_map_rgb(0, 0, 0);
         }
         else {
             RectangleButton.ButtonCollor = al_map_rgb(255, 0, 0);
             RectangleButton.TextCollor = al_map_rgb(255, 255, 255);
-        }
+        }*/
 
 		//trojkat
-        if (TriangleDrawingMode) {
+        /*if (TriangleDrawingMode) {
             TriangleButton.ButtonCollor = al_map_rgb(0, 255, 0);
             TriangleButton.TextCollor = al_map_rgb(0, 0, 0);
         }
         else {
             TriangleButton.ButtonCollor = al_map_rgb(255, 0, 0);
             TriangleButton.TextCollor = al_map_rgb(255, 255, 255);
-        }
+        }*/
 
         // Rysowanie obszaru roboczego i czasomierza
         al_draw_filled_rectangle(WorkspacePlace_x, WorkspacePlace_y,
@@ -209,6 +221,12 @@ public:
             renderer.circle(c.x, c.y, c.r, true, 2.0);
         }
 
+        for (auto& l : lines) {
+			LineSegment renderer; 
+            Point2D p1(l.x0, l.y0, l.color);
+            Point2D p2(l.x1, l.y1, l.color);
+            renderer.DrawLine(p1,p2);
+		}
 
         // Czasomierz
         time_t elapsed = time(nullptr) - start_time;
@@ -259,6 +277,10 @@ public:
                 PointDrawingMode = !PointDrawingMode; // przelaczanie trybu rysowania 
             }
 
+            else if (LineButton.hovered(ev.mouse.x, ev.mouse.y)) {
+                LineDrawingMode = !LineDrawingMode; // przelaczanie trybu rysowania 
+            }
+
             // Jeśli kliknięto poza przyciskami i tryb rysowania jest aktywny:
             else if (PointDrawingMode) {
                 Point2D newPoint(ev.mouse.x, ev.mouse.y, al_map_rgb(255, 255, 255));
@@ -273,6 +295,18 @@ public:
                 newCircle.color = al_map_rgb(0, 255, 0);
                 circles.push_back(newCircle);
             }
+
+            else if(LineButton.hovered(ev.mouse.x, ev.mouse.y)) {
+                LineData newLine;
+                Point2D p1(ev.mouse.x, ev.mouse.y, al_map_rgb(255, 255, 255)),
+                        p2(ev.mouse.x, ev.mouse.y, al_map_rgb(255, 255, 255));
+				newLine.x0 = p1.x;
+				newLine.y0 = p1.y;
+				newLine.x1 = p2.x;
+                newLine.y1 = p2.y;
+                newLine.color = al_map_rgb(0, 0, 255);
+                lines.push_back(newLine);
+			}
         }
 
         else if (ev.type == ALLEGRO_EVENT_KEY_DOWN)

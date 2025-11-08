@@ -19,3 +19,9 @@ struct RectangleData {
 	int x0, y0, x1, y1;
 	ALLEGRO_COLOR color;
 };
+
+struct LineData {
+	int x0, y0, x1, y1;
+	ALLEGRO_COLOR color;
+};
+

@@ -51,6 +51,7 @@ public:
     bool Circle2DrawingMode = false;
     bool ElipseDrawingMode = false;
     bool PolygonDrawingMode = false;
+	bool LineDrawingMode = false;
     
 	vector<Point2D> points; // Przechowywanie punktow Point2D
     vector<CircleData> circles; // Przechowywanie punktow Circle

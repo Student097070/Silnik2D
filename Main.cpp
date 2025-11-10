@@ -12,6 +12,9 @@ Button CleanButton(660, 0, 100, 20, "Clean", al_map_rgb(0, 0, 0), al_map_rgb(255
 Button RectangleButton(0, 30, 100, 20, "RECTANGLE", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button TriangleButton(110, 30, 100, 20, "TRIANGLE", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button LineButton(220, 30, 100, 20, "LINE", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+Button CircleCustomButton(330, 30, 100, 20, "Circle v2", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+Button ElipseCustomButton(440, 30, 100, 20, "Elipse", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+Button PolygonButton(0, 60, 100, 20, "Polygon", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 
 
 // Klasa silnika programu
@@ -44,12 +47,18 @@ public:
 	bool PointDrawingMode = false;
     bool RectangleDrawingMode = false;
     bool TriangleDrawingMode = false;
+    bool Circle2DrawingMode = false;
+    bool ElipseDrawingMode = false;
+    bool PolygonDrawingMode = false;
     
 	vector<Point2D> points; // Przechowywanie punktow Point2D
     vector<CircleData> circles; // Przechowywanie punktow Circle
 	vector<RectangleData> rectangles; // Przechowywanie prostokatow Rectangle
 	vector<TriangleData> triangles; // Przechowywanie trojkątów Triangle
-
+    vector<Circle2Data> circles2;
+    vector<ElipseData> elipses;
+    vector<vector<PolygonPoint>> polygons;
+    vector<PolygonPoint> punktyWielokata;
 
     // Zapisywanie komunikatu z błędami
     static void logError(const string& errorMessage) {
@@ -137,7 +146,11 @@ public:
 
     void clear() { // czyszczenie mapy
         points.clear(); 
-		circles.clear(); 
+		circles.clear();
+        circles2.clear();
+        elipses.clear();
+        polygons.clear();
+        punktyWielokata.clear();
     }
 
 
@@ -153,6 +166,11 @@ public:
 		RectangleButton.draw();
 		TriangleButton.draw();
 		LineButton.draw();
+        CircleCustomButton.draw();
+        ElipseCustomButton.draw();
+        PolygonButton.draw();
+
+
 
         //punkt
         if (PointDrawingMode) {
@@ -194,6 +212,33 @@ public:
             TriangleButton.TextCollor = al_map_rgb(255, 255, 255);
         }
 
+        if (Circle2DrawingMode) {
+            CircleCustomButton.ButtonCollor = al_map_rgb(0, 255, 0);
+            CircleCustomButton.TextCollor = al_map_rgb(0, 0, 0);
+        }
+        else {
+            CircleCustomButton.ButtonCollor = al_map_rgb(255, 0, 0);
+            CircleCustomButton.TextCollor = al_map_rgb(255, 255, 255);
+        }
+
+        if (ElipseDrawingMode) {
+            ElipseCustomButton.ButtonCollor = al_map_rgb(0, 255, 0);
+            ElipseCustomButton.TextCollor = al_map_rgb(0, 0, 0);
+        }
+        else {
+            ElipseCustomButton.ButtonCollor = al_map_rgb(255, 0, 0);
+            ElipseCustomButton.TextCollor = al_map_rgb(255, 255, 255);
+        }
+
+        if (PolygonDrawingMode) {
+            PolygonButton.ButtonCollor = al_map_rgb(0, 255, 0);
+            PolygonButton.TextCollor = al_map_rgb(0, 0, 0);
+        }
+        else {
+            PolygonButton.ButtonCollor = al_map_rgb(255, 0, 0);
+            PolygonButton.TextCollor = al_map_rgb(255, 255, 255);
+        }
+
         // Rysowanie obszaru roboczego i czasomierza
         al_draw_filled_rectangle(WorkspacePlace_x, WorkspacePlace_y,
             WorkspacePlace_x + WorkspacePlace_w, WorkspacePlace_y + WorkspacePlace_h,
@@ -209,6 +254,36 @@ public:
             renderer.circle(c.x, c.y, c.r, true, 2.0);
         }
 
+        for (auto& c : circles2) {
+            PrimitiveRenderer renderer(c.color);
+            renderer.circlecustom(c.x0, c.y0, c.R);
+        }
+
+        for (auto& c : elipses) {
+            PrimitiveRenderer renderer(c.color);
+            renderer.elipsecustom(c.x0, c.y0, c.Rx, c.Ry);
+        }
+
+        if (PolygonDrawingMode && !punktyWielokata.empty()) {
+            for (auto& p : punktyWielokata) {
+                al_draw_filled_circle(p.x, p.y, 3, al_map_rgb(255, 0, 0));
+            }
+            for (size_t i = 0; i + 1 < punktyWielokata.size(); ++i) {
+                al_draw_line(punktyWielokata[i].x, punktyWielokata[i].y,
+                    punktyWielokata[i + 1].x, punktyWielokata[i + 1].y,
+                    al_map_rgb(180, 0, 0), 1.0f);
+            }
+            for (auto& p : punktyWielokata) {
+                al_draw_filled_circle(p.x, p.y, 3, al_map_rgb(255, 0, 0));
+            }
+
+        }
+
+        for (auto& c : polygons) {
+            PrimitiveRenderer renderer(al_map_rgb(255, 0, 0));
+            renderer.polygon(c);
+        }
+      
 
         // Czasomierz
         time_t elapsed = time(nullptr) - start_time;
@@ -259,6 +334,17 @@ public:
                 PointDrawingMode = !PointDrawingMode; // przelaczanie trybu rysowania 
             }
 
+            else if (CircleCustomButton.hovered(ev.mouse.x, ev.mouse.y)) {
+                Circle2DrawingMode = !Circle2DrawingMode;
+            }
+
+            else if (ElipseCustomButton.hovered(ev.mouse.x, ev.mouse.y)) {
+                ElipseDrawingMode = !ElipseDrawingMode;
+            }
+
+            else if (PolygonButton.hovered(ev.mouse.x, ev.mouse.y)) {
+                PolygonDrawingMode = !PolygonDrawingMode;
+            }
             // Jeśli kliknięto poza przyciskami i tryb rysowania jest aktywny:
             else if (PointDrawingMode) {
                 Point2D newPoint(ev.mouse.x, ev.mouse.y, al_map_rgb(255, 255, 255));
@@ -269,14 +355,43 @@ public:
                 CircleData newCircle;
                 newCircle.x = ev.mouse.x;
                 newCircle.y = ev.mouse.y;
-                newCircle.r = 50;
+                newCircle.r = 40;
                 newCircle.color = al_map_rgb(0, 255, 0);
                 circles.push_back(newCircle);
+            }
+            else if (Circle2DrawingMode) {
+                Circle2Data newCircle;
+                newCircle.x0 = ev.mouse.x;
+                newCircle.y0 = ev.mouse.y;
+                newCircle.R = 40;
+                newCircle.color = al_map_rgb(0, 255, 255);
+                circles2.push_back(newCircle);
+            }
+            else if (ElipseDrawingMode) {
+                ElipseData newElipse;
+                newElipse.x0 = ev.mouse.x;
+                newElipse.y0 = ev.mouse.y;
+                newElipse.Rx = 40;
+                newElipse.Ry = 20;
+                newElipse.color = al_map_rgb(0, 0, 255);
+                elipses.push_back(newElipse);
+            }
+            else if (PolygonDrawingMode) {
+                PolygonPoint newPoly;
+                newPoly.x = ev.mouse.x;
+                newPoly.y = ev.mouse.y;
+                punktyWielokata.push_back(newPoly);
             }
         }
 
         else if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
+        {
             handleKey(ev.keyboard.keycode);
+            if (ev.keyboard.keycode == ALLEGRO_KEY_ENTER) {
+                polygons.push_back(punktyWielokata);
+                punktyWielokata.clear();
+            }
+        }
         else if (ev.type == ALLEGRO_EVENT_DISPLAY_RESIZE)
             handleResize();
     }
@@ -310,7 +425,7 @@ public:
 
     void primitive() {
         PrimitiveRenderer p(al_map_rgb(0, 255, 0));
-        p.circle(200,200, 100, true, 3.5);
+        p.circle(200,200, 100, false, 3.5);
         al_flip_display();
     }
 

@@ -1,5 +1,7 @@
 #pragma once
 #include "Include.h"
+#include "Point2D.h"
+#include "STR.h"
 class PrimitiveRenderer {
 
 private:
@@ -11,4 +13,7 @@ public:
     void circle(int x, int y, int r, bool wypelniony = false, float grubosc = 1.0f);
     void triangle(int x0, int y0, int x1, int y1, int x2, int y2, bool wypelniony = false, float grubosc = 1.0f);
     void line(int x0, int y0, int x1, int y1);
+    void circlecustom(int x0, int y0, int R);
+    void elipsecustom(int x0, int y0, int Rx, int Ry);
+    void polygon(const vector<PolygonPoint>& points);
 };

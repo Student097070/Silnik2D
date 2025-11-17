@@ -31,11 +31,11 @@ extern bool reset_hovered;
 extern bool prim_hovered;
 
 // --- UI: pozycje i rozmiary przycisków ---
-/*extern float ResolutionButton_x, ResolutionButton_y;
+extern float ResolutionButton_x, ResolutionButton_y;
 extern float ResolutionButton_w, ResolutionButton_h;
 extern float ResetButton_x, ResetButton_y;
 extern float ResetButton_w, ResetButton_h;
 extern float PrimButton_x, PrimButton_y;
-extern float PrimButton_w, PrimButton_h;  */
+extern float PrimButton_w, PrimButton_h;  
 extern float WorkspacePlace_x, WorkspacePlace_y, WorkspacePlace_w, WorkspacePlace_h;
 extern float Timer_x, Timer_y;

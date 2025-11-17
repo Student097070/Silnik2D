@@ -66,6 +66,8 @@ public:
     vector<PolygonPoint> punktyWielokata;
     vector<Point2D> polylinePoints;
     vector<LineSegment> lineSegments;
+    vector<pair<float, float>> tempTrianglePoints; 
+    vector<pair<float, float>> tempRectanglePoints;
 
     // Zapisywanie komunikatu z błędami
     static void logError(const string& errorMessage) {
@@ -156,6 +158,10 @@ public:
         circles2.clear();
         elipses.clear();
         polygons.clear();
+        triangles.clear();
+        tempTrianglePoints.clear();
+        rectangles.clear();
+        tempRectanglePoints.clear();
         punktyWielokata.clear();
         polylinePoints.clear();
         lineSegments.clear();
@@ -206,6 +212,28 @@ public:
             LineButton.ButtonCollor = al_map_rgb(255, 0, 0);
             LineButton.TextCollor = al_map_rgb(255, 255, 255);
         }
+
+        //kwadrat
+        if (RectangleDrawingMode) {
+            RectangleButton.ButtonCollor = al_map_rgb(0, 255, 0);
+            RectangleButton.TextCollor = al_map_rgb(0, 0, 0);
+        }
+        else {
+            RectangleButton.ButtonCollor = al_map_rgb(255, 0, 0);
+            RectangleButton.TextCollor = al_map_rgb(255, 255, 255);
+        }
+
+
+        //trojkat
+        if (TriangleDrawingMode) {
+            TriangleButton.ButtonCollor = al_map_rgb(0, 255, 0);
+            TriangleButton.TextCollor = al_map_rgb(0, 0, 0);
+        }
+        else {
+            TriangleButton.ButtonCollor = al_map_rgb(255, 0, 0);
+            TriangleButton.TextCollor = al_map_rgb(255, 255, 255);
+        }
+
 
         if (Circle2DrawingMode) {
             CircleCustomButton.ButtonCollor = al_map_rgb(0, 255, 0);
@@ -266,6 +294,44 @@ public:
             PrimitiveRenderer renderer(c.color);
             renderer.elipsecustom(c.x0, c.y0, c.Rx, c.Ry);
         }
+
+        if (TriangleDrawingMode && !tempTrianglePoints.empty()) {
+            for (auto& p : tempTrianglePoints) {
+                al_draw_filled_circle(p.first, p.second, 5, al_map_rgb(0, 0, 255));
+            }
+
+            if (tempTrianglePoints.size() == 2) {
+                al_draw_line(tempTrianglePoints[0].first, tempTrianglePoints[0].second,
+                    tempTrianglePoints[1].first, tempTrianglePoints[1].second,
+                    al_map_rgb(0, 0, 255), 2.0f);
+            }
+        }
+
+        for (auto& c : triangles) {
+            PrimitiveRenderer renderer(c.color);
+            renderer.triangle(c.x0, c.y0, c.x1, c.y1, c.x2, c.y2);
+        }
+
+        if (RectangleDrawingMode && !tempRectanglePoints.empty()) {
+            for (auto& p : tempRectanglePoints) {
+                al_draw_filled_circle(p.first, p.second, 5, al_map_rgb(255, 0, 255));
+            }
+
+            if (tempRectanglePoints.size() == 2) {
+                al_draw_rectangle(tempRectanglePoints[0].first, tempRectanglePoints[0].second,
+                    tempRectanglePoints[1].first, tempRectanglePoints[1].second,
+                    al_map_rgb(255, 0, 255), 2.0f);
+            }
+        }
+
+        for (auto& c : rectangles) {
+            PrimitiveRenderer renderer(c.color);
+            renderer.rectangle(c.x0, c.y0, c.x1, c.y1);
+        }
+
+
+
+
 
         // Rysowanie trwającego wielokąta
         if (PolygonDrawingMode && !punktyWielokata.empty()) {
@@ -396,6 +462,48 @@ public:
                 punktyWielokata.push_back(newPoly);
             }
 
+
+            else if (TriangleDrawingMode) {
+                // Dodaj kliknięty punkt do listy tymczasowych punktów
+                tempTrianglePoints.push_back({ ev.mouse.x, ev.mouse.y });
+
+                // Jeśli mamy 3 punkty, stwórz trójkąt
+                if (tempTrianglePoints.size() == 3) {
+                    TriangleData newTriangle;
+                    newTriangle.x0 = tempTrianglePoints[0].first;
+                    newTriangle.y0 = tempTrianglePoints[0].second;
+                    newTriangle.x1 = tempTrianglePoints[1].first;
+                    newTriangle.y1 = tempTrianglePoints[1].second;
+                    newTriangle.x2 = tempTrianglePoints[2].first;
+                    newTriangle.y2 = tempTrianglePoints[2].second;
+                    newTriangle.color = al_map_rgb(0, 0, 255);
+                    triangles.push_back(newTriangle);
+
+                    // Wyczyść tymczasowe punkty
+                    tempTrianglePoints.clear();
+                }
+            }
+            else if (RectangleDrawingMode) {
+                // Dodaj kliknięty punkt do listy tymczasowych punktów
+                tempRectanglePoints.push_back({ ev.mouse.x, ev.mouse.y });
+
+                // Jeśli mamy 2 punkty, stwórz prostokąt
+                if (tempRectanglePoints.size() == 2) {
+                    RectangleData newRectangle;
+                    newRectangle.x0 = tempRectanglePoints[0].first;
+                    newRectangle.y0 = tempRectanglePoints[0].second;
+                    newRectangle.x1 = tempRectanglePoints[1].first;
+                    newRectangle.y1 = tempRectanglePoints[1].second;
+                    newRectangle.color = al_map_rgb(255, 0, 255);
+                    rectangles.push_back(newRectangle);
+
+                    // Wyczyść tymczasowe punkty
+                    tempRectanglePoints.clear();
+                }
+            }
+
+
+
             else if (PolylineDrawingMode) {
                 Point2D newPoint(ev.mouse.x, ev.mouse.y, al_map_rgb(0, 255, 0));
                 polylinePoints.push_back(newPoint);
@@ -442,8 +550,17 @@ public:
         case ALLEGRO_KEY_ESCAPE: running = false; break;
         case ALLEGRO_KEY_R: resetTimer(); break;
         case ALLEGRO_KEY_F: toggleFullscreen(); break;
+        case ALLEGRO_KEY_DELETE:
+            if (TriangleDrawingMode && !tempTrianglePoints.empty()) {
+                tempTrianglePoints.clear();
+            }
+            if (RectangleDrawingMode && !tempRectanglePoints.empty()) {
+                tempRectanglePoints.clear();
+            }
+            break;
         }
-    }
+        }
+    
 
     void handleResize() {
         al_acknowledge_resize(display);

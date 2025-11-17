@@ -3,7 +3,7 @@
 
 Point2D::Point2D(float x, float y, ALLEGRO_COLOR kolor) {
     this->x = x;
-    this->y = y;
+    this->y = y;    
     this->kolor = kolor;
 }
 

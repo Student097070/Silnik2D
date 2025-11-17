@@ -1,15 +1,32 @@
 #pragma once
 #include "Include.h"
-#include "PrimitiveRenderer.h"
 #include "Point2D.h"
 
-class LineSegment : public PrimitiveRenderer{
+// Forward declaration
+class PrimitiveRenderer;
+
+class LineSegment {
+private:
+    Point2D p1, p2;
+    ALLEGRO_COLOR color;
+
 public:
-	/*int x0, y0, x1, y1;
-	LineSegment(int x0, int y0, int x1, int y1);*/
+    // Konstruktory
+    LineSegment(Point2D start, Point2D end, ALLEGRO_COLOR col = al_map_rgb(255, 255, 255));
+    LineSegment(float x0, float y0, float x1, float y1, ALLEGRO_COLOR col = al_map_rgb(255, 255, 255));
 
-	void DrawLine(Point2D p1, Point2D p2);
+    // Odczyt wspó³rzêdnych koñców
+    Point2D getStart() const;
+    Point2D getEnd() const;
 
-	~LineSegment();
+    // Modyfikacja wspó³rzêdnych koñców
+    void setStart(Point2D newStart);
+    void setEnd(Point2D newEnd);
+    void setStart(float x, float y);
+    void setEnd(float x, float y);
+
+    // Rysowanie odcinka (z wyborem algorytmu)
+    void draw(bool useIncrementalAlgorithm = false);
+
+    ~LineSegment();
 };
-

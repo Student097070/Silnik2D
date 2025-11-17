@@ -4,15 +4,13 @@
 class Point2D
 {
 public:
-	float x, y; //wspolrzedne punktu 
-	ALLEGRO_COLOR kolor; //kolor punktu
-	Point2D(float x, float y, ALLEGRO_COLOR kolor);
+    float x, y; //wspolrzedne punktu 
+    ALLEGRO_COLOR kolor; //kolor punktu
 
-	void ReadPoint();
+    Point2D(float x, float y, ALLEGRO_COLOR kolor);
+    ~Point2D();
 
-	void ChangeCoordinates(float newX, float newY);
-
-	void DisplayPoint();
-	
+    void ReadPoint();
+    void ChangeCoordinates(float newX, float newY);
+    void DisplayPoint();
 };
-

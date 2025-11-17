@@ -161,6 +161,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Include.h" />
     <ClInclude Include="LineSegment.h" />
+    <ClInclude Include="Utils.h" />
     <ClInclude Include="Point2D.h" />
     <ClInclude Include="PrimitiveRenderer.h" />
     <ClInclude Include="STR.h" />

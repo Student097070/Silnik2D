@@ -276,10 +276,6 @@ public:
             WorkspacePlace_x + WorkspacePlace_w, WorkspacePlace_y + WorkspacePlace_h,
             al_map_rgb(190, 190, 190));
 
-        const int MAX_POINTS = 1000;
-        if (points.size() > MAX_POINTS) {
-            points.erase(points.begin(), points.begin() + (points.size() - MAX_POINTS));
-        }
         // Rysowanie wszystkich obiektów
         for (auto& p : points)
             p.DisplayPoint();

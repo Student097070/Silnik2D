@@ -4,3 +4,198 @@
 [Mon Nov 17 14:43:55 2025] Point2D destroyed: (306.000000,229.000000)
 [Mon Nov 17 14:43:55 2025] Point2D destroyed: (385.000000,330.000000)
 [Mon Nov 17 14:43:55 2025] Point2D destroyed: (506.000000,237.000000)
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle v2' destroyed successfully.
+Button 'LINE' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'CIRCLE' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle v2' destroyed successfully.
+Button 'LINE' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'CIRCLE' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle v2' destroyed successfully.
+Button 'LINE' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'CIRCLE' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle v2' destroyed successfully.
+Button 'LINE' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'CIRCLE' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle v2' destroyed successfully.
+Button 'LINE' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'CIRCLE' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle v2' destroyed successfully.
+Button 'LINE' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'CIRCLE' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+[Mon Nov 17 17:33:07 2025] Point2D destroyed: (339.000000,259.000000)
+[Mon Nov 17 17:33:07 2025] Point2D destroyed: (339.000000,259.000000)
+[Mon Nov 17 17:33:07 2025] Point2D destroyed: (455.000000,330.000000)
+[Mon Nov 17 17:33:09 2025] Point2D destroyed: (339.000000,259.000000)
+[Mon Nov 17 17:33:09 2025] Point2D destroyed: (455.000000,330.000000)
+[Mon Nov 17 17:33:09 2025] Point2D destroyed: (297.000000,353.000000)
+[Mon Nov 17 17:33:10 2025] Point2D destroyed: (339.000000,259.000000)
+[Mon Nov 17 17:33:10 2025] Point2D destroyed: (455.000000,330.000000)
+[Mon Nov 17 17:33:10 2025] Point2D destroyed: (297.000000,353.000000)
+[Mon Nov 17 17:33:10 2025] Point2D destroyed: (435.000000,247.000000)
+[Mon Nov 17 17:33:11 2025] Point2D destroyed: (339.000000,259.000000)
+[Mon Nov 17 17:33:11 2025] Point2D destroyed: (455.000000,330.000000)
+[Mon Nov 17 17:33:11 2025] Point2D destroyed: (297.000000,353.000000)
+[Mon Nov 17 17:33:11 2025] Point2D destroyed: (435.000000,247.000000)
+[Mon Nov 17 17:33:11 2025] Point2D destroyed: (391.000000,399.000000)
+[Mon Nov 17 17:33:12 2025] Point2D destroyed: (387.000000,307.000000)
+[Mon Nov 17 17:33:13 2025] Point2D destroyed: (339.000000,259.000000)
+[Mon Nov 17 17:33:13 2025] Point2D destroyed: (455.000000,330.000000)
+[Mon Nov 17 17:33:13 2025] Point2D destroyed: (297.000000,353.000000)
+[Mon Nov 17 17:33:13 2025] Point2D destroyed: (435.000000,247.000000)
+[Mon Nov 17 17:33:13 2025] Point2D destroyed: (391.000000,399.000000)
+[Mon Nov 17 17:33:13 2025] Point2D destroyed: (387.000000,307.000000)
+[Mon Nov 17 17:33:13 2025] Point2D destroyed: (269.000000,275.000000)
+[Mon Nov 17 17:33:15 2025] Point2D destroyed: (517.000000,303.000000)
+[Mon Nov 17 17:33:23 2025] Point2D destroyed: (522.000000,420.000000)
+[Mon Nov 17 17:33:45 2025] Point2D destroyed: (339.000000,259.000000)
+[Mon Nov 17 17:33:45 2025] Point2D destroyed: (455.000000,330.000000)
+[Mon Nov 17 17:33:45 2025] Point2D destroyed: (297.000000,353.000000)
+[Mon Nov 17 17:33:45 2025] Point2D destroyed: (435.000000,247.000000)
+[Mon Nov 17 17:33:45 2025] Point2D destroyed: (391.000000,399.000000)
+[Mon Nov 17 17:33:45 2025] Point2D destroyed: (387.000000,307.000000)
+[Mon Nov 17 17:33:45 2025] Point2D destroyed: (269.000000,275.000000)
+[Mon Nov 17 17:33:45 2025] Point2D destroyed: (517.000000,303.000000)
+[Mon Nov 17 17:33:45 2025] Point2D destroyed: (522.000000,420.000000)
+[Mon Nov 17 17:33:45 2025] Point2D destroyed: (336.000000,307.000000)
+[Mon Nov 17 17:34:21 2025] Point2D destroyed: (339.000000,259.000000)
+[Mon Nov 17 17:34:21 2025] Point2D destroyed: (455.000000,330.000000)
+[Mon Nov 17 17:34:21 2025] Point2D destroyed: (297.000000,353.000000)
+[Mon Nov 17 17:34:21 2025] Point2D destroyed: (435.000000,247.000000)
+[Mon Nov 17 17:34:21 2025] Point2D destroyed: (391.000000,399.000000)
+[Mon Nov 17 17:34:21 2025] Point2D destroyed: (387.000000,307.000000)
+[Mon Nov 17 17:34:21 2025] Point2D destroyed: (269.000000,275.000000)
+[Mon Nov 17 17:34:21 2025] Point2D destroyed: (517.000000,303.000000)
+[Mon Nov 17 17:34:21 2025] Point2D destroyed: (522.000000,420.000000)
+[Mon Nov 17 17:34:21 2025] Point2D destroyed: (336.000000,307.000000)
+[Mon Nov 17 17:44:21 2025] Point2D destroyed: (321.000000,213.000000)
+[Mon Nov 17 17:44:22 2025] Point2D destroyed: (321.000000,213.000000)
+[Mon Nov 17 17:44:22 2025] Point2D destroyed: (405.000000,300.000000)
+[Mon Nov 17 17:44:22 2025] Point2D destroyed: (321.000000,213.000000)
+[Mon Nov 17 17:44:22 2025] Point2D destroyed: (405.000000,300.000000)
+[Mon Nov 17 17:44:22 2025] Point2D destroyed: (314.000000,322.000000)
+[Mon Nov 17 17:44:23 2025] Point2D destroyed: (321.000000,213.000000)
+[Mon Nov 17 17:44:23 2025] Point2D destroyed: (405.000000,300.000000)
+[Mon Nov 17 17:44:23 2025] Point2D destroyed: (314.000000,322.000000)
+[Mon Nov 17 17:44:23 2025] Point2D destroyed: (289.000000,269.000000)
+[Mon Nov 17 17:44:23 2025] Point2D destroyed: (321.000000,213.000000)
+[Mon Nov 17 17:44:23 2025] Point2D destroyed: (405.000000,300.000000)
+[Mon Nov 17 17:44:23 2025] Point2D destroyed: (314.000000,322.000000)
+[Mon Nov 17 17:44:23 2025] Point2D destroyed: (289.000000,269.000000)
+[Mon Nov 17 17:44:23 2025] Point2D destroyed: (393.000000,360.000000)
+[Mon Nov 17 17:44:24 2025] Point2D destroyed: (405.000000,238.000000)
+[Mon Nov 17 17:44:24 2025] Point2D destroyed: (321.000000,213.000000)
+[Mon Nov 17 17:44:24 2025] Point2D destroyed: (405.000000,300.000000)
+[Mon Nov 17 17:44:24 2025] Point2D destroyed: (314.000000,322.000000)
+[Mon Nov 17 17:44:24 2025] Point2D destroyed: (289.000000,269.000000)
+[Mon Nov 17 17:44:24 2025] Point2D destroyed: (393.000000,360.000000)
+[Mon Nov 17 17:44:24 2025] Point2D destroyed: (405.000000,238.000000)
+[Mon Nov 17 17:44:24 2025] Point2D destroyed: (482.000000,307.000000)
+[Mon Nov 17 17:44:25 2025] Point2D destroyed: (330.000000,272.000000)
+[Mon Nov 17 17:44:26 2025] Point2D destroyed: (270.000000,320.000000)
+[Mon Nov 17 17:44:26 2025] Point2D destroyed: (321.000000,213.000000)
+[Mon Nov 17 17:44:26 2025] Point2D destroyed: (405.000000,300.000000)
+[Mon Nov 17 17:44:26 2025] Point2D destroyed: (314.000000,322.000000)
+[Mon Nov 17 17:44:26 2025] Point2D destroyed: (289.000000,269.000000)
+[Mon Nov 17 17:44:26 2025] Point2D destroyed: (393.000000,360.000000)
+[Mon Nov 17 17:44:26 2025] Point2D destroyed: (405.000000,238.000000)
+[Mon Nov 17 17:44:26 2025] Point2D destroyed: (482.000000,307.000000)
+[Mon Nov 17 17:44:26 2025] Point2D destroyed: (330.000000,272.000000)
+[Mon Nov 17 17:44:26 2025] Point2D destroyed: (270.000000,320.000000)
+[Mon Nov 17 17:44:26 2025] Point2D destroyed: (317.000000,410.000000)
+[Mon Nov 17 17:44:26 2025] Point2D destroyed: (490.000000,392.000000)
+[Mon Nov 17 17:44:27 2025] Point2D destroyed: (490.000000,253.000000)
+[Mon Nov 17 17:44:28 2025] Point2D destroyed: (522.000000,351.000000)
+[Mon Nov 17 17:44:28 2025] Point2D destroyed: (321.000000,213.000000)
+[Mon Nov 17 17:44:28 2025] Point2D destroyed: (405.000000,300.000000)
+[Mon Nov 17 17:44:28 2025] Point2D destroyed: (314.000000,322.000000)
+[Mon Nov 17 17:44:28 2025] Point2D destroyed: (289.000000,269.000000)
+[Mon Nov 17 17:44:28 2025] Point2D destroyed: (393.000000,360.000000)
+[Mon Nov 17 17:44:28 2025] Point2D destroyed: (405.000000,238.000000)
+[Mon Nov 17 17:44:28 2025] Point2D destroyed: (482.000000,307.000000)
+[Mon Nov 17 17:44:28 2025] Point2D destroyed: (330.000000,272.000000)
+[Mon Nov 17 17:44:28 2025] Point2D destroyed: (270.000000,320.000000)
+[Mon Nov 17 17:44:28 2025] Point2D destroyed: (317.000000,410.000000)
+[Mon Nov 17 17:44:28 2025] Point2D destroyed: (490.000000,392.000000)
+[Mon Nov 17 17:44:28 2025] Point2D destroyed: (490.000000,253.000000)
+[Mon Nov 17 17:44:28 2025] Point2D destroyed: (522.000000,351.000000)
+[Mon Nov 17 17:44:28 2025] Point2D destroyed: (253.000000,377.000000)
+[Mon Nov 17 17:44:52 2025] Point2D destroyed: (321.000000,213.000000)
+[Mon Nov 17 17:44:52 2025] Point2D destroyed: (405.000000,300.000000)
+[Mon Nov 17 17:44:52 2025] Point2D destroyed: (314.000000,322.000000)
+[Mon Nov 17 17:44:52 2025] Point2D destroyed: (289.000000,269.000000)
+[Mon Nov 17 17:44:52 2025] Point2D destroyed: (393.000000,360.000000)
+[Mon Nov 17 17:44:52 2025] Point2D destroyed: (405.000000,238.000000)
+[Mon Nov 17 17:44:52 2025] Point2D destroyed: (482.000000,307.000000)
+[Mon Nov 17 17:44:52 2025] Point2D destroyed: (330.000000,272.000000)
+[Mon Nov 17 17:44:52 2025] Point2D destroyed: (270.000000,320.000000)
+[Mon Nov 17 17:44:52 2025] Point2D destroyed: (317.000000,410.000000)
+[Mon Nov 17 17:44:52 2025] Point2D destroyed: (490.000000,392.000000)
+[Mon Nov 17 17:44:52 2025] Point2D destroyed: (490.000000,253.000000)
+[Mon Nov 17 17:44:52 2025] Point2D destroyed: (522.000000,351.000000)
+[Mon Nov 17 17:44:52 2025] Point2D destroyed: (253.000000,377.000000)
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle v2' destroyed successfully.
+Button 'LINE' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'CIRCLE' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.

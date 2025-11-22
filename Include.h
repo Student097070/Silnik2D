@@ -10,6 +10,8 @@
 #include <Windows.h>
 #include <vector>
 #include <map>
+#include <stack>
+
 
 using namespace std;
 

@@ -16,7 +16,8 @@ Button CircleCustomButton(330, 30, 100, 20, "Circle v2", al_map_rgb(0, 0, 0), al
 Button ElipseCustomButton(440, 30, 100, 20, "Elipse", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button PolygonButton(0, 60, 100, 20, "Polygon", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button PolylineButton(220, 30, 100, 20, "Polyline", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
-Button FillButton(110, 60, 100, 20, "FILL", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255)); //wypelnianie
+Button Fill1Button(110, 60, 100, 20, "FILL boundary", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255)); //wypelnianie
+Button Fill2Button(220, 60, 100, 20, "FILL flood", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 
 // Klasa silnika programu
 class Engine {
@@ -53,7 +54,8 @@ public:
     bool PolygonDrawingMode = false;
     bool LineDrawingMode = false;
     bool PolylineDrawingMode = false;
-    bool FillDrawingMode = false;
+    bool Fill1DrawingMode = false;
+    bool Fill2DrawingMode = false;
 
     // Kontenery dla różnych obiektów
     vector<Point2D> points;
@@ -68,6 +70,8 @@ public:
     vector<LineSegment> lineSegments;
     vector<pair<float, float>> tempTrianglePoints; 
     vector<pair<float, float>> tempRectanglePoints;
+    vector<FillPoint> fill1points;
+    vector<FillPoint> fill2points;
 
     // Zapisywanie komunikatu z błędami
     static void logError(const string& errorMessage) {
@@ -165,6 +169,8 @@ public:
         punktyWielokata.clear();
         polylinePoints.clear();
         lineSegments.clear();
+        fill1points.clear();
+        fill2points.clear();
     }
 
     // Rysowanie interfejsu
@@ -184,7 +190,8 @@ public:
         ElipseCustomButton.draw();
         PolygonButton.draw();
         PolylineButton.draw();
-        FillButton.draw();
+        Fill1Button.draw();
+        Fill2Button.draw();
 
         // Zmiana kolorów przycisków w zależności od aktywnego trybu
         if (PointDrawingMode) {
@@ -265,14 +272,23 @@ public:
             PolylineButton.TextCollor = al_map_rgb(255, 255, 255);
         }
 
-        if (FillDrawingMode) {
-            FillButton.ButtonCollor = al_map_rgb(0, 255, 0);
-            FillButton.TextCollor = al_map_rgb(0, 0, 0);
+        if (Fill1DrawingMode) {
+            Fill1Button.ButtonCollor = al_map_rgb(0, 255, 0);
+            Fill1Button.TextCollor = al_map_rgb(0, 0, 0);
         }
         else {
-            FillButton.ButtonCollor = al_map_rgb(255, 0, 0);
-            FillButton.TextCollor = al_map_rgb(255, 255, 255);
+            Fill1Button.ButtonCollor = al_map_rgb(255, 0, 0);
+            Fill1Button.TextCollor = al_map_rgb(255, 255, 255);
         }
+        if (Fill2DrawingMode) {
+            Fill2Button.ButtonCollor = al_map_rgb(0, 255, 0);
+            Fill2Button.TextCollor = al_map_rgb(0, 0, 0);
+        }
+        else {
+            Fill2Button.ButtonCollor = al_map_rgb(255, 0, 0);
+            Fill2Button.TextCollor = al_map_rgb(255, 255, 255);
+        }
+
 
         // Rysowanie obszaru roboczego
         al_draw_filled_rectangle(WorkspacePlace_x, WorkspacePlace_y,
@@ -284,9 +300,6 @@ public:
             points.erase(points.begin(), points.begin() + (points.size() - MAX_POINTS));
         }
 
-        ALLEGRO_BITMAP* bb = al_get_backbuffer(display);
-        al_lock_bitmap(bb, ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_WRITEONLY);
-
         // Rysowanie wszystkich obiektów
         for (auto& p : points)
             p.DisplayPoint();
@@ -294,16 +307,6 @@ public:
         for (auto& c : circles) {
             PrimitiveRenderer renderer(c.color);
             renderer.circle(c.x, c.y, c.r, true, 2.0);
-        }
-
-        for (auto& c : circles2) {
-            PrimitiveRenderer renderer(c.color);
-            renderer.circlecustom(c.x0, c.y0, c.R);
-        }
-
-        for (auto& c : elipses) {
-            PrimitiveRenderer renderer(c.color);
-            renderer.elipsecustom(c.x0, c.y0, c.Rx, c.Ry);
         }
 
         for (auto& c : triangles) {
@@ -315,13 +318,8 @@ public:
             PrimitiveRenderer renderer(c.color);
             renderer.rectangle(c.x0, c.y0, c.x1, c.y1);
         }
-
-        // Rysowanie zakończonych wielokątów
-        for (auto& c : polygons) {
-            PrimitiveRenderer renderer(al_map_rgb(255, 0, 0));
-            renderer.polygon(c);
-        }
-
+        
+        
         // Rysowanie trwającej linii łamanej
         if (PolylineDrawingMode && !polylinePoints.empty()) {
             for (auto& p : polylinePoints) {
@@ -330,7 +328,30 @@ public:
             PrimitiveRenderer renderer(al_map_rgb(0, 255, 0));
             renderer.polyline(polylinePoints);
         }
+        ALLEGRO_BITMAP* bb = al_get_backbuffer(display);
+        al_lock_bitmap(bb, ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_WRITEONLY);
+        // Rysowanie zakończonych wielokątów
+        for (auto& c : polygons) {
+            PrimitiveRenderer renderer(al_map_rgb(255, 0, 0));
+            renderer.polygon(c);
+        }
+        for (auto& c : circles2) {
+            PrimitiveRenderer renderer(c.color);
+            renderer.circlecustom(c.x0, c.y0, c.R);
+        }
 
+        for (auto& c : elipses) {
+            PrimitiveRenderer renderer(c.color);
+            renderer.elipsecustom(c.x0, c.y0, c.Rx, c.Ry);
+        }
+        for (auto& c : fill1points) {
+            PrimitiveRenderer renderer(al_map_rgb(255, 0, 0));
+            renderer.boundaryFill(c.x, c.y, al_map_rgb(0, 255, 0), al_map_rgb(255, 0, 0));
+        }
+        for (auto& c : fill2points) {
+            PrimitiveRenderer renderer(al_map_rgb(255, 0, 0));
+            renderer.floodFill(c.x, c.y, al_map_rgb(0, 255, 0), al_map_rgb(190, 190, 190));
+        }
         al_unlock_bitmap(bb);
 
         if (TriangleDrawingMode && !tempTrianglePoints.empty()) {
@@ -428,9 +449,10 @@ public:
                     polylinePoints.clear();
                 }
             }
-
-            else if (FillButton.hovered(ev.mouse.x, ev.mouse.y))
-               FillDrawingMode = !FillDrawingMode;
+            else if (Fill1Button.hovered(ev.mouse.x, ev.mouse.y))
+               Fill1DrawingMode = !Fill1DrawingMode;
+            else if (Fill2Button.hovered(ev.mouse.x, ev.mouse.y))
+                Fill2DrawingMode = !Fill2DrawingMode;
 
             // Rysowanie w obszarze roboczym
             else if (PointDrawingMode) {
@@ -515,6 +537,19 @@ public:
             else if (PolylineDrawingMode) {
                 Point2D newPoint(ev.mouse.x, ev.mouse.y, al_map_rgb(0, 255, 0));
                 polylinePoints.push_back(newPoint);
+            }
+
+            else if (Fill1DrawingMode) {
+                FillPoint newPoint;
+                newPoint.x = ev.mouse.x;
+                newPoint.y = ev.mouse.y;
+                fill1points.push_back(newPoint);
+                }
+            else if (Fill2DrawingMode) {
+                FillPoint newPoint;
+                newPoint.x = ev.mouse.x;
+                newPoint.y = ev.mouse.y;
+                fill2points.push_back(newPoint);
             }
         }
 

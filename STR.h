@@ -38,3 +38,7 @@ struct PolygonData {
 	vector<PolygonPoint>& points;
 	ALLEGRO_COLOR color;
 };
+
+struct FillPoint {
+	float x, y;
+};

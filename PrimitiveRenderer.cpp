@@ -132,3 +132,106 @@ void PrimitiveRenderer::polygon(const vector<PolygonPoint>& points) {
         line(points[i].x, points[i].y, points[next_index].x, points[next_index].y);
     }
 }
+
+// helper
+bool colorsEqual(ALLEGRO_COLOR c1, ALLEGRO_COLOR c2)
+{
+    unsigned char r1, g1, b1;
+    unsigned char r2, g2, b2;
+    al_unmap_rgb(c1, &r1, &g1, &b1);
+    al_unmap_rgb(c2, &r2, &g2, &b2);
+    return (r1 == r2 && g1 == g2 && b1 == b2);
+}
+
+// boundaryFill - iteracyjna, bez wyjœcia poza ekran
+void PrimitiveRenderer::boundaryFill(int x, int y, ALLEGRO_COLOR fillColor, ALLEGRO_COLOR boundaryColor)
+{
+    // pobierz backbuffer (bitmapê) i zablokuj
+    ALLEGRO_DISPLAY* d = al_get_current_display();
+    if (!d) return;
+    ALLEGRO_BITMAP* bb = al_get_backbuffer(d);
+    if (!bb) return;
+
+    int w = al_get_bitmap_width(bb);
+    int h = al_get_bitmap_height(bb);
+
+    // sprawdŸ punkt startowy w obrêbie bitmapy
+    if (x < 0 || x >= w || y < 0 || y >= h) return;
+
+    al_lock_bitmap(bb, ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_READWRITE);
+
+    // od razu pobierz kolor startowy - jeœli równy fillColor lub boundaryColor -> nic nie robimy
+    ALLEGRO_COLOR startColor = al_get_pixel(bb, x, y);
+    if (colorsEqual(startColor, fillColor) || colorsEqual(startColor, boundaryColor)) {
+        al_unlock_bitmap(bb);
+        return;
+    }
+
+    stack<pair<int, int>> st;
+    st.push({ x,y });
+
+    while (!st.empty()) {
+        auto p = st.top(); st.pop();
+        int px = p.first, py = p.second;
+
+        // bounds check
+        if (px < 0 || px >= w || py < 0 || py >= h) continue;
+
+        ALLEGRO_COLOR cur = al_get_pixel(bb, px, py);
+        if (!colorsEqual(cur, fillColor) && !colorsEqual(cur, boundaryColor)) {
+            al_put_pixel(px, py, fillColor);
+
+            st.push({ px + 1, py });
+            st.push({ px - 1, py });
+            st.push({ px, py + 1 });
+            st.push({ px, py - 1 });
+        }
+    }
+
+    al_unlock_bitmap(bb);
+}
+
+// floodFill - iteracyjna (wype³nia obszar pixel==backgroundColor)
+void PrimitiveRenderer::floodFill(int x, int y, ALLEGRO_COLOR fillColor, ALLEGRO_COLOR backgroundColor)
+{
+    ALLEGRO_DISPLAY* d = al_get_current_display();
+    if (!d) return;
+    ALLEGRO_BITMAP* bb = al_get_backbuffer(d);
+    if (!bb) return;
+
+    int w = al_get_bitmap_width(bb);
+    int h = al_get_bitmap_height(bb);
+
+    if (x < 0 || x >= w || y < 0 || y >= h) return;
+
+    al_lock_bitmap(bb, ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_READWRITE);
+
+    ALLEGRO_COLOR startColor = al_get_pixel(bb, x, y);
+    // jeœli startColor != backgroundColor lub startColor == fillColor -> nic
+    if (!colorsEqual(startColor, backgroundColor) || colorsEqual(startColor, fillColor)) {
+        al_unlock_bitmap(bb);
+        return;
+    }
+
+    stack<pair<int, int>> st;
+    st.push({ x,y });
+
+    while (!st.empty()) {
+        auto p = st.top(); st.pop();
+        int px = p.first, py = p.second;
+
+        if (px < 0 || px >= w || py < 0 || py >= h) continue;
+
+        ALLEGRO_COLOR cur = al_get_pixel(bb, px, py);
+        if (colorsEqual(cur, backgroundColor) && !colorsEqual(cur, fillColor)) {
+            al_put_pixel(px, py, fillColor);
+
+            st.push({ px + 1, py });
+            st.push({ px - 1, py });
+            st.push({ px, py + 1 });
+            st.push({ px, py - 1 });
+        }
+    }
+
+    al_unlock_bitmap(bb);
+}

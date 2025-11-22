@@ -44,7 +44,7 @@ void Point2D::ChangeCoordinates(float newX, float newY) {
 
 void Point2D::DisplayPoint() {
     try {
-        al_draw_filled_circle(x, y, 2, kolor);
+        al_put_pixel(x, y, kolor);
     }
     catch (const exception& e) {
         cerr << "Error displaying point: " << e.what() << endl;

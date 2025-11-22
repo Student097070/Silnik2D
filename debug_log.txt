@@ -1,0 +1,6 @@
+[Mon Nov 17 14:43:39 2025] Point2D destroyed: (306.000000,229.000000)
+[Mon Nov 17 14:43:39 2025] Point2D destroyed: (306.000000,229.000000)
+[Mon Nov 17 14:43:39 2025] Point2D destroyed: (385.000000,330.000000)
+[Mon Nov 17 14:43:55 2025] Point2D destroyed: (306.000000,229.000000)
+[Mon Nov 17 14:43:55 2025] Point2D destroyed: (385.000000,330.000000)
+[Mon Nov 17 14:43:55 2025] Point2D destroyed: (506.000000,237.000000)

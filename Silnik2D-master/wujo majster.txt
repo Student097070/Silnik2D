@@ -1,0 +1,34 @@
+// w pliku z pętlą główną / Engine
+#include "ShapeCircle.h"
+#include "ShapePolygon.h"
+#include "Player.h"
+
+// wewnątrz klasy Engine
+std::vector<std::unique_ptr<ShapeObject>> shapes;
+std::unique_ptr<Player> player;
+
+// po inicjalizacji (np. w konstruktorze):
+player = std::make_unique<Player>(400,300);
+shapes.push_back(std::make_unique<ShapeCircle>(200,200,50, al_map_rgb(255,0,0)));
+
+// prosty polygon:
+std::vector<Point2D> pts = { {500,200}, {560,240}, {540,300}, {460,300}, {440,240} };
+shapes.push_back(std::make_unique<ShapePolygon>(pts, al_map_rgb(0,255,0)));
+
+// w funkcji update(dt):
+for (auto &s : shapes) {
+    // jeśli chcesz aktualizować (niektóre shape mogą być Updatable) - dynamic_cast
+    // no-op tutaj
+}
+if (player) player->update(dt);
+
+// w funkcji draw():
+// rysujemy GUI i canvas...
+for (auto &s : shapes) s->draw();
+if (player) player->draw();
+
+// przykład transformacji (wywołać gdzieś, np. przy naciśnięciu klawisza)
+// obróć pierwszy shape o 15 stopni:
+if (!shapes.empty()) {
+    shapes[0]->rotate(15.0f * 3.14159265f / 180.0f, 400.0f, 300.0f); // rotate around (400,300)
+}

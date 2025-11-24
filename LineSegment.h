@@ -27,6 +27,8 @@ public:
 
     // Rysowanie odcinka (z wyborem algorytmu)
     void draw(bool useIncrementalAlgorithm = false);
-
+    void translate(float tx, float ty) { p0.translate(tx, ty); p1.translate(tx, ty); }
+    void rotate(float alpha, float cx = 0.0f, float cy = 0.0f) { p0.rotate(alpha, cx, cy); p1.rotate(alpha, cx, cy); }
+    void scale(float kx, float ky, float cx = 0.0f, float cy = 0.0f) { p0.scale(kx, ky, cx, cy); p1.scale(kx, ky, cx, cy); }
     ~LineSegment();
 };

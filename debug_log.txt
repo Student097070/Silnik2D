@@ -334,3 +334,16 @@ Button 'Point2D' destroyed successfully.
 Button 'CIRCLE' destroyed successfully.
 Button 'RESET TIMERA' destroyed successfully.
 Button 'Rozdzielczosc' destroyed successfully.
+Button 'FILL flood' destroyed successfully.
+Button 'FILL boundary' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle v2' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'CIRCLE' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.

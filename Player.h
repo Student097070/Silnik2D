@@ -6,8 +6,10 @@
 
 class Player : public UpdatableObject, public DrawableObject {
 public:
+	ALLEGRO_COLOR c = al_map_rgb(255, 255, 0);
+    Point2D pos;
     Player(float x = 400, float y = 300, float speed = 200.0f)
-        : pos(x, y), speed(speed) {
+        : pos(x, y, c), speed(speed) {
     }
 
     void update(float dt) override {
@@ -27,6 +29,6 @@ public:
         r.triangle(x, y - 10, x - 8, y + 6, x + 8, y + 6, true, 1.0f);
     }
 
-    Point2D pos;
+    
     float speed;
 };

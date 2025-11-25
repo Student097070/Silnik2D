@@ -4,6 +4,10 @@
 #include "Button.h"
 #include "Point2D.h"
 #include "LineSegment.h"
+#include "ShapeObject.h"
+#include "ShapeCircle.h"
+#include "ShapePolygon.h"
+#include "Player.h"
 
 Button ResolutionButton(0, 0, 100, 20, "Rozdzielczosc", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button ResetButton(110, 0, 100, 20, "RESET TIMERA", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
@@ -16,7 +20,7 @@ Button CircleCustomButton(330, 30, 100, 20, "Circle v2", al_map_rgb(0, 0, 0), al
 Button ElipseCustomButton(440, 30, 100, 20, "Elipse", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button PolygonButton(0, 60, 100, 20, "Polygon", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button PolylineButton(220, 30, 100, 20, "Polyline", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
-Button Fill1Button(110, 60, 100, 20, "FILL boundary", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255)); //wypelnianie
+Button Fill1Button(110, 60, 100, 20, "FILL boundary", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255)); 
 Button Fill2Button(220, 60, 100, 20, "FILL flood", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 
 // Klasa silnika programu
@@ -73,6 +77,9 @@ public:
     vector<FillPoint> fill1points;
     vector<FillPoint> fill2points;
 
+    vector<unique_ptr<ShapeObject>> shapes;
+    unique_ptr<Player> player = make_unique<Player>(400, 300);;
+
     // Zapisywanie komunikatu z błędami
     static void logError(const string& errorMessage) {
         ofstream errorFile("error_log.txt", ios::app);
@@ -107,6 +114,10 @@ public:
         al_set_window_title(display, "Engine Allegro");
         queue = al_create_event_queue();
         if (!queue) { logError("Błąd tworzenia kolejki zdarzeń!"); exit(-1); }
+    }
+ 
+    void funkcja() {
+        shapes.push_back(make_unique<ShapeCircle>(200, 200, 50, al_map_rgb(255, 0, 0)));
     }
 
     // Ładowanie czcionek

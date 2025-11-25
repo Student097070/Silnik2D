@@ -78,7 +78,9 @@ public:
     vector<FillPoint> fill2points;
 
     vector<unique_ptr<ShapeObject>> shapes;
-    unique_ptr<Player> player = make_unique<Player>(400, 300);;
+    unique_ptr<Player> player;
+
+    
 
     // Zapisywanie komunikatu z błędami
     static void logError(const string& errorMessage) {
@@ -114,10 +116,6 @@ public:
         al_set_window_title(display, "Engine Allegro");
         queue = al_create_event_queue();
         if (!queue) { logError("Błąd tworzenia kolejki zdarzeń!"); exit(-1); }
-    }
- 
-    void funkcja() {
-        shapes.push_back(make_unique<ShapeCircle>(200, 200, 50, al_map_rgb(255, 0, 0)));
     }
 
     // Ładowanie czcionek
@@ -222,8 +220,6 @@ public:
             CircleButton.ButtonCollor = al_map_rgb(255, 0, 0);
             CircleButton.TextCollor = al_map_rgb(255, 255, 255);
         }
-
-        
 
         //kwadrat
         if (RectangleDrawingMode) {
@@ -363,7 +359,15 @@ public:
             PrimitiveRenderer renderer(al_map_rgb(255, 0, 0));
             renderer.floodFill(c.x, c.y, al_map_rgb(0, 255, 0), al_map_rgb(190, 190, 190));
         }
+
+
+       
+        for (auto& s : shapes) s->draw();
+        
+
         al_unlock_bitmap(bb);
+
+        if (player) player->draw();
 
         if (TriangleDrawingMode && !tempTrianglePoints.empty()) {
             for (auto& p : tempTrianglePoints) {
@@ -400,6 +404,9 @@ public:
                     al_map_rgb(180, 0, 0), 1.0f);
             }
         }
+
+
+
 
         // Czasomierz
         time_t elapsed = time(nullptr) - start_time;
@@ -589,6 +596,37 @@ public:
                     PolylineDrawingMode = false;
                 }
             }
+
+            if(ev.keyboard.keycode == ALLEGRO_KEY_I ) {
+                if (!shapes.empty()) {
+                    shapes[1]->rotate(15.0f * 3.14159265f / 180.0f, 400.0f, 300.0f); 
+                }
+			}
+
+            if (ev.keyboard.keycode == ALLEGRO_KEY_UP) {
+                if(player){
+                   
+                    player->pos.y -= 5;
+                }
+            }
+            if (ev.keyboard.keycode == ALLEGRO_KEY_DOWN) {
+                if (player) {
+                    
+                    player->pos.y += 5;
+                }
+            }
+            if (ev.keyboard.keycode == ALLEGRO_KEY_LEFT) {
+                if (player) {
+
+                    player->pos.x -= 5;
+                }
+            }
+            if (ev.keyboard.keycode == ALLEGRO_KEY_RIGHT) {
+                if (player) {
+
+                    player->pos.x += 5;
+                }
+            }
         }
         else if (ev.type == ALLEGRO_EVENT_DISPLAY_RESIZE)
             handleResize();
@@ -642,6 +680,20 @@ public:
 
     // Konstruktor
     Engine() {
+
+        player = make_unique<Player>(400, 300);
+        shapes.push_back(make_unique<ShapeCircle>(200, 200, 50, al_map_rgb(255, 0, 0)));
+
+        vector<Point2D> pts = {
+            {500, 200, al_map_rgb(255, 255, 255)},
+            {560, 240, al_map_rgb(255, 255, 255)},
+            {540, 300, al_map_rgb(255, 255, 255)},
+            {460, 300, al_map_rgb(255, 255, 255)},
+            {440, 240, al_map_rgb(255, 255, 255)}
+        };
+
+        shapes.push_back(std::make_unique<ShapePolygon>(pts, al_map_rgb(0, 255, 0)));
+
         initLog();
         if (!initAllegro()) exit(-1);
         createDisplay();

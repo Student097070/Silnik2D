@@ -5,8 +5,10 @@
 // Prosty kszta³t - okr¹g przechowuje œrodek i promieñ
 class ShapeCircle : public ShapeObject {
 public:
+	ALLEGRO_COLOR c = al_map_rgb(0, 0, 0);
+
     ShapeCircle(float cx = 0, float cy = 0, float r = 10, ALLEGRO_COLOR col = al_map_rgb(0, 0, 0))
-        : center(cx, cy), radius(r) {
+        : center(cx, cy,c), radius(r) {
         color = col;
     }
 

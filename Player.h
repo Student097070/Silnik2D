@@ -6,6 +6,7 @@
 
 class Player : public UpdatableObject, public DrawableObject {
 public:
+    
 	ALLEGRO_COLOR c = al_map_rgb(255, 255, 0);
     Point2D pos;
     Player(float x = 400, float y = 300, float speed = 200.0f)
@@ -14,7 +15,11 @@ public:
 
     void update(float dt) override {
         // prosty ruch klawiszami WSAD
-        if (al_key_down) { /* placeholder if you use your own keyboard tracking */ }
+        if (al_key_down) { 
+           /* if (ev.keyboard.keycode == ALLEGRO_KEY_W){
+            }*/
+        
+        }
         // tutaj: przyk³adowo - poruszanie zale¿ne od globalnych flag klawiatury
     }
 

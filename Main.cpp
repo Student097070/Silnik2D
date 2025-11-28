@@ -11,7 +11,7 @@
 
 Button ResolutionButton(0, 0, 100, 20, "Rozdzielczosc", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button ResetButton(110, 0, 100, 20, "RESET TIMERA", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
-Button CircleButton(220, 0, 100, 20, "CIRCLE", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+Button CircleButton(220, 0, 100, 20, "Triange rotate", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button Point2DButton(330, 0, 100, 20, "Point2D", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button CleanButton(660, 0, 100, 20, "CLEAN", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button RectangleButton(0, 30, 100, 20, "RECTANGLE", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
@@ -49,7 +49,7 @@ private:
 
 public:
     // Tryby rysowania
-    bool CircleDrawingMode = false;
+    bool TriangleRotate = false;
     bool PointDrawingMode = false;
     bool RectangleDrawingMode = false;
     bool TriangleDrawingMode = false;
@@ -66,6 +66,7 @@ public:
     vector<CircleData> circles;
     vector<RectangleData> rectangles;
     vector<TriangleData> triangles;
+    //vector<unique_ptr<TriangleData>> triangles;
     vector<Circle2Data> circles2;
     vector<ElipseData> elipses;
     vector<vector<PolygonPoint>> polygons;
@@ -79,7 +80,6 @@ public:
 
     vector<unique_ptr<ShapeObject>> shapes;
     unique_ptr<Player> player;
-
     
 
     // Zapisywanie komunikatu z błędami
@@ -182,6 +182,33 @@ public:
         fill2points.clear();
     }
 
+    void rotatePoint(float& x, float& y, float angle, float cx, float cy) {
+        float s = sin(angle);
+        float c = cos(angle);
+
+        // przesunięcie do układu z centrum w (cx, cy)
+        x -= cx;
+        y -= cy;
+
+        // obrót
+        float nx = x * c - y * s;
+        float ny = x * s + y * c;
+
+        // powrót do układu globalnego
+        x = nx + cx;
+        y = ny + cy;
+    }
+
+    void rotateTriangle(TriangleData& t, float angle) {
+        float cx = (t.x0 + t.x1 + t.x2) / 3.0f;
+        float cy = (t.y0 + t.y1 + t.y2) / 3.0f;
+
+        rotatePoint(t.x0, t.y0, angle, cx, cy);
+        rotatePoint(t.x1, t.y1, angle, cx, cy);
+        rotatePoint(t.x2, t.y2, angle, cx, cy);
+    }
+    
+
     // Rysowanie interfejsu
     void draw(ALLEGRO_EVENT& ev) {
         al_clear_to_color(al_map_rgb(30, 30, 30));
@@ -212,7 +239,7 @@ public:
             Point2DButton.TextCollor = al_map_rgb(255, 255, 255);
         }
 
-        if (CircleDrawingMode) {
+        if (TriangleRotate) {
             CircleButton.ButtonCollor = al_map_rgb(0, 255, 0);
             CircleButton.TextCollor = al_map_rgb(0, 0, 0);
         }
@@ -461,7 +488,7 @@ public:
                 clear();
 
             else if (CircleButton.hovered(ev.mouse.x, ev.mouse.y))
-                CircleDrawingMode = !CircleDrawingMode;
+                TriangleRotate = !TriangleRotate;
 
             else if (RectangleButton.hovered(ev.mouse.x, ev.mouse.y))
                 RectangleDrawingMode = !RectangleDrawingMode;
@@ -498,14 +525,7 @@ public:
                 points.push_back(newPoint);
             }
 
-            else if (CircleDrawingMode) {
-                CircleData newCircle;
-                newCircle.x = ev.mouse.x;
-                newCircle.y = ev.mouse.y;
-                newCircle.r = 40;
-                newCircle.color = al_map_rgb(0, 255, 0);
-                circles.push_back(newCircle);
-            }
+            
 
             else if (Circle2DrawingMode) {
                 Circle2Data newCircle;
@@ -572,6 +592,7 @@ public:
                 }
             }
 
+            
             else if (PolylineDrawingMode) {
                 Point2D newPoint(ev.mouse.x, ev.mouse.y, al_map_rgb(0, 255, 0));
                 polylinePoints.push_back(newPoint);
@@ -620,8 +641,31 @@ public:
             if(ev.keyboard.keycode == ALLEGRO_KEY_I ) {
                 if (!shapes.empty()) {
                     shapes[1]->rotate(15.0f * 3.14159265f / 180.0f, 400.0f, 300.0f); 
+					/*triangles[0]->rotate(15.0f * 3.14159265f / 180.0f, 400.0f, 300.0f);*/
+					shapes[1]->translate(10.0f, 10.0f);
                 }
 			}
+            
+            if (ev.keyboard.keycode == ALLEGRO_KEY_T) {
+                if (!shapes.empty()) {
+                    shapes[1]->translate(10.0f, 10.0f);
+                }
+            }
+            
+            if (TriangleRotate) {
+                if (ev.keyboard.keycode == ALLEGRO_KEY_I) {
+                    if (!triangles.empty()) {
+                        rotateTriangle(triangles[0], 15.0f * 3.14159265f / 180.0f);
+                    }
+                }
+            }
+
+
+            /*if (ev.keyboard.keycode == ALLEGRO_KEY_I) {
+                if (!triangles.empty()) {
+                    rotateTriangle(triangles[0], 15.0f * 3.14159265f / 180.0f);
+                }
+            }*/
 
 
 
@@ -680,7 +724,7 @@ public:
     Engine() {
 
         player = make_unique<Player>(400, 300);
-        shapes.push_back(make_unique<ShapeCircle>(200, 200, 50, al_map_rgb(255, 0, 0)));
+        /*shapes.push_back(make_unique<ShapeCircle>(200, 200, 50, al_map_rgb(255, 0, 0)));
 
         vector<Point2D> pts = {
             {500, 200, al_map_rgb(255, 255, 255)},
@@ -690,7 +734,7 @@ public:
             {440, 240, al_map_rgb(255, 255, 255)}
         };
 
-        shapes.push_back(std::make_unique<ShapePolygon>(pts, al_map_rgb(0, 255, 0)));
+        shapes.push_back(std::make_unique<ShapePolygon>(pts, al_map_rgb(0, 255, 0)));*/
 
         initLog();
         if (!initAllegro()) exit(-1);

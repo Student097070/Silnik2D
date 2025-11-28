@@ -169,6 +169,7 @@
     <ClInclude Include="ShapeObject.h" />
     <ClInclude Include="ShapePolygon.h" />
     <ClInclude Include="TransformableObject.h" />
+    <ClInclude Include="TriangleObject.h" />
     <ClInclude Include="UpdatableObject.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Point2D.h" />

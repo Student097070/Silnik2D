@@ -422,10 +422,30 @@ public:
 
     // Obsługa zdarzeń
     void handleEvent(ALLEGRO_EVENT& ev) {
+		
         if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
             running = false;
-        else if (ev.type == ALLEGRO_EVENT_TIMER)
+        else if (ev.type == ALLEGRO_EVENT_TIMER) {
+            ALLEGRO_KEYBOARD_STATE keyState;
+            al_get_keyboard_state(&keyState);
+
+            if (player) {
+                if (al_key_down(&keyState, ALLEGRO_KEY_UP)) {
+                    player->pos.y -= 1;
+                }
+                if (al_key_down(&keyState, ALLEGRO_KEY_DOWN)) {
+                    player->pos.y += 1;
+                }
+                if (al_key_down(&keyState, ALLEGRO_KEY_LEFT)) {
+                    player->pos.x -= 1;
+                }
+                if (al_key_down(&keyState, ALLEGRO_KEY_RIGHT)) {
+                    player->pos.x += 1;
+                }
+            }
             draw(ev);
+        }
+            
         else if (ev.type == ALLEGRO_EVENT_MOUSE_AXES)
             handleMouseMove(ev.mouse.x, ev.mouse.y);
         else if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
@@ -603,30 +623,8 @@ public:
                 }
 			}
 
-            if (ev.keyboard.keycode == ALLEGRO_KEY_UP) {
-                if(player){
-                   
-                    player->pos.y -= 5;
-                }
-            }
-            if (ev.keyboard.keycode == ALLEGRO_KEY_DOWN) {
-                if (player) {
-                    
-                    player->pos.y += 5;
-                }
-            }
-            if (ev.keyboard.keycode == ALLEGRO_KEY_LEFT) {
-                if (player) {
 
-                    player->pos.x -= 5;
-                }
-            }
-            if (ev.keyboard.keycode == ALLEGRO_KEY_RIGHT) {
-                if (player) {
 
-                    player->pos.x += 5;
-                }
-            }
         }
         else if (ev.type == ALLEGRO_EVENT_DISPLAY_RESIZE)
             handleResize();

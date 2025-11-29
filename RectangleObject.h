@@ -4,47 +4,39 @@
 #include "TransformableObject.h"
 #include "STR.h"
 
-class TriangleObject : public ShapeObject, public TransformableObject {
+class RectangleObject : public ShapeObject, public TransformableObject {
 public:
-    TriangleData data;
-   
-    TriangleObject(const TriangleData& d) : data(d) {}
+    RectangleData data;
+
+    RectangleObject(const RectangleData& d) : data(d) {}
 
     // ---- RYSOWANIE ----
     void draw() override {
-        al_draw_filled_triangle(
-            data.x0, data.y0,
-            data.x1, data.y1,
-            data.x2, data.y2,
-            data.color
-        );
+        al_draw_filled_rectangle(data.x0, data.y0, data.x1, data.y1, data.color);
     }
 
     // ---- TRANSLACJA ----
     void translate(float tx, float ty) override {
         data.x0 += tx; data.y0 += ty;
         data.x1 += tx; data.y1 += ty;
-        data.x2 += tx; data.y2 += ty;
     }
 
     // ---- OBRÓT ----
     void rotate(float alpha, float cx, float cy) override {
         rotatePoint(data.x0, data.y0, alpha, cx, cy);
         rotatePoint(data.x1, data.y1, alpha, cx, cy);
-        rotatePoint(data.x2, data.y2, alpha, cx, cy);
     }
 
     // ---- SKALOWANIE ----
     void scale(float kx, float ky, float cx, float cy) override {
         scalePoint(data.x0, data.y0, kx, ky, cx, cy);
         scalePoint(data.x1, data.y1, kx, ky, cx, cy);
-        scalePoint(data.x2, data.y2, kx, ky, cx, cy);
     }
 
-    // ---- CENTRUM TRÓJK¥TA ----
+    // ---- CENTRUM PROSTOK¥TA ----
     void getCenter(float& cx, float& cy) {
-        cx = (data.x0 + data.x1 + data.x2) / 3.0f;
-        cy = (data.y0 + data.y1 + data.y2) / 3.0f;
+        cx = (data.x0 + data.x1) / 2.0f;
+        cy = (data.y0 + data.y1) / 2.0f;
     }
 
 private:

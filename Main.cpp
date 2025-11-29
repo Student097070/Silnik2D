@@ -9,16 +9,25 @@
 #include "ShapePolygon.h"
 #include "Player.h"
 #include "TriangleObject.h"
+#include "RectangleObject.h"
+#include "CircleObject.h"
+#include "EllipseObject.h"
 
 Button ResolutionButton(0, 0, 100, 20, "Rozdzielczosc", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button ResetButton(110, 0, 100, 20, "RESET TIMERA", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
-Button CircleButton(220, 0, 100, 20, "Triange rotate", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
-Button Point2DButton(330, 0, 100, 20, "Point2D", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+
+Button TriangleTransformButton(220, 0, 100, 20, "Triange transform", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+Button CircleTransformButton(330, 0, 100, 20, "Circle transform", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+Button RectangleTransformButton(440, 0, 100, 20, "Rectangle transform", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+Button EllipseleTransformButton(550, 0, 100, 20, "Elipse transform", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+
 Button CleanButton(660, 0, 100, 20, "CLEAN", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button RectangleButton(0, 30, 100, 20, "RECTANGLE", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button TriangleButton(110, 30, 100, 20, "TRIANGLE", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
-Button CircleCustomButton(330, 30, 100, 20, "Circle v2", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+Button CircleCustomButton(330, 30, 100, 20, "Circle", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button ElipseCustomButton(440, 30, 100, 20, "Elipse", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+Button Point2DButton(550, 30, 100, 20, "Point2D", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
+
 Button PolygonButton(0, 60, 100, 20, "Polygon", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button PolylineButton(220, 30, 100, 20, "Polyline", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button Fill1Button(110, 60, 100, 20, "FILL boundary", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255)); 
@@ -50,7 +59,10 @@ private:
 
 public:
     // Tryby rysowania
-    bool TriangleRotate = false;
+    bool TriangleTransform = false;
+    bool RectangleTransform = false;
+    bool CircleTransform = false;
+    bool ElipseTransform = false;
     bool PointDrawingMode = false;
     bool RectangleDrawingMode = false;
     bool TriangleDrawingMode = false;
@@ -65,11 +77,15 @@ public:
     // Kontenery dla różnych obiektów
     vector<Point2D> points;
     vector<CircleData> circles;
-    vector<RectangleData> rectangles;
+    //vector<RectangleData> rectangles;
 
     vector<unique_ptr<TriangleObject>> triangles;
-    vector<Circle2Data> circles2;
-    vector<ElipseData> elipses;
+    vector<unique_ptr<CircleObject>> circles2;
+    vector<unique_ptr<EllipseObject>> elipses;
+    vector<unique_ptr<RectangleObject>> rectangles;
+
+    //vector<Circle2Data> circles2;
+    //vector<ElipseData> elipses;
     vector<vector<PolygonPoint>> polygons;
     vector<PolygonPoint> punktyWielokata;
     vector<Point2D> polylinePoints;
@@ -190,12 +206,16 @@ public:
         // Rysowanie przycisków
         ResolutionButton.draw();
         ResetButton.draw();
-        CircleButton.draw();
+
+        TriangleTransformButton.draw();
+		RectangleTransformButton.draw();
+		EllipseleTransformButton.draw();
+		CircleTransformButton.draw();
+        
         Point2DButton.draw();
         CleanButton.draw();
         RectangleButton.draw();
         TriangleButton.draw();
-        
         CircleCustomButton.draw();
         ElipseCustomButton.draw();
         PolygonButton.draw();
@@ -213,13 +233,13 @@ public:
             Point2DButton.TextCollor = al_map_rgb(255, 255, 255);
         }
 
-        if (TriangleRotate) {
-            CircleButton.ButtonCollor = al_map_rgb(0, 255, 0);
-            CircleButton.TextCollor = al_map_rgb(0, 0, 0);
+        if (TriangleTransform) {
+            TriangleTransformButton.ButtonCollor = al_map_rgb(0, 255, 0);
+            TriangleTransformButton.TextCollor = al_map_rgb(0, 0, 0);
         }
         else {
-            CircleButton.ButtonCollor = al_map_rgb(255, 0, 0);
-            CircleButton.TextCollor = al_map_rgb(255, 255, 255);
+            TriangleTransformButton.ButtonCollor = al_map_rgb(255, 0, 0);
+            TriangleTransformButton.TextCollor = al_map_rgb(255, 255, 255);
         }
 
         //kwadrat
@@ -232,6 +252,14 @@ public:
             RectangleButton.TextCollor = al_map_rgb(255, 255, 255);
         }
 
+        if(RectangleTransform) {
+            RectangleTransformButton.ButtonCollor = al_map_rgb(0, 255, 0);
+            RectangleTransformButton.TextCollor = al_map_rgb(0, 0, 0);
+        }
+        else {
+            RectangleTransformButton.ButtonCollor = al_map_rgb(255, 0, 0);
+            RectangleTransformButton.TextCollor = al_map_rgb(255, 255, 255);
+        }
 
         //trojkat
         if (TriangleDrawingMode) {
@@ -243,6 +271,14 @@ public:
             TriangleButton.TextCollor = al_map_rgb(255, 255, 255);
         }
 
+        if(TriangleTransform) {
+            TriangleTransformButton.ButtonCollor = al_map_rgb(0, 255, 0);
+            TriangleTransformButton.TextCollor = al_map_rgb(0, 0, 0);
+        }
+        else {
+            TriangleTransformButton.ButtonCollor = al_map_rgb(255, 0, 0);
+            TriangleTransformButton.TextCollor = al_map_rgb(255, 255, 255);
+		}
 
         if (Circle2DrawingMode) {
             CircleCustomButton.ButtonCollor = al_map_rgb(0, 255, 0);
@@ -253,6 +289,15 @@ public:
             CircleCustomButton.TextCollor = al_map_rgb(255, 255, 255);
         }
 
+        if(CircleTransform) {
+            CircleTransformButton.ButtonCollor = al_map_rgb(0, 255, 0);
+            CircleTransformButton.TextCollor = al_map_rgb(0, 0, 0);
+        }
+        else {
+            CircleTransformButton.ButtonCollor = al_map_rgb(255, 0, 0);
+            CircleTransformButton.TextCollor = al_map_rgb(255, 255, 255);
+		}
+
         if (ElipseDrawingMode) {
             ElipseCustomButton.ButtonCollor = al_map_rgb(0, 255, 0);
             ElipseCustomButton.TextCollor = al_map_rgb(0, 0, 0);
@@ -260,6 +305,15 @@ public:
         else {
             ElipseCustomButton.ButtonCollor = al_map_rgb(255, 0, 0);
             ElipseCustomButton.TextCollor = al_map_rgb(255, 255, 255);
+        }
+
+        if(ElipseTransform) {
+            EllipseleTransformButton.ButtonCollor = al_map_rgb(0, 255, 0);
+            EllipseleTransformButton.TextCollor = al_map_rgb(0, 0, 0);
+        }
+        else {
+            EllipseleTransformButton.ButtonCollor = al_map_rgb(255, 0, 0);
+            EllipseleTransformButton.TextCollor = al_map_rgb(255, 255, 255);
         }
 
         if (PolygonDrawingMode) {
@@ -323,8 +377,8 @@ public:
         }
 
         for (auto& c : rectangles) {
-            PrimitiveRenderer renderer(c.color);
-            renderer.rectangle(c.x0, c.y0, c.x1, c.y1);
+            PrimitiveRenderer renderer(c->data.color);
+            renderer.rectangle(c->data.x0, c->data.y0, c->data.x1, c->data.y1);
         }
         
         
@@ -344,13 +398,13 @@ public:
             renderer.polygon(c);
         }
         for (auto& c : circles2) {
-            PrimitiveRenderer renderer(c.color);
-            renderer.circlecustom(c.x0, c.y0, c.R);
+            PrimitiveRenderer renderer(c->data.color);
+            renderer.circlecustom(c->data.x0, c->data.y0, c->data.R);
         }
 
         for (auto& c : elipses) {
-            PrimitiveRenderer renderer(c.color);
-            renderer.elipsecustom(c.x0, c.y0, c.Rx, c.Ry);
+            PrimitiveRenderer renderer(c->data.color);
+            renderer.elipsecustom(c->data.x0, c->data.y0, c->data.Rx, c->data.Ry);
         }
         for (auto& c : fill1points) {
             PrimitiveRenderer renderer(al_map_rgb(255, 0, 0));
@@ -461,8 +515,15 @@ public:
             else if (CleanButton.hovered(ev.mouse.x, ev.mouse.y))
                 clear();
 
-            else if (CircleButton.hovered(ev.mouse.x, ev.mouse.y))
-                TriangleRotate = !TriangleRotate;
+            else if (TriangleTransformButton.hovered(ev.mouse.x, ev.mouse.y))
+                TriangleTransform = !TriangleTransform;
+			else if (CircleTransformButton.hovered(ev.mouse.x, ev.mouse.y))
+				CircleTransform = !CircleTransform;
+			else if (RectangleTransformButton.hovered(ev.mouse.x, ev.mouse.y))
+				RectangleTransform = !RectangleTransform;
+			else if (EllipseleTransformButton.hovered(ev.mouse.x, ev.mouse.y))
+				ElipseTransform = !ElipseTransform;
+
 
             else if (RectangleButton.hovered(ev.mouse.x, ev.mouse.y))
                 RectangleDrawingMode = !RectangleDrawingMode;
@@ -507,7 +568,7 @@ public:
                 newCircle.y0 = ev.mouse.y;
                 newCircle.R = 40;
                 newCircle.color = al_map_rgb(0, 255, 255);
-                circles2.push_back(newCircle);
+                circles2.push_back(make_unique<CircleObject>(newCircle));
             }
 
             else if (ElipseDrawingMode) {
@@ -517,7 +578,10 @@ public:
                 newElipse.Rx = 40;
                 newElipse.Ry = 20;
                 newElipse.color = al_map_rgb(0, 0, 255);
-                elipses.push_back(newElipse);
+                
+                elipses.push_back(make_unique<EllipseObject>(newElipse));
+                // Wyczyść tymczasowe punkty
+                tempTrianglePoints.clear();
             }
 
             else if (PolygonDrawingMode) {
@@ -559,7 +623,7 @@ public:
                     newRectangle.x1 = tempRectanglePoints[1].first;
                     newRectangle.y1 = tempRectanglePoints[1].second;
                     newRectangle.color = al_map_rgb(255, 0, 255);
-                    rectangles.push_back(newRectangle);
+                    rectangles.push_back(make_unique<RectangleObject>(newRectangle));
 
                     // Wyczyść tymczasowe punkty
                     tempRectanglePoints.clear();
@@ -618,19 +682,45 @@ public:
                 }
 			}
             
-            if (ev.keyboard.keycode == ALLEGRO_KEY_T) {
-                if (!triangles .empty()) {
-                    triangles[1]->translate(10.0f, 10.0f);
-                }
-            }
-            
-            if (TriangleRotate) {
+            if (TriangleTransform) {
                 if (ev.keyboard.keycode == ALLEGRO_KEY_I) {
                     if (!triangles.empty()) {
-                        triangles[0]->rotate(15.0f * 3.14159265f / 180.0f, 400.0f, 300.0f);
+                        float cx, cy;
+                        triangles[0]->getCenter(cx, cy);
+                        triangles[0]->rotate(15.0f * 3.14159265f / 180.0f, cx, cy);
+                    }
+                }
+                else if (ev.keyboard.keycode == ALLEGRO_KEY_T) {
+                    if (!triangles.empty()) {
+                        triangles[0]->translate(10.0f, 10.0f);
+                    }
+                }
+                else if (ev.keyboard.keycode == ALLEGRO_KEY_S) {
+                    if (!triangles.empty()) {
+						float cx, cy;
+						triangles[0]->getCenter(cx, cy);
+                        triangles[0]->scale(1.1f, 1.1f, cx, cy);
                     }
                 }
             }
+
+            if (RectangleTransform) {
+                if (ev.keyboard.keycode == ALLEGRO_KEY_I) {
+                    if (!rectangles.empty()) {
+                        float cx, cy;
+                        rectangles[0]->getCenter(cx, cy);
+                        rectangles[0]->rotate(15.0f * 3.14159265f / 180.0f, cx, cy);
+                    }
+                }
+                else if (ev.keyboard.keycode == ALLEGRO_KEY_T) {
+                    if (!rectangles.empty()) {
+                        rectangles[0]->translate(10.0f, 10.0f);
+                    }
+                }
+            }
+
+            
+
 
         }
         else if (ev.type == ALLEGRO_EVENT_DISPLAY_RESIZE)
@@ -640,7 +730,7 @@ public:
     void handleMouseMove(int x, int y) {
         resolution_hovered = ResolutionButton.hovered(x, y);
         reset_hovered = ResetButton.hovered(x, y);
-        prim_hovered = CircleButton.hovered(x, y);
+        prim_hovered = TriangleTransformButton.hovered(x, y);
     }
 
     void handleKey(int key) {

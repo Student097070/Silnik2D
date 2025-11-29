@@ -160,11 +160,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
+    <ClInclude Include="CircleObject.h" />
     <ClInclude Include="DrawableObject.h" />
+    <ClInclude Include="EllipseObject.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Include.h" />
     <ClInclude Include="LineSegment.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="RectangleObject.h" />
     <ClInclude Include="ShapeCircle.h" />
     <ClInclude Include="ShapeObject.h" />
     <ClInclude Include="ShapePolygon.h" />

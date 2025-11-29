@@ -16,17 +16,17 @@ struct TriangleData {
 };
 
 struct RectangleData {
-	int x0, y0, x1, y1;
+	float x0, y0, x1, y1;
 	ALLEGRO_COLOR color;
 };
 
 struct Circle2Data {
-	int x0, y0, R;
+	float x0, y0, R;
 	ALLEGRO_COLOR color;
 };
 
 struct ElipseData {
-	int x0, y0, Rx, Ry;
+	float x0, y0, Rx, Ry;
 	ALLEGRO_COLOR color;
 };
 

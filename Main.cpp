@@ -126,7 +126,7 @@ public:
     }
 
     // Tworzenie głównego okna aplikacji
-    void createDisplay() {
+    void createDisplay() const {
         al_set_new_display_flags(ALLEGRO_RESIZABLE);
         display = al_create_display(resolutions[current_index].w, resolutions[current_index].h);
         if (!display) { logError("Błąd tworzenia display!"); exit(-1); }
@@ -161,7 +161,7 @@ public:
     }
 
     // Ustawianie obszaru roboczego
-    void setupWorkspace() {
+    void setupWorkspace()const {
         WorkspacePlace_w = resolutions[current_index].workspace_w;
         WorkspacePlace_h = resolutions[current_index].workspace_h;
         WorkspacePlace_x = (resolutions[current_index].w / 2.0f) - (WorkspacePlace_w / 2.0f);
@@ -171,7 +171,7 @@ public:
     }
 
     // Centrowanie okna na ekranie
-    void centerWindow() {
+    void centerWindow()const {
         ALLEGRO_MONITOR_INFO info;
         if (al_get_monitor_info(0, &info)) {
             int screen_w = info.x2 - info.x1;
@@ -563,7 +563,7 @@ public:
             
 
             else if (Circle2DrawingMode) {
-                Circle2Data newCircle;
+                Circle2Data newCircle ;
                 newCircle.x0 = ev.mouse.x;
                 newCircle.y0 = ev.mouse.y;
                 newCircle.R = 40;
@@ -760,7 +760,7 @@ public:
         Timer_y = WorkspacePlace_y - 40;
     }
 
-    void changeResolution() {
+    void changeResolution()const {
         current_index = (current_index + 1) % 5;
         al_resize_display(display, resolutions[current_index].w, resolutions[current_index].h);
         setupWorkspace();

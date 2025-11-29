@@ -32,7 +32,7 @@ public:
         data.R *= k;
     }
 
-    void getCenter(float& cx, float& cy) {
+    void getCenter(float& cx, float& cy) const {
         cx = data.x0;
         cy = data.y0;
     }

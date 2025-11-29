@@ -1,10 +1,4 @@
-#pragma once
-#include "Include.h"
-#include "ShapeObject.h"
-#include "TransformableObject.h"
-#include "STR.h"
-
-class CircleObject : public ShapeObject, public TransformableObject {
+class CircleObject : public ShapeObject {
 public:
     Circle2Data data;
 
@@ -15,35 +9,29 @@ public:
         data.color = color;
     }
 
-    // ---- RYSOWANIE ----
+    CircleObject(const Circle2Data& d) {
+        data = d;
+    }
+
     void draw() override {
         al_draw_filled_circle(data.x0, data.y0, data.R, data.color);
     }
 
-    // ---- TRANSLACJA ----
     void translate(float tx, float ty) override {
         data.x0 += tx;
         data.y0 += ty;
     }
 
-    // ---- OBRÓT ----
     void rotate(float alpha, float cx, float cy) override {
         rotatePoint(data.x0, data.y0, alpha, cx, cy);
     }
 
-    // ---- SKALOWANIE ----
     void scale(float kx, float ky, float cx, float cy) override {
-        // Dla ko³a u¿ywamy œredniej z kx i ky aby zachowaæ okr¹g³oœæ
         float k = (kx + ky) / 2.0f;
-
-        // Skalowanie pozycji œrodka
         scalePoint(data.x0, data.y0, kx, ky, cx, cy);
-
-        // Skalowanie promienia
         data.R *= k;
     }
 
-    // ---- CENTRUM KO£A ----
     void getCenter(float& cx, float& cy) {
         cx = data.x0;
         cy = data.y0;

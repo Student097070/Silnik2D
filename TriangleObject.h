@@ -4,17 +4,17 @@
 #include "TransformableObject.h"
 #include "STR.h"
 
-struct TriangleData {
-    float x0, y0; // Wierzcho³ek 1
-    float x1, y1; // Wierzcho³ek 2
-    float x2, y2; // Wierzcho³ek 3
-    ALLEGRO_COLOR color; // Kolor wype³nienia
-};
+//struct TriangleData {
+//    float x0, y0; // Wierzcho³ek 1
+//    float x1, y1; // Wierzcho³ek 2
+//    float x2, y2; // Wierzcho³ek 3
+//    ALLEGRO_COLOR color; // Kolor wype³nienia
+//};
 
 class TriangleObject : public ShapeObject, public TransformableObject {
 public:
     TriangleData data;
-
+   
     TriangleObject(const TriangleData& d) : data(d) {}
 
     // ---- RYSOWANIE ----

@@ -8,6 +8,7 @@
 #include "ShapeCircle.h"
 #include "ShapePolygon.h"
 #include "Player.h"
+#include "TriangleObject.h"
 
 Button ResolutionButton(0, 0, 100, 20, "Rozdzielczosc", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button ResetButton(110, 0, 100, 20, "RESET TIMERA", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
@@ -65,8 +66,8 @@ public:
     vector<Point2D> points;
     vector<CircleData> circles;
     vector<RectangleData> rectangles;
-    vector<TriangleData> triangles;
-    //vector<unique_ptr<TriangleData>> triangles;
+
+    vector<unique_ptr<TriangleObject>> triangles;
     vector<Circle2Data> circles2;
     vector<ElipseData> elipses;
     vector<vector<PolygonPoint>> polygons;
@@ -181,33 +182,6 @@ public:
         fill1points.clear();
         fill2points.clear();
     }
-
-    void rotatePoint(float& x, float& y, float angle, float cx, float cy) {
-        float s = sin(angle);
-        float c = cos(angle);
-
-        // przesunięcie do układu z centrum w (cx, cy)
-        x -= cx;
-        y -= cy;
-
-        // obrót
-        float nx = x * c - y * s;
-        float ny = x * s + y * c;
-
-        // powrót do układu globalnego
-        x = nx + cx;
-        y = ny + cy;
-    }
-
-    void rotateTriangle(TriangleData& t, float angle) {
-        float cx = (t.x0 + t.x1 + t.x2) / 3.0f;
-        float cy = (t.y0 + t.y1 + t.y2) / 3.0f;
-
-        rotatePoint(t.x0, t.y0, angle, cx, cy);
-        rotatePoint(t.x1, t.y1, angle, cx, cy);
-        rotatePoint(t.x2, t.y2, angle, cx, cy);
-    }
-    
 
     // Rysowanie interfejsu
     void draw(ALLEGRO_EVENT& ev) {
@@ -343,9 +317,9 @@ public:
             renderer.circle(c.x, c.y, c.r, true, 2.0);
         }
 
-        for (auto& c : triangles) {
-            PrimitiveRenderer renderer(c.color);
-            renderer.triangle(c.x0, c.y0, c.x1, c.y1, c.x2, c.y2);
+        for (auto& t : triangles) {
+            PrimitiveRenderer renderer(t->data.color);
+            renderer.triangle(t->data.x0, t->data.y0, t->data.x1, t->data.y1, t->data.x2, t->data.y2);
         }
 
         for (auto& c : rectangles) {
@@ -567,8 +541,8 @@ public:
                     newTriangle.x2 = tempTrianglePoints[2].first;
                     newTriangle.y2 = tempTrianglePoints[2].second;
                     newTriangle.color = al_map_rgb(0, 0, 255);
-                    triangles.push_back(newTriangle);
-
+                  
+                    triangles.push_back(make_unique<TriangleObject>(newTriangle));
                     // Wyczyść tymczasowe punkty
                     tempTrianglePoints.clear();
                 }
@@ -641,33 +615,22 @@ public:
             if(ev.keyboard.keycode == ALLEGRO_KEY_I ) {
                 if (!shapes.empty()) {
                     shapes[1]->rotate(15.0f * 3.14159265f / 180.0f, 400.0f, 300.0f); 
-					/*triangles[0]->rotate(15.0f * 3.14159265f / 180.0f, 400.0f, 300.0f);*/
-					shapes[1]->translate(10.0f, 10.0f);
                 }
 			}
             
             if (ev.keyboard.keycode == ALLEGRO_KEY_T) {
-                if (!shapes.empty()) {
-                    shapes[1]->translate(10.0f, 10.0f);
+                if (!triangles .empty()) {
+                    triangles[1]->translate(10.0f, 10.0f);
                 }
             }
             
             if (TriangleRotate) {
                 if (ev.keyboard.keycode == ALLEGRO_KEY_I) {
                     if (!triangles.empty()) {
-                        rotateTriangle(triangles[0], 15.0f * 3.14159265f / 180.0f);
+                        triangles[0]->rotate(15.0f * 3.14159265f / 180.0f, 400.0f, 300.0f);
                     }
                 }
             }
-
-
-            /*if (ev.keyboard.keycode == ALLEGRO_KEY_I) {
-                if (!triangles.empty()) {
-                    rotateTriangle(triangles[0], 15.0f * 3.14159265f / 180.0f);
-                }
-            }*/
-
-
 
         }
         else if (ev.type == ALLEGRO_EVENT_DISPLAY_RESIZE)
@@ -724,18 +687,6 @@ public:
     Engine() {
 
         player = make_unique<Player>(400, 300);
-        /*shapes.push_back(make_unique<ShapeCircle>(200, 200, 50, al_map_rgb(255, 0, 0)));
-
-        vector<Point2D> pts = {
-            {500, 200, al_map_rgb(255, 255, 255)},
-            {560, 240, al_map_rgb(255, 255, 255)},
-            {540, 300, al_map_rgb(255, 255, 255)},
-            {460, 300, al_map_rgb(255, 255, 255)},
-            {440, 240, al_map_rgb(255, 255, 255)}
-        };
-
-        shapes.push_back(std::make_unique<ShapePolygon>(pts, al_map_rgb(0, 255, 0)));*/
-
         initLog();
         if (!initAllegro()) exit(-1);
         createDisplay();

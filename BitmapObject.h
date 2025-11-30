@@ -13,7 +13,7 @@ protected:
     float scaleX = 1.0f;
     float scaleY = 1.0f;
 
-    std::vector<std::unique_ptr<BitmapHandler>> bitmaps;
+    vector<BitmapHandler*> bitmaps;
 
 public:
     BitmapObject() = default;
@@ -26,7 +26,7 @@ public:
 
     // dodawanie bitmap (np. warstw)
     void addBitmap(BitmapHandler* bmp) {
-        bitmaps.emplace_back(bmp);
+        bitmaps.push_back(bmp);
     }
 
     // --- TransformableObject ---
@@ -46,15 +46,22 @@ public:
 
     // --- DrawableObject ---
     virtual void draw() override {
-        for (auto& bmp : bitmaps)
-            if (bmp->get())
-                al_draw_scaled_rotated_bitmap(
-                    bmp->get(),
-                    0, 0,                    
-                    pos.x, pos.y,            
-                    scaleX, scaleY,        
-                    angle,                 
-                    0                        
-                );
+        for (auto& bmp : bitmaps) {
+            ALLEGRO_BITMAP* bitmap = bmp->get();
+            if (!bitmap) continue;
+
+            int w = al_get_bitmap_width(bitmap);
+            int h = al_get_bitmap_height(bitmap);
+
+            al_draw_scaled_rotated_bitmap(
+                bitmap,
+                w / 2.0, h / 2.0,   // punkt obrotu w œrodku bitmapy
+                pos.x, pos.y,       // pozycja bitmapy
+                scaleX, scaleY,     // skalowanie
+                angle,              // obrót
+                0                   // flagi
+            );
+        }
     }
+
 };

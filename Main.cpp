@@ -117,6 +117,7 @@ public:
         if (!al_init_primitives_addon()) { logError("Błąd inicjalizacji primitives!"); return false; }
         if (!al_install_mouse()) { logError("Błąd inicjalizacji myszy!"); return false; }
         if (!al_install_keyboard()) { logError("Błąd inicjalizacji klawiatury!"); return false; }
+        al_init_image_addon();
 
         return true;
     }
@@ -380,8 +381,8 @@ public:
             PrimitiveRenderer renderer(al_map_rgb(0, 255, 0));
             renderer.polyline(polylinePoints);
         }
-        ALLEGRO_BITMAP* bb = al_get_backbuffer(display);
-        al_lock_bitmap(bb, ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_WRITEONLY);
+        //ALLEGRO_BITMAP* bb = al_get_backbuffer(display);
+        //al_lock_bitmap(bb, ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_WRITEONLY);
         // Rysowanie zakończonych wielokątów
         for (auto& c : polygons) {
             PrimitiveRenderer renderer(al_map_rgb(255, 0, 0));
@@ -410,7 +411,7 @@ public:
         for (auto& s : shapes) s->draw();
         
 
-        al_unlock_bitmap(bb);
+        //al_unlock_bitmap(bb);
 
         if (player) player->draw();
 
@@ -473,7 +474,9 @@ public:
         else if (ev.type == ALLEGRO_EVENT_TIMER) {
             ALLEGRO_KEYBOARD_STATE keyState;
             al_get_keyboard_state(&keyState);
-
+            float dt = 1.0f / 60.0f;   // stały czas kroku
+            if (player) player->update(dt);
+            draw(ev);
           /*  if (player) {
                 if (al_key_down(&keyState, ALLEGRO_KEY_UP)) {
                     player->pos.y -= 1;
@@ -792,7 +795,6 @@ public:
     // Konstruktor
     Engine() {
 
-        player = make_unique<Player>(400, 300);
         initLog();
         if (!initAllegro()) exit(-1);
         createDisplay();
@@ -801,6 +803,7 @@ public:
         registerEventSources();
         setupWorkspace();
         centerWindow();
+        player = make_unique<Player>(400, 300);
         logError("Silnik uruchomiony pomyslnie");
     }
 

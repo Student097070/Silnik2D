@@ -2232,3 +2232,360 @@ Button 'Circle transform' destroyed successfully.
 Button 'Triange transform' destroyed successfully.
 Button 'RESET TIMERA' destroyed successfully.
 Button 'Rozdzielczosc' destroyed successfully.
+[Sun Nov 30 19:39:40 2025] Point2D destroyed: (400.000000,300.000000)
+Button 'FILL flood' destroyed successfully.
+Button 'FILL boundary' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Elipse transform' destroyed successfully.
+Button 'Rectangle transform' destroyed successfully.
+Button 'Circle transform' destroyed successfully.
+Button 'Triange transform' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+[Sun Nov 30 19:41:38 2025] Point2D destroyed: (400.000000,300.000000)
+Button 'FILL flood' destroyed successfully.
+Button 'FILL boundary' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Elipse transform' destroyed successfully.
+Button 'Rectangle transform' destroyed successfully.
+Button 'Circle transform' destroyed successfully.
+Button 'Triange transform' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+[Sun Nov 30 19:44:34 2025] Point2D destroyed: (400.000000,300.000000)
+Button 'FILL flood' destroyed successfully.
+Button 'FILL boundary' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Elipse transform' destroyed successfully.
+Button 'Rectangle transform' destroyed successfully.
+Button 'Circle transform' destroyed successfully.
+Button 'Triange transform' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+[Sun Nov 30 19:46:15 2025] Point2D destroyed: (400.000000,300.000000)
+Button 'FILL flood' destroyed successfully.
+Button 'FILL boundary' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Elipse transform' destroyed successfully.
+Button 'Rectangle transform' destroyed successfully.
+Button 'Circle transform' destroyed successfully.
+Button 'Triange transform' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+[Sun Nov 30 19:47:23 2025] Point2D destroyed: (400.000000,300.000000)
+Button 'FILL flood' destroyed successfully.
+Button 'FILL boundary' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Elipse transform' destroyed successfully.
+Button 'Rectangle transform' destroyed successfully.
+Button 'Circle transform' destroyed successfully.
+Button 'Triange transform' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+[Sun Nov 30 19:49:50 2025] Point2D destroyed: (400.000000,300.000000)
+Button 'FILL flood' destroyed successfully.
+Button 'FILL boundary' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Elipse transform' destroyed successfully.
+Button 'Rectangle transform' destroyed successfully.
+Button 'Circle transform' destroyed successfully.
+Button 'Triange transform' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+[Sun Nov 30 19:50:33 2025] Point2D destroyed: (400.000000,300.000000)
+Button 'FILL flood' destroyed successfully.
+Button 'FILL boundary' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Elipse transform' destroyed successfully.
+Button 'Rectangle transform' destroyed successfully.
+Button 'Circle transform' destroyed successfully.
+Button 'Triange transform' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+[Sun Nov 30 19:51:08 2025] Point2D destroyed: (400.000000,300.000000)
+Button 'FILL flood' destroyed successfully.
+Button 'FILL boundary' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Elipse transform' destroyed successfully.
+Button 'Rectangle transform' destroyed successfully.
+Button 'Circle transform' destroyed successfully.
+Button 'Triange transform' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+[Sun Nov 30 19:56:11 2025] Point2D destroyed: (400.000000,300.000000)
+Button 'FILL flood' destroyed successfully.
+Button 'FILL boundary' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Elipse transform' destroyed successfully.
+Button 'Rectangle transform' destroyed successfully.
+Button 'Circle transform' destroyed successfully.
+Button 'Triange transform' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+[Sun Nov 30 20:01:40 2025] Point2D destroyed: (372.732239,330.404541)
+Button 'FILL flood' destroyed successfully.
+Button 'FILL boundary' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Elipse transform' destroyed successfully.
+Button 'Rectangle transform' destroyed successfully.
+Button 'Circle transform' destroyed successfully.
+Button 'Triange transform' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+[Sun Nov 30 20:08:44 2025] Point2D destroyed: (431.213257,309.832489)
+Button 'FILL flood' destroyed successfully.
+Button 'FILL boundary' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Elipse transform' destroyed successfully.
+Button 'Rectangle transform' destroyed successfully.
+Button 'Circle transform' destroyed successfully.
+Button 'Triange transform' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+[Sun Nov 30 20:08:50 2025] Point2D destroyed: (405.453522,324.546570)
+Button 'FILL flood' destroyed successfully.
+Button 'FILL boundary' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Elipse transform' destroyed successfully.
+Button 'Rectangle transform' destroyed successfully.
+Button 'Circle transform' destroyed successfully.
+Button 'Triange transform' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+[Sun Nov 30 20:10:00 2025] Point2D destroyed: (400.000000,300.000000)
+Button 'FILL flood' destroyed successfully.
+Button 'FILL boundary' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Elipse transform' destroyed successfully.
+Button 'Rectangle transform' destroyed successfully.
+Button 'Circle transform' destroyed successfully.
+Button 'Triange transform' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+[Sun Nov 30 20:12:26 2025] Point2D destroyed: (325.216400,249.260422)
+Button 'FILL flood' destroyed successfully.
+Button 'FILL boundary' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Elipse transform' destroyed successfully.
+Button 'Rectangle transform' destroyed successfully.
+Button 'Circle transform' destroyed successfully.
+Button 'Triange transform' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+[Sun Nov 30 20:12:40 2025] Point2D destroyed: (404.477203,358.521240)
+Button 'FILL flood' destroyed successfully.
+Button 'FILL boundary' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Elipse transform' destroyed successfully.
+Button 'Rectangle transform' destroyed successfully.
+Button 'Circle transform' destroyed successfully.
+Button 'Triange transform' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+[Sun Nov 30 20:13:00 2025] Point2D destroyed: (420.571991,308.047394)
+Button 'FILL flood' destroyed successfully.
+Button 'FILL boundary' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Elipse transform' destroyed successfully.
+Button 'Rectangle transform' destroyed successfully.
+Button 'Circle transform' destroyed successfully.
+Button 'Triange transform' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+[Sun Nov 30 20:13:17 2025] Point2D destroyed: (400.000000,300.000000)
+Button 'FILL flood' destroyed successfully.
+Button 'FILL boundary' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Elipse transform' destroyed successfully.
+Button 'Rectangle transform' destroyed successfully.
+Button 'Circle transform' destroyed successfully.
+Button 'Triange transform' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+[Sun Nov 30 20:15:01 2025] Point2D destroyed: (423.905334,430.572327)
+Button 'FILL flood' destroyed successfully.
+Button 'FILL boundary' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Elipse transform' destroyed successfully.
+Button 'Rectangle transform' destroyed successfully.
+Button 'Circle transform' destroyed successfully.
+Button 'Triange transform' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+[Sun Nov 30 20:29:30 2025] Point2D destroyed: (366.735870,373.974792)
+Button 'FILL flood' destroyed successfully.
+Button 'FILL boundary' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Elipse transform' destroyed successfully.
+Button 'Rectangle transform' destroyed successfully.
+Button 'Circle transform' destroyed successfully.
+Button 'Triange transform' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+[Sun Nov 30 20:30:05 2025] Point2D destroyed: (352.928802,306.499146)
+Button 'FILL flood' destroyed successfully.
+Button 'FILL boundary' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Elipse transform' destroyed successfully.
+Button 'Rectangle transform' destroyed successfully.
+Button 'Circle transform' destroyed successfully.
+Button 'Triange transform' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.
+[Sun Nov 30 20:32:53 2025] Point2D destroyed: (330.305939,293.974884)
+Button 'FILL flood' destroyed successfully.
+Button 'FILL boundary' destroyed successfully.
+Button 'Polyline' destroyed successfully.
+Button 'Polygon' destroyed successfully.
+Button 'Point2D' destroyed successfully.
+Button 'Elipse' destroyed successfully.
+Button 'Circle' destroyed successfully.
+Button 'TRIANGLE' destroyed successfully.
+Button 'RECTANGLE' destroyed successfully.
+Button 'CLEAN' destroyed successfully.
+Button 'Elipse transform' destroyed successfully.
+Button 'Rectangle transform' destroyed successfully.
+Button 'Circle transform' destroyed successfully.
+Button 'Triange transform' destroyed successfully.
+Button 'RESET TIMERA' destroyed successfully.
+Button 'Rozdzielczosc' destroyed successfully.

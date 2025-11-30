@@ -12,7 +12,7 @@ protected:
     float timeAccumulator = 0.0f;
 
 public:
-    SpriteObject(float x = 0, float y = 0) : BitmapObject() { pos.x; pos.y; }
+    SpriteObject(float x = 0, float y = 0) : BitmapObject() { pos.x = x; pos.y = y; }
 
 
     void setupSprite(int fw, int fh, int frames, float timePerFrame = 0.1f) {
@@ -23,29 +23,24 @@ public:
     }
 
     virtual void animate(float dt) override {
-        timeAccumulator += dt;
+        if (bitmaps.empty()) return;
 
+        timeAccumulator += dt;
         if (timeAccumulator >= frameTime) {
-            currentFrame = (currentFrame + 1) % frameCount;
+            currentFrame = (currentFrame + 1) % bitmaps.size(); // <- bez frameCount
             timeAccumulator = 0.0f;
         }
     }
 
+
     virtual void draw() override {
         if (bitmaps.empty()) return;
 
-        ALLEGRO_BITMAP* sheet = bitmaps[0]->get();
-        if (!sheet) return;
+        ALLEGRO_BITMAP* bmp = bitmaps[currentFrame]->get();
+        if (!bmp) return;
 
-        al_draw_bitmap_region(
-            sheet,
-            currentFrame * frameWidth,
-            0,
-            frameWidth,
-            frameHeight,
-            pos.x,
-            pos.y,
-            0
-        );
+        al_draw_bitmap(bmp, pos.x, pos.y, 0);
     }
+
+
 };

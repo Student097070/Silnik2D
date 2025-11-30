@@ -76,16 +76,12 @@ public:
 
     // Kontenery dla różnych obiektów
     vector<Point2D> points;
-    vector<CircleData> circles;
-    //vector<RectangleData> rectangles;
 
     vector<unique_ptr<TriangleObject>> triangles;
     vector<unique_ptr<CircleObject>> circles2;
     vector<unique_ptr<EllipseObject>> elipses;
     vector<unique_ptr<RectangleObject>> rectangles;
 
-    //vector<Circle2Data> circles2;
-    //vector<ElipseData> elipses;
     vector<vector<PolygonPoint>> polygons;
     vector<PolygonPoint> punktyWielokata;
     vector<Point2D> polylinePoints;
@@ -184,7 +180,6 @@ public:
 
     void clear() {
         points.clear();
-        circles.clear();
         circles2.clear();
         elipses.clear();
         polygons.clear();
@@ -366,11 +361,6 @@ public:
         for (auto& p : points)
             p.DisplayPoint();
 
-        for (auto& c : circles) {
-            PrimitiveRenderer renderer(c.color);
-            renderer.circle(c.x, c.y, c.r, true, 2.0);
-        }
-
         for (auto& t : triangles) {
             PrimitiveRenderer renderer(t->data.color);
             renderer.triangle(t->data.x0, t->data.y0, t->data.x1, t->data.y1, t->data.x2, t->data.y2);
@@ -484,7 +474,7 @@ public:
             ALLEGRO_KEYBOARD_STATE keyState;
             al_get_keyboard_state(&keyState);
 
-            if (player) {
+          /*  if (player) {
                 if (al_key_down(&keyState, ALLEGRO_KEY_UP)) {
                     player->pos.y -= 1;
                 }
@@ -497,7 +487,7 @@ public:
                 if (al_key_down(&keyState, ALLEGRO_KEY_RIGHT)) {
                     player->pos.x += 1;
                 }
-            }
+            }*/
             draw(ev);
         }
             
@@ -717,8 +707,34 @@ public:
                         rectangles[0]->translate(10.0f, 10.0f);
                     }
                 }
+                else if (ev.keyboard.keycode == ALLEGRO_KEY_S) {
+                    if (!rectangles.empty()) {
+                        float cx, cy;
+                        rectangles[0]->getCenter(cx, cy);
+                        rectangles[0]->scale(1.1f, 1.1f, cx, cy);
+                    }
+                }
             }
 
+            if (CircleTransform) {
+                if (!circles2.empty()) {
+                    float cx, cy;
+                    circles2[0]->getCenter(cx, cy);
+                    circles2[0]->rotate(15.0f * 3.14159265f / 180.0f, cx, cy);
+                }
+                else if (ev.keyboard.keycode == ALLEGRO_KEY_T) {
+                    if (!circles2.empty()) {
+                        circles2[0]->translate(10.0f, 10.0f);
+                    }
+                }
+                else if (ev.keyboard.keycode == ALLEGRO_KEY_S) {
+                    if (!circles2.empty()) {
+                        float cx, cy;
+                        circles2[0]->getCenter(cx, cy);
+                        circles2[0]->scale(1.1f, 1.1f, cx, cy);
+                    }
+                }
+            }
             
 
 

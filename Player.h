@@ -1,39 +1,48 @@
 #pragma once
+#include "SpriteObject.h"
 #include "UpdatableObject.h"
-#include "DrawableObject.h"
-#include "Point2D.h"
-#include "PrimitiveRenderer.h"
+#include "Include.h"
 
-class Player : public UpdatableObject, public DrawableObject {
+class Player : public SpriteObject, public UpdatableObject {
 public:
-    
-	ALLEGRO_COLOR c = al_map_rgb(255, 255, 0);
-    Point2D pos;
+    float speed;
+
     Player(float x = 400, float y = 300, float speed = 200.0f)
-        : pos(x, y, c), speed(speed) {
+        : SpriteObject(), UpdatableObject(), speed(speed)
+    {
+        pos.x = x;
+        pos.y = y;
+
+        // Wczytanie sprite sheet
+        auto bmp = new BitmapHandler();
+        bmp->loadFromFile("sprity/Gangster/przod/Gangster_00_1.png");
+        addBitmap(bmp);
+
+        int fw = al_get_bitmap_width(bmp->get()) / 4;
+        int fh = al_get_bitmap_height(bmp->get());
+
+        setupSprite(fw, fh, 4, 0.12f);
     }
 
     void update(float dt) override {
-        // prosty ruch klawiszami WSAD
-        if (al_key_down) { 
-           /* if (ev.keyboard.keycode == ALLEGRO_KEY_W){
-            }*/
-        
+        ALLEGRO_KEYBOARD_STATE ks;
+        al_get_keyboard_state(&ks);
+
+        float dx = 0;
+        float dy = 0;
+
+        if (al_key_down(&ks, ALLEGRO_KEY_UP)) dy -= 1;
+        if (al_key_down(&ks, ALLEGRO_KEY_DOWN)) dy += 1;
+        if (al_key_down(&ks, ALLEGRO_KEY_LEFT)) dx -= 1;
+        if (al_key_down(&ks, ALLEGRO_KEY_RIGHT)) dx += 1;
+
+        if (dx != 0 || dy != 0) {
+            float len = sqrt(dx * dx + dy * dy);
+            dx /= len;
+            dy /= len;
+
+            translate(dx * speed * dt, dy * speed * dt);
+            animate(dt);
         }
-        // tutaj: przyk³adowo - poruszanie zale¿ne od globalnych flag klawiatury
     }
-
-    // szybkie API do zewnêtrznego sterowania
-    void moveBy(float dx, float dy) { pos.translate(dx, dy); }
-
-    void draw() override {
-        PrimitiveRenderer r(al_map_rgb(255, 255, 0));
-        // narysuj ma³y trójk¹t jako gracza
-        int x = (int)round(pos.x);
-        int y = (int)round(pos.y);
-        r.triangle(x, y - 10, x - 8, y + 6, x + 8, y + 6, true, 1.0f);
-    }
-
-    
-    float speed;
 };

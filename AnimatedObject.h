@@ -4,5 +4,5 @@
 class AnimatedObject : virtual public GameObject {
 public:
     virtual ~AnimatedObject() = default;
-    virtual void animate() = 0;
+    virtual void animate(float dt) = 0;
 };

@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BitmapHandler.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Globals.cpp" />
     <ClCompile Include="LineSegment.cpp" />
@@ -159,6 +160,8 @@
     <ClCompile Include="PrimitiveRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BitmapHandler.h" />
+    <ClInclude Include="BitmapObject.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="CircleObject.h" />
     <ClInclude Include="DrawableObject.h" />
@@ -171,6 +174,7 @@
     <ClInclude Include="ShapeCircle.h" />
     <ClInclude Include="ShapeObject.h" />
     <ClInclude Include="ShapePolygon.h" />
+    <ClInclude Include="SpriteObject.h" />
     <ClInclude Include="TransformableObject.h" />
     <ClInclude Include="TriangleObject.h" />
     <ClInclude Include="UpdatableObject.h" />

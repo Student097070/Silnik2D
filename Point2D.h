@@ -7,7 +7,7 @@ public:
     float x, y; //wspolrzedne punktu 
     ALLEGRO_COLOR kolor; //kolor punktu
 
-    
+	Point2D() = default;
     Point2D(float x, float y, ALLEGRO_COLOR kolor);
     ~Point2D();
 

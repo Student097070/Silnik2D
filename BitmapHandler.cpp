@@ -1,3 +1,11 @@
+/**
+ * @file BitmapHandler.cpp
+ * @brief Implementacja klasy BitmapHandler.
+ * @details
+ * - Zarz¹dza cyklem ¿ycia bitmap Allegro.
+ * - Implementuje metody ³adowania, zapisywania i rysowania.
+ */
+
 #include "BitmapHandler.h"
 
 BitmapHandler::~BitmapHandler() {

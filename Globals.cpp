@@ -1,3 +1,10 @@
+/**
+ * @file Globals.cpp
+ * @brief Definicje zmiennych globalnych programu.
+ * @details
+ * - Zawiera definicje wskaŸników Allegro i zmiennych stanu aplikacji.
+ */
+
 #include "Include.h"
 
 ALLEGRO_DISPLAY* display = nullptr;

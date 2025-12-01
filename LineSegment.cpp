@@ -1,9 +1,26 @@
+/**
+ * @file LineSegment.cpp
+ * @brief Implementacja klasy LineSegment (odcinek).
+ * @details
+ * - Zawiera metody rysowania odcinka z wyborem algorytmu.
+ * - Obs³uguje transformacje geometryczne (translacja, rotacja, skalowanie).
+ */
+
 #include "LineSegment.h"
 #include "PrimitiveRenderer.h"
+
+
+ /**
+  * @brief Konstruktor z punktami.
+  */
 
 LineSegment::LineSegment(Point2D start, Point2D end, ALLEGRO_COLOR col)
     : p1(start), p2(end), color(col) {
 }
+
+/**
+ * @brief Konstruktor ze wspó³rzêdnymi.
+ */
 
 LineSegment::LineSegment(float x0, float y0, float x1, float y1, ALLEGRO_COLOR col)
     : p1(x0, y0, col), p2(x1, y1, col), color(col) {
@@ -34,7 +51,10 @@ void LineSegment::setEnd(float x, float y) {
     p2.x = x;
     p2.y = y;
 }
-
+/**
+ * @brief Rysuje odcinek.
+ * @param useIncrementalAlgorithm Jeœli true, u¿ywa algorytmu przyrostowego.
+ */
 void LineSegment::draw(bool useIncrementalAlgorithm) {
     if (useIncrementalAlgorithm) {
         // Algorytm przyrostowy - u¿yj PrimitiveRenderer

@@ -1,3 +1,10 @@
+/**
+ * @file Point2D.cpp
+ * @brief Implementacja klasy Point2D – punktu 2D.
+ * @details
+ * - Przechowuje wspó³rzêdne i kolor punktu.
+ * - Udostêpnia metody transformacji (translacja, rotacja, skalowanie).
+ */
 #include "Point2D.h"
 #include "Utils.h"  // Dodaj ten include dla logowania
 

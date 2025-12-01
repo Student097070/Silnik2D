@@ -1,12 +1,26 @@
+/**
+ * @file EllipseObject.h
+ * @brief Nag³ówek klasy EllipseObject – elipsy jako obiektu kszta³tu.
+ * @details
+ * - Dziedziczy po ShapeObject i TransformableObject.
+ * - Przechowuje dane elipsy (œrodek, promienie, kolor).
+ * - Implementuje transformacje geometryczne.
+ */
+
 #pragma once
 #include "Include.h"
 #include "ShapeObject.h"
 #include "TransformableObject.h"
 #include "STR.h"
 
+ /**
+  * @class EllipseObject
+  * @brief Klasa reprezentuj¹ca elipsê.
+  */
+
 class EllipseObject : public ShapeObject, public TransformableObject {
 public:
-    ElipseData data;
+    ElipseData data; ///< Dane elipsy
 
     EllipseObject(const ElipseData& d) : data(d) {}
 

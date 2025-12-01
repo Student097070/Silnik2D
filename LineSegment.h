@@ -1,14 +1,26 @@
+/**
+ * @file LineSegment.h
+ * @brief Nag³ówek klasy LineSegment – odcinka linii.
+ * @details
+ * - Przechowuje dwa punkty koñcowe i kolor.
+ * - Udostêpnia metody transformacji i rysowania.
+ */
+
 #pragma once
 #include "Include.h"
 #include "Point2D.h"
 
-// Forward declaration
+ // Deklaracja klasy PrimitiveRenderer
 class PrimitiveRenderer;
 
+/**
+ * @class LineSegment
+ * @brief Klasa reprezentuj¹ca odcinek linii.
+ */
 class LineSegment {
 private:
-    Point2D p1, p2;
-    ALLEGRO_COLOR color;
+    Point2D p1, p2;  ///< Punkty koñcowe
+    ALLEGRO_COLOR color; ///< Kolor odcinka
 
 public:
     // Konstruktory

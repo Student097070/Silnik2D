@@ -1,6 +1,15 @@
+/**
+ * @file CircleObject.h
+ * @brief Nag³ówek klasy CircleObject – okrêgu jako obiektu kszta³tu.
+ * @details
+ * - Dziedziczy po ShapeObject.
+ * - Przechowuje dane okrêgu (œrodek, promieñ, kolor).
+ * - Implementuje transformacje geometryczne.
+ */
+
 class CircleObject : public ShapeObject {
 public:
-    Circle2Data data;
+    Circle2Data data; ///< Dane okrêgu
 
     CircleObject(float x, float y, float r, ALLEGRO_COLOR color) {
         data.x0 = x;

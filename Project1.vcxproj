@@ -160,6 +160,7 @@
     <ClCompile Include="PrimitiveRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimatedObject.h" />
     <ClInclude Include="BitmapHandler.h" />
     <ClInclude Include="BitmapObject.h" />
     <ClInclude Include="Button.h" />

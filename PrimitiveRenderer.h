@@ -1,16 +1,36 @@
+/**
+ * @file PrimitiveRenderer.h
+ * @brief Nag³ówek klasy PrimitiveRenderer – renderera prymitywów graficznych.
+ * @details
+ * - Udostêpnia metody do rysowania kszta³tów podstawowych (prostok¹ty, ko³a, trójk¹ty, linie).
+ * - Implementuje algorytmy wype³niania (boundary fill, flood fill).
+ * - Obs³uguje wielok¹ty i linie ³amane.
+ */
+
 #pragma once
 #include "Include.h"
 #include "Point2D.h"
 #include "STR.h"
 
-// Forward declaration zamiast include
+// deklaracja
 class LineSegment;
+
+/**
+ * @class PrimitiveRenderer
+ * @brief Klasa odpowiedzialna za rysowanie prymitywów graficznych.
+ */
 
 class PrimitiveRenderer {
 
 private:
-    ALLEGRO_COLOR kolor;
+    ALLEGRO_COLOR kolor; ///< Aktualny kolor rysowania
 public:
+
+    /**
+  * @brief Konstruktor.
+  * @param kolor Kolor domyœlny.
+  */
+
     PrimitiveRenderer(ALLEGRO_COLOR kolor = al_map_rgb(0, 0, 0)) : kolor(kolor) {}
     void rectangle(int x0, int y0, int x1, int y1, bool wypelniony = false, float grubosc = 1.0f);
     void circle(int x, int y, int r, bool wypelniony = false, float grubosc = 1.0f);

@@ -1,5 +1,17 @@
+/**
+ * @file BitmapHandler.h
+ * @brief Nag³ówek klasy BitmapHandler – zarz¹dzania bitmapami Allegro.
+ * @details
+ * - Opakowuje ALLEGRO_BITMAP, zarz¹dza cyklem ¿ycia.
+ * - Udostêpnia metody ³adowania, zapisywania i rysowania bitmap.
+ */
 #pragma once
 #include "Include.h"
+
+ /**
+  * @class BitmapHandler
+  * @brief Klasa opakowuj¹ca bitmapy Allegro.
+  */
 
 class BitmapHandler {
 private:
@@ -17,5 +29,5 @@ public:
     void drawTo(BitmapHandler& target, float x, float y);
     void drawRegionTo(BitmapHandler& target, float sx, float sy, float sw, float sh, float dx, float dy);
 
-    ALLEGRO_BITMAP* get() const { return bitmap; }
+    ALLEGRO_BITMAP* get() const { return bitmap; } ///< Zwraca wskaŸnik na bitmapê
 };

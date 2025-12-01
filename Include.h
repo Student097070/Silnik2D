@@ -1,3 +1,11 @@
+/**
+ * @file Include.h
+ * @brief G³ówny plik nag³ówkowy z includes i deklaracjami zmiennych globalnych.
+ * @details
+ * - Zawiera wszystkie potrzebne nag³ówki Allegro i standardowe.
+ * - Deklaruje zmienne globalne u¿ywane w ca³ym projekcie.
+ */
+
 #pragma once
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
@@ -25,7 +33,7 @@ extern ALLEGRO_FONT* fontSmall;
 extern ALLEGRO_FONT* fontLarge;
 extern ALLEGRO_EVENT ev;
 
-// --- Aplikacja: zmienne globalne stanu ---
+// ---  zmienne globalne stanu ---
 extern int current_index;
 
 extern bool running;
@@ -34,7 +42,7 @@ extern bool resolution_hovered;
 extern bool reset_hovered;
 extern bool prim_hovered;
 
-// --- UI: pozycje i rozmiary przycisków ---
+// Pozycje i rozmiary przycisków
 extern float ResolutionButton_x, ResolutionButton_y;
 extern float ResolutionButton_w, ResolutionButton_h;
 extern float ResetButton_x, ResetButton_y;

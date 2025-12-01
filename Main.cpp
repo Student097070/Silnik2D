@@ -1,4 +1,14 @@
-﻿#include "Include.h"
+﻿/**
+ * @file Main.cpp
+ * @brief Główny plik źródłowy programu, zawierający klasę Engine i punkt wejścia.
+ * @details
+ * - Implementuje główną pętlę aplikacji, zarządza przyciskami i trybami rysowania.
+ * - Obsługuje zdarzenia klawiatury, myszy oraz zmiany rozdzielczości.
+ * - Zawiera kontenery dla różnych typów obiektów graficznych (punkty, trójkąty, koła, elipsy, itp.).
+ * - Używa Allegro do zarządzania oknem, timerem i renderowaniem.
+ */
+
+#include "Include.h"
 #include "PrimitiveRenderer.h"
 #include "STR.h"
 #include "Button.h"
@@ -12,6 +22,8 @@
 #include "RectangleObject.h"
 #include "CircleObject.h"
 #include "EllipseObject.h"
+
+ /// Przyciski interfejsu użytkownika
 
 Button ResolutionButton(0, 0, 100, 20, "Rozdzielczosc", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 Button ResetButton(110, 0, 100, 20, "RESET TIMERA", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
@@ -33,7 +45,10 @@ Button PolylineButton(220, 30, 100, 20, "Polyline", al_map_rgb(0, 0, 0), al_map_
 Button Fill1Button(110, 60, 100, 20, "FILL boundary", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255)); 
 Button Fill2Button(220, 60, 100, 20, "FILL flood", al_map_rgb(0, 0, 0), al_map_rgb(255, 255, 255));
 
-// Klasa silnika programu
+/**
+ * @class Engine
+ * @brief Główna klasa silnika aplikacji, zarządzająca inicjalizacją, pętlą główną i logiką programu.
+ */
 class Engine {
 private:
 
@@ -58,7 +73,7 @@ private:
     }
 
 public:
-    // Tryby rysowania
+    /// Flagi trybów rysowania
     bool TriangleTransform = false;
     bool RectangleTransform = false;
     bool CircleTransform = false;
@@ -74,7 +89,7 @@ public:
     bool Fill1DrawingMode = false;
     bool Fill2DrawingMode = false;
 
-    // Kontenery dla różnych obiektów
+    /// Kontenery dla obiektów graficznych
     vector<Point2D> points;
 
     vector<unique_ptr<TriangleObject>> triangles;
@@ -95,7 +110,10 @@ public:
     unique_ptr<Player> player;
     
 
-    // Zapisywanie komunikatu z błędami
+    /**
+     * @brief Zapisuje komunikat błędu do pliku log.
+     * @param errorMessage Tekst błędu do zapisania.
+     */
     static void logError(const string& errorMessage) {
         ofstream errorFile("error_log.txt", ios::app);
         if (errorFile.is_open()) {
@@ -829,6 +847,10 @@ public:
         if (display) al_destroy_display(display);
     }
 };
+/**
+ * @brief Punkt wejścia programu.
+ * @return Kod wyjścia.
+ */
 
 int main() {
     Engine engine;

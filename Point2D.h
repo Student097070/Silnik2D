@@ -1,5 +1,18 @@
+/**
+ * @file Point2D.h
+ * @brief Nag³ówek klasy Point2D – punktu w przestrzeni 2D.
+ * @details
+ * - Przechowuje wspó³rzêdne (x, y) i kolor.
+ * - Udostêpnia metody transformacji geometrycznych.
+ */
+
 #pragma once
 #include "Include.h"
+
+ /**
+  * @class Point2D
+  * @brief Klasa reprezentuj¹ca punkt 2D.
+  */
 
 class Point2D
 {

@@ -1,19 +1,37 @@
+/**
+ * @file Player.h
+ * @brief Nag³ówek klasy Player – sterowalnej postaci w grze.
+ * @details
+ * - Dziedziczy po SpriteObject i UpdatableObject.
+ * - Obs³uguje animacjê w zale¿noœci od kierunku ruchu.
+ * - Wczytuje zestawy sprite’ów dla 8 kierunków ruchu.
+ */
+
 #pragma once
 #include "SpriteObject.h"
 #include "UpdatableObject.h"
 #include "Include.h"
+
+ /**
+  * @enum Direction
+  * @brief Kierunki ruchu postaci.
+  */
 
 enum class Direction {
     UP, UP_RIGHT, RIGHT, DOWN_RIGHT,
     DOWN, DOWN_LEFT, LEFT, UP_LEFT, NONE
 };
 
+/**
+ * @class Player
+ * @brief Klasa reprezentuj¹ca gracza.
+ */
 
 class Player : public SpriteObject, public UpdatableObject {
 public:
-    float speed;
+    float speed; ///< Prêdkoœæ poruszania siê
     Direction dir = Direction::DOWN; // domyœlny kierunek
-    std::map<Direction, std::vector<std::unique_ptr<BitmapHandler>>> sprites;
+    std::map<Direction, std::vector<std::unique_ptr<BitmapHandler>>> sprites;  ///< Mapowanie kierunków na sprite'y
 
     Player(float x = 400, float y = 300, float speed = 200.0f)
         : SpriteObject(), UpdatableObject(), speed(speed)

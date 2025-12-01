@@ -1,3 +1,12 @@
+/**
+ * @file BitmapObject.h
+ * @brief Nag³ówek klasy BitmapObject – obiektu bitmapy z transformacjami.
+ * @details
+ * - Dziedziczy po DrawableObject i TransformableObject.
+ * - Przechowuje pozycjê, k¹t obrotu i skalê.
+ * - Mo¿e zawieraæ wiele warstw bitmap.
+ */
+
 #pragma once
 #include <vector>
 #include <memory>
@@ -6,21 +15,22 @@
 #include "BitmapHandler.h"
 #include "Point2D.h"
 
+ /**
+  * @class BitmapObject
+  * @brief Klasa reprezentuj¹ca obiekt bitmapy z transformacjami.
+  */
+
 class BitmapObject : public DrawableObject, public TransformableObject {
 protected:
-    Point2D pos;   
-    float angle = 0;
-    float scaleX = 1.0f;
-    float scaleY = 1.0f;
+    Point2D pos;     ///< Pozycja obiektu
+    float angle = 0; ///< K¹t obrotu
+	float scaleX = 1.0f; ///< Skalowanie w osi X
+	float scaleY = 1.0f; ///< Skalowanie w osi Y
 
-    vector<BitmapHandler*> bitmaps;
+    vector<BitmapHandler*> bitmaps; ///< Lista bitmap (warstw)
 
 public:
     BitmapObject() = default;
-    /*BitmapObject() {
-        pos.x = 0;
-        pos.y = 0;
-    }*/
 
     virtual ~BitmapObject() = default;
 

@@ -1,3 +1,11 @@
+/**
+ * @file Button.cpp
+ * @brief Implementacja klasy Button.
+ * @details
+ * - Rysuje przycisk z obs³ug¹ stanu najechania.
+ * - Loguje destrukcjê przycisku do pliku debug.
+ */
+
 #include "Include.h"
 #include "Button.h"
 

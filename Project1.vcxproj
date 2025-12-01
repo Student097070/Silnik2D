@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BitmapHandler.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Globals.cpp" />
     <ClCompile Include="LineSegment.cpp" />
@@ -159,7 +160,8 @@
     <ClCompile Include="PrimitiveRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AnimatedObject.h" />
+    <ClInclude Include="BitmapHandler.h" />
+    <ClInclude Include="BitmapObject.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="CircleObject.h" />
     <ClInclude Include="DrawableObject.h" />
@@ -172,6 +174,7 @@
     <ClInclude Include="ShapeCircle.h" />
     <ClInclude Include="ShapeObject.h" />
     <ClInclude Include="ShapePolygon.h" />
+    <ClInclude Include="SpriteObject.h" />
     <ClInclude Include="TransformableObject.h" />
     <ClInclude Include="TriangleObject.h" />
     <ClInclude Include="UpdatableObject.h" />
@@ -185,14 +188,14 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="packages\AllegroDeps.1.15.0\build\native\AllegroDeps.targets" Condition="Exists('packages\AllegroDeps.1.15.0\build\native\AllegroDeps.targets')" />
-    <Import Project="packages\Allegro.5.2.10\build\native\Allegro.targets" Condition="Exists('packages\Allegro.5.2.10\build\native\Allegro.targets')" />
+    <Import Project="packages\AllegroDeps.1.16.0\build\native\AllegroDeps.targets" Condition="Exists('packages\AllegroDeps.1.16.0\build\native\AllegroDeps.targets')" />
+    <Import Project="packages\Allegro.5.2.11.1\build\native\Allegro.targets" Condition="Exists('packages\Allegro.5.2.11.1\build\native\Allegro.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+      <ErrorText>Ten projekt zawiera odwołania do pakietów NuGet, których nie ma na tym komputerze. Użyj przywracania pakietów NuGet, aby je pobrać. Aby uzyskać więcej informacji, zobacz http://go.microsoft.com/fwlink/?LinkID=322105. Brakujący plik: {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('packages\AllegroDeps.1.15.0\build\native\AllegroDeps.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\AllegroDeps.1.15.0\build\native\AllegroDeps.targets'))" />
-    <Error Condition="!Exists('packages\Allegro.5.2.10\build\native\Allegro.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Allegro.5.2.10\build\native\Allegro.targets'))" />
+    <Error Condition="!Exists('packages\AllegroDeps.1.16.0\build\native\AllegroDeps.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\AllegroDeps.1.16.0\build\native\AllegroDeps.targets'))" />
+    <Error Condition="!Exists('packages\Allegro.5.2.11.1\build\native\Allegro.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Allegro.5.2.11.1\build\native\Allegro.targets'))" />
   </Target>
 </Project>

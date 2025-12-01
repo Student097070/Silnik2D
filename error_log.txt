@@ -1,2 +1,3 @@
 === Log b³êdów programu ===
-[Sat Nov 29 14:21:12 2025] Silnik uruchomiony pomyslnie
+[Sun Nov 30 20:32:36 2025] Silnik uruchomiony pomyslnie
+[Sun Nov 30 20:32:53 2025] Silnik zakonczy³ dzialanie pomyslnie

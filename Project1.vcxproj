@@ -159,6 +159,7 @@
     <ClCompile Include="PrimitiveRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimatedObject.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="CircleObject.h" />
     <ClInclude Include="DrawableObject.h" />
